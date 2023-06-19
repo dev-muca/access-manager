@@ -17,7 +17,6 @@ export function AuthProvider({ children }) {
     if (!!token) {
       API.getUserDataRequest(token)
         .then((response) => {
-          console.log(response.data);
           setUserSession(response.data);
         })
         .catch((err) => console.log(err))
