@@ -220,6 +220,7 @@ __metadata:
     postcss: 8.4.24
     react: 18.2.0
     react-dom: 18.2.0
+    react-icons: ^4.9.0
     tailwindcss: 3.3.2
   languageName: unknown
   linkType: soft
@@ -1607,6 +1608,15 @@ __metadata:
   peerDependencies:
     react: ^18.2.0
   checksum: 7d323310bea3a91be2965f9468d552f201b1c27891e45ddc2d6b8f717680c95a75ae0bc1e3f5cf41472446a2589a75aed4483aee8169287909fcd59ad149e8cc
+  languageName: node
+  linkType: hard
+
+"react-icons@npm:^4.9.0":
+  version: 4.9.0
+  resolution: "react-icons@npm:4.9.0"
+  peerDependencies:
+    react: "*"
+  checksum: 69d1000d02349cf4baa78a0882aff09723d348d910256ea7489dea777abf10f158b27c1b5d3b1d2ec030e21320eae0afcc13f9c9d11afb85a8809c59a23a923c
   languageName: node
   linkType: hard
 
