@@ -1,9 +1,13 @@
-import { Button } from "@/components/Button";
+import { useContext, useState } from "react";
+import { AuthContext } from "@/context/AuthContext";
+
 import { Input } from "@/components/Input";
 import { Title } from "@/components/Title";
-import { useState } from "react";
+import { Button } from "@/components/Button";
 
 export default function Home() {
+  const { signIn } = useContext(AuthContext);
+
   const [loader, setLoader] = useState(false);
 
   const [formData, setFormData] = useState({
@@ -11,25 +15,30 @@ export default function Home() {
     password: "",
   });
 
-  const [error, setError] = useState({
-    field: null,
-    message: null,
-  });
+  const [error, setError] = useState({ field: null, message: null });
+
+  function clearErrors(amount = 0) {
+    setTimeout(() => {
+      setError({ field: null, message: null });
+    }, amount);
+  }
 
   function handleInput(e) {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   }
 
-  function handleSubmitForm(e) {
+  async function handleSubmitForm(e) {
     e.preventDefault();
     setLoader(true);
 
-    console.log(formData);
+    const response = await signIn(formData);
 
-    setTimeout(() => {
-      setLoader(false);
-    }, 1200);
+    if (!!response.error) {
+      setError({ field: response.error.field, message: response.error.message });
+    }
+
+    setLoader(false);
   }
 
   return (
@@ -42,6 +51,7 @@ export default function Home() {
           placeholder="Usuário"
           value={formData.username}
           onChange={handleInput}
+          onClick={clearErrors}
           error={error.field === "username" ? true : false}
           errorMessage={error.message}
         />
@@ -51,6 +61,7 @@ export default function Home() {
           placeholder="Senha"
           value={formData.password}
           onChange={handleInput}
+          onClick={clearErrors}
           error={error.field === "password" ? true : false}
           errorMessage={error.message}
         />
