@@ -68,11 +68,11 @@ export default async function handler(req, res) {
     let user;
 
     if (!dataDB) {
-      const { email, fullname, department } = dataAD;
+      const { email, fullname, departament } = dataAD;
 
       const hashedPassword = hashSync(password, 16);
 
-      const id = await DB.createUser({ email, username, fullname, password: hashedPassword, department });
+      const id = await DB.createUser({ email, username, fullname, password: hashedPassword, departament });
 
       const payload = {
         id,

@@ -23,7 +23,7 @@ export function AuthProvider({ children }) {
         })
         .finally(() => {
           Router.push("/home");
-          console.log("Autenticado!");
+          console.log(userSession);
         });
     }
   }, []);
