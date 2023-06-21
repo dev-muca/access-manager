@@ -1,9 +1,10 @@
 import { useContext, useState } from "react";
 import { AuthContext } from "@/context/AuthContext";
 
-import { Input } from "@/components/Input";
-import { Title } from "@/components/Title";
-import { Button } from "@/components/Button";
+import { Input } from "@/components/Login/Input";
+import { Title } from "@/components/Login/Title";
+import { Button } from "@/components/Login/Button";
+import { Card } from "@/components/Login/Card";
 
 export default function Home() {
   const { signIn } = useContext(AuthContext);
@@ -43,7 +44,7 @@ export default function Home() {
 
   return (
     <form onSubmit={handleSubmitForm} className="w-screen h-screen flex justify-center items-center bg-slate-500">
-      <div className="w-96 p-14 flex flex-col gap-8 shadow-2xl rounded-md bg-white">
+      <Card>
         <Title />
         <Input
           type="text"
@@ -66,7 +67,7 @@ export default function Home() {
           errorMessage={error.message}
         />
         <Button type="submit" text="Entrar" loader={loader} />
-      </div>
+      </Card>
     </form>
   );
 }
