@@ -26,7 +26,7 @@ export function Navbar() {
 
       <ul className="w-full my-2 px-2 flex flex-col justify-start items-center gap-4">
         <ItemMenu name="Início" icon="HiHome" to="/home" />
-        <ItemMenu name="Colaboradores" icon="SlPeople" color="blue" to="/colaboradores/novo" />
+        <ItemMenu name="Colaboradores" icon="SlPeople" color="blue" to="/colaboradores" />
       </ul>
 
       <button onClick={signOut} className="absolute bottom-0 py-1 border-t w-full hover:bg-red-100">

@@ -25,6 +25,18 @@ const API = {
       return null;
     }
   },
+
+  getUsersByDepartament: async (departament) => {
+    try {
+      const response = await baseAPI.post(`/user/departament`, { departament });
+      return response.data;
+    } catch (err) {
+      if (isAxiosError(err)) {
+        return err.response.data;
+      }
+      return null;
+    }
+  },
 };
 
 export default API;

@@ -66,7 +66,7 @@ export default function Home() {
           error={error.field === "password" ? true : false}
           errorMessage={error.message}
         />
-        <Button type="submit" text="Entrar" loader={loader} />
+        <Button text="Entrar" loader={loader} />
       </Card>
     </form>
   );
