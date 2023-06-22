@@ -82,7 +82,7 @@ export default async function handler(req, res) {
       token = sign(payload, KEY, { expiresIn: "1d" });
       user = payload;
     } else {
-      const { id, email, fullname, department } = dataDB;
+      const { id, email, fullname, departament } = dataDB;
 
       const match = compareSync(password, dataDB.password);
 
@@ -90,8 +90,8 @@ export default async function handler(req, res) {
         await DB.updatePasswordByUsername(username);
       }
 
-      token = sign({ id, email, username, fullname, department }, KEY, { expiresIn: "1d" });
-      user = { id, email, username, fullname, department };
+      token = sign({ id, email, username, fullname, departament }, KEY, { expiresIn: "1d" });
+      user = { id, email, username, fullname, departament };
     }
 
     return res.status(200).send({ token, user, error: null });
@@ -102,7 +102,6 @@ export default async function handler(req, res) {
       token: null,
       user: null,
       error: {
-        field: "",
         message: "Ocorreu um erro no servidor",
       },
     });

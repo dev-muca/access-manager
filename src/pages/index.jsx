@@ -26,7 +26,7 @@ export default function Home() {
 
   function handleInput(e) {
     const { name, value } = e.target;
-    setFormData((prevData) => ({ ...prevData, [name]: value }));
+    setFormData((prevData) => ({ ...prevData, [name]: value.toLowerCase() }));
   }
 
   async function handleSubmitForm(e) {
@@ -35,7 +35,7 @@ export default function Home() {
 
     const response = await signIn(formData);
 
-    if (!!response.error) {
+    if (!!response?.error) {
       setError({ field: response.error.field, message: response.error.message });
     }
 

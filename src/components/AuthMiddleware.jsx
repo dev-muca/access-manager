@@ -13,20 +13,3 @@ export function AuthMiddleware({ children }) {
 
   return children;
 }
-
-// export async function getServerSideProps(context) {
-//   const { ["token"]: token } = parseCookies(context);
-
-//   if (!token) {
-//     return {
-//       redirect: {
-//         destination: "/",
-//         permanent: false,
-//       },
-//     };
-//   }
-
-//   return {
-//     props: {},
-//   };
-// }

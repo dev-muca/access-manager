@@ -1,5 +1,6 @@
 import { InputFloating } from "@/components/InputFloating";
 import { AuthContext } from "@/context/AuthContext";
+import { getCurrentDate } from "@/utils/data";
 import { useContext } from "react";
 
 export default function Novo() {
@@ -13,9 +14,12 @@ export default function Novo() {
           Prencha todos os campos abaixos para criar credenciais de acesso para um novo colaborador
         </p>
       </div>
-      <form>
-        <InputFloating name="Nome Completo" />
+      <div className="text-sm py-2 px-1 flex flec-row justify-between items-center">
         <p>Departamento: {userSession?.departament}</p>
+        <p>Data: {getCurrentDate()}</p>
+      </div>
+      <form className="mt-4">
+        <InputFloating name="Nome Completo" />
       </form>
     </main>
   );

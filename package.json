@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@loadable/component": "^5.15.3",
     "activedirectory2": "^2.2.0",
     "autoprefixer": "10.4.14",
     "axios": "^1.4.0",

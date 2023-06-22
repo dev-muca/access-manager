@@ -1,27 +1,29 @@
 import "@/styles/globals.css";
 
-import { AuthContext, AuthProvider } from "@/context/AuthContext";
-import { Layout } from "@/components/Layout";
-import { useContext } from "react";
 import { useRouter } from "next/router";
-import { parseCookies } from "nookies";
+import { Layout } from "@/components/Layout";
+import { AuthProvider } from "@/context/AuthContext";
+import Head from "next/head";
 
 export default function App({ Component, pageProps }) {
   const Router = useRouter();
 
-  // const { userSession } = useContext(AuthContext);
-
-  // Defina a lista de páginas que não precisam da Navbar
+  // Lista de páginas que não precisam da Navbar
   const excludeNavbarPages = ["/"];
 
   // Verifica se a página atual está na lista de exclusão
   const excludeNavbar = excludeNavbarPages.includes(Router.pathname);
 
   return (
-    <AuthProvider>
-      <Layout excludeNavbar={excludeNavbar}>
-        <Component {...pageProps} />
-      </Layout>
-    </AuthProvider>
+    <>
+      <Head>
+        <title>SGA | Sistema Gerenciador Acessos</title>
+      </Head>
+      <AuthProvider>
+        <Layout excludeNavbar={excludeNavbar}>
+          <Component {...pageProps} />
+        </Layout>
+      </AuthProvider>
+    </>
   );
 }

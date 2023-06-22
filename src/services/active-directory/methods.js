@@ -29,6 +29,95 @@ const AD = {
     }
   },
 
+  findUsers: async (username) => {
+    try {
+      let users = [];
+      const data = await new Promise((resolve, reject) => {
+        LDAP.findUsers(`CN=*${username}*`, (err, found) => {
+          if (err) reject(err);
+          if (!found) reject(found);
+
+          resolve(found);
+        });
+      });
+
+      data.forEach((adUser) => {
+        const { sAMAccountName, cn, mail, description } = adUser;
+        const user = {
+          email: mail,
+          fullname: cn,
+          username: sAMAccountName,
+          departament: description,
+        };
+        users.push(user);
+      });
+
+      return users;
+    } catch (err) {
+      return null;
+    }
+  },
+
+  findUsersByDepartament: async (office) => {
+    try {
+      let users = [];
+      const data = await new Promise((resolve, reject) => {
+        LDAP.findUsers((err, found) => {
+          if (err) reject(err);
+          if (!found) reject(found);
+
+          resolve(found);
+        });
+      });
+
+      data.forEach((adUser) => {
+        const { sAMAccountName, cn, mail, description } = adUser;
+        if (description == office) {
+          const user = {
+            email: mail,
+            fullname: cn,
+            username: sAMAccountName,
+            departament: description,
+          };
+          users.push(user);
+        }
+      });
+
+      return users;
+    } catch (err) {
+      return null;
+    }
+  },
+
+  findAllUsers: async () => {
+    try {
+      let users = [];
+      const data = await new Promise((resolve, reject) => {
+        LDAP.findUsers((err, found) => {
+          if (err) reject(err);
+          if (!found) reject(found);
+
+          resolve(found);
+        });
+      });
+
+      data.forEach((adUser) => {
+        const { sAMAccountName, cn, mail, description } = adUser;
+        const user = {
+          email: mail,
+          fullname: cn,
+          username: sAMAccountName,
+          departament: description,
+        };
+        users.push(user);
+      });
+
+      return users;
+    } catch (err) {
+      return null;
+    }
+  },
+
   authenticate: async (username, password) => {
     try {
       const auth = await new Promise((resolve, reject) => {
