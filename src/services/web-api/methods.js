@@ -4,7 +4,7 @@ import baseAPI from "./config";
 const API = {
   signInRequest: async (credentials) => {
     try {
-      const response = await baseAPI.post("/auth", credentials);
+      const response = await baseAPI.post("/api/auth", credentials);
       return response.data;
     } catch (err) {
       if (isAxiosError(err)) {
@@ -16,7 +16,7 @@ const API = {
 
   getUserDataRequest: async (token) => {
     try {
-      const response = await baseAPI.get(`/user/${token}`);
+      const response = await baseAPI.get(`/api/user/${token}`);
       return response.data;
     } catch (err) {
       if (isAxiosError(err)) {
@@ -28,7 +28,7 @@ const API = {
 
   getUsersByDepartament: async (departament) => {
     try {
-      const response = await baseAPI.post(`/user/departament`, { departament });
+      const response = await baseAPI.post(`/api/user/departament`, { departament });
       return response.data;
     } catch (err) {
       if (isAxiosError(err)) {

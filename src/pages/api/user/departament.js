@@ -4,7 +4,7 @@ export default async function handler(req, res) {
   try {
     const departament = req.body.departament;
 
-    if (!departament.length) {
+    if (!!departament && !departament.length) {
       return res.status(400).send({ users: null, error: { message: "Informe o departamento" } });
     }
 

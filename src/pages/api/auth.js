@@ -95,9 +95,9 @@ export default async function handler(req, res) {
     }
 
     return res.status(200).send({ token, user, error: null });
-  } catch (error) {
+  } catch (err) {
     // Tratar e responder aos erros adequadamente
-    console.error(error);
+    console.error(err);
     return res.status(500).send({
       token: null,
       user: null,

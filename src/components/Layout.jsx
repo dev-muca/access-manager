@@ -8,6 +8,7 @@ export function Layout({ excludeNavbar, children }) {
     <AuthMiddleware>
       <div className="flex flex-row">
         <Navbar />
+
         {children}
       </div>
     </AuthMiddleware>
