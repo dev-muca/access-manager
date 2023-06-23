@@ -1,6 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 
 import AD from "@/services/active-directory/methods";
+import Profile from "@/services/database/profile-methods";
 import User from "@/services/database/user-methods";
 import { hashSync, compareSync } from "bcrypt";
 import { sign } from "jsonwebtoken";
@@ -35,10 +36,10 @@ export default async function handler(req, res) {
       });
     }
 
-    const dataAD = await AD.findUser(username);
+    const activedirectoryUserInfo = await AD.findUser(username);
 
     // Validação usuário inválido
-    if (!dataAD) {
+    if (!activedirectoryUserInfo) {
       return res.status(401).send({
         token: null,
         user: null,
@@ -68,27 +69,27 @@ export default async function handler(req, res) {
     let user;
 
     if (!databaseUserInfo) {
-      const { email, fullname, departament } = dataAD;
+      const password = hashSync(password, 16);
 
-      const hashedPassword = hashSync(password, 16);
+      const id = await User.createUser({ username, password, ...activedirectoryUserInfo });
 
-      const id = await User.createUser({ email, username, fullname, password: hashedPassword, departament });
-
-      const payload = {
+      const tokenData = {
         id,
-        ...dataAD,
+        role: null,
+        avatar: null,
+        ...activedirectoryUserInfo,
       };
 
-      token = sign(payload, KEY, { expiresIn: "1d" });
-      user = payload;
+      token = sign(tokenData, KEY, { expiresIn: "1d" });
+      user = tokenData;
     } else {
-      const { id, email, fullname, departament } = databaseUserInfo;
-
       const match = compareSync(password, databaseUserInfo.password);
 
       if (!match) {
         await User.updatePasswordByUsername(username);
       }
+
+      const tokenData = await Profile.getProfileInfoByUsername(username);
 
       token = sign({ id, email, username, fullname, departament }, KEY, { expiresIn: "1h" });
       user = { id, email, username, fullname, departament };

@@ -18,7 +18,7 @@ export default function Colaboradores() {
 
   useEffect(() => {
     API.getUsersByDepartament(userSession?.departament)
-      .then((response) => setUsers(response.users))
+      .then((response) => setUsers(response.members))
       .catch((err) => setUsers(null));
   }, [userSession?.departament]);
 

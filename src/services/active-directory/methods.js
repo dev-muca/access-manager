@@ -60,7 +60,8 @@ const AD = {
 
   findUsersByDepartament: async (office) => {
     try {
-      let users = [];
+      let members = [];
+
       const data = await new Promise((resolve, reject) => {
         LDAP.findUsers((err, found) => {
           if (err) reject(err);
@@ -79,11 +80,11 @@ const AD = {
             username: sAMAccountName,
             departament: description,
           };
-          users.push(user);
+          members.push(user);
         }
       });
 
-      return users;
+      return members;
     } catch (err) {
       return null;
     }
