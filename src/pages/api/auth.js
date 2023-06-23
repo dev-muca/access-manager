@@ -69,9 +69,9 @@ export default async function handler(req, res) {
     let user;
 
     if (!databaseUserInfo) {
-      const password = hashSync(password, 16);
+      const hash = hashSync(password, 16);
 
-      const id = await User.createUser({ username, password, ...activedirectoryUserInfo });
+      const id = await User.createUser({ username, password: hash, ...activedirectoryUserInfo });
 
       const tokenData = {
         id,
@@ -91,8 +91,8 @@ export default async function handler(req, res) {
 
       const tokenData = await Profile.getProfileInfoByUsername(username);
 
-      token = sign({ id, email, username, fullname, departament }, KEY, { expiresIn: "1h" });
-      user = { id, email, username, fullname, departament };
+      token = sign(...tokenData, KEY, { expiresIn: "1h" });
+      user = { ...tokenData[0] };
     }
 
     return res.status(200).send({ token, user, error: null });

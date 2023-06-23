@@ -24,17 +24,18 @@ const Profile = {
     try {
       const conn = await pool.getConnection();
       const query = `SELECT 
-                        username, fullname, email, departament, name AS role, avatar
+                        users.id, username, fullname, email, departament, name AS role, avatar
                      FROM users
                         INNER JOIN profile ON profile.user_id = users.id
                         INNER JOIN roles ON roles.id = profile.role_id
-                     WHERE users.username = ?`;
+                     WHERE username = ?`;
 
       const [result] = await conn.query(query, [username]);
       conn.release();
 
       return result;
-    } catch (error) {
+    } catch (err) {
+      console.log(err);
       return null;
     }
   },
