@@ -23,7 +23,7 @@ export default function Detalhes() {
 
     API.getAllRoles()
       .then((response) => setRoles(response.roles))
-      .catch((err) => setRoles([]));
+      .catch((err) => setRoles(null));
   }, []);
 
   function handleInput(e) {

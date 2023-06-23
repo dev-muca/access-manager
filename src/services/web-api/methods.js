@@ -28,7 +28,7 @@ const API = {
 
   getUsersByDepartament: async (departament) => {
     try {
-      const response = await baseAPI.post(`/api/user/departament`, { departament });
+      const response = await baseAPI.post(`/api/departament/members`, { departament });
       return response.data;
     } catch (err) {
       if (isAxiosError(err)) {
