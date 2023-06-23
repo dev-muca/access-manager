@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Icon } from "@/components/Icon";
 
-export function ItemMenu({ name = "? ? ? ? ?", icon = "BiHelpCircle", to = "/" }) {
+export function ItemMenu({ name = "?", icon = "BiHelpCircle", to = "/" }) {
   return (
     <Link
       href={to}

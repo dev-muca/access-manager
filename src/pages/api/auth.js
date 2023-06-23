@@ -1,7 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 
 import AD from "@/services/active-directory/methods";
-import DB from "@/services/database/methods";
+import User from "@/services/database/user-methods";
 import { hashSync, compareSync } from "bcrypt";
 import { sign } from "jsonwebtoken";
 
@@ -63,16 +63,16 @@ export default async function handler(req, res) {
       });
     }
 
-    const dataDB = await DB.getUserByUsername(username);
+    const databaseUserInfo = await User.getUserByUsername(username);
     let token;
     let user;
 
-    if (!dataDB) {
+    if (!databaseUserInfo) {
       const { email, fullname, departament } = dataAD;
 
       const hashedPassword = hashSync(password, 16);
 
-      const id = await DB.createUser({ email, username, fullname, password: hashedPassword, departament });
+      const id = await User.createUser({ email, username, fullname, password: hashedPassword, departament });
 
       const payload = {
         id,
@@ -82,15 +82,15 @@ export default async function handler(req, res) {
       token = sign(payload, KEY, { expiresIn: "1d" });
       user = payload;
     } else {
-      const { id, email, fullname, departament } = dataDB;
+      const { id, email, fullname, departament } = databaseUserInfo;
 
-      const match = compareSync(password, dataDB.password);
+      const match = compareSync(password, databaseUserInfo.password);
 
       if (!match) {
-        await DB.updatePasswordByUsername(username);
+        await User.updatePasswordByUsername(username);
       }
 
-      token = sign({ id, email, username, fullname, departament }, KEY, { expiresIn: "1d" });
+      token = sign({ id, email, username, fullname, departament }, KEY, { expiresIn: "1h" });
       user = { id, email, username, fullname, departament };
     }
 

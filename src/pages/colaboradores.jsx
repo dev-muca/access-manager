@@ -3,7 +3,7 @@ import { AuthContext } from "@/context/AuthContext";
 
 import { Button } from "@/components/Login/Button";
 import { Header } from "@/components/Colaboradores/Header";
-import { InputFloating } from "@/components/InputFloating";
+import { InputFloating } from "@/components/Form/InputFloating";
 import { CollabList } from "@/components/Colaboradores/CollabList";
 import { PreviewCard } from "@/components/Colaboradores/PreviewCard";
 import { GenerateButton } from "@/components/Colaboradores/GenerateButton";

@@ -37,6 +37,18 @@ const API = {
       return null;
     }
   },
+
+  getAllRoles: async () => {
+    try {
+      const response = await baseAPI.get(`/api/roles/all`);
+      return response.data;
+    } catch (err) {
+      if (isAxiosError(err)) {
+        return err.response.data;
+      }
+      return null;
+    }
+  },
 };
 
 export default API;

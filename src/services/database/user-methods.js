@@ -1,6 +1,6 @@
 import pool from "./config";
 
-const DB = {
+const User = {
   getUserByUsername: async (username) => {
     try {
       const conn = await pool.getConnection();
@@ -25,6 +25,8 @@ const DB = {
     }
   },
 
+  getUserWithProfileByUsername: async (username) => {},
+
   createUser: async (user) => {
     try {
       const conn = await pool.getConnection();
@@ -40,13 +42,12 @@ const DB = {
 
       return result.insertId;
     } catch (err) {
-      console.log(err);
       return null;
     }
   },
 };
 
-export default DB;
+export default User;
 
 // export const getUserById = async (id: number): Promise<User | null> => {
 //   try {

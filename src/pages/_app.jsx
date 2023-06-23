@@ -18,6 +18,7 @@ export default function App({ Component, pageProps }) {
     <>
       <Head>
         <title>SGA | Sistema Gerenciador Acessos</title>
+        <link rel="icon" href="/assets/logo.png" />
       </Head>
       <AuthProvider>
         <Layout excludeNavbar={excludeNavbar}>
