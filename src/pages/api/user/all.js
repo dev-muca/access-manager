@@ -1,6 +1,6 @@
 import AD from "@/services/active-directory/methods";
 
-export default async function handler(req, res) {
+export default async function getAllUsers(req, res) {
   try {
     const users = await AD.findAllUsers();
     res.status(200).send({ users, error: null });

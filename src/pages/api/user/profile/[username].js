@@ -1,6 +1,6 @@
 import Profile from "@/services/database/profile-methods";
 
-export default async function handler(req, res) {
+export default async function getuserProfileInfo(req, res) {
   try {
     const username = req.query.username;
     const profileInfo = await Profile.getProfileInfoByUsername(username);

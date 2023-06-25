@@ -25,6 +25,7 @@ const AD = {
 
       return user;
     } catch (err) {
+      console.log(err);
       return null;
     }
   },

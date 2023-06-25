@@ -8,7 +8,7 @@ import { sign } from "jsonwebtoken";
 
 const KEY = process.env.SECRET_KEY;
 
-export default async function handler(req, res) {
+export default async function authentication(req, res) {
   try {
     const { username, password } = req.body;
 

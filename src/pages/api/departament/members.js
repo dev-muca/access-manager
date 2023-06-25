@@ -1,6 +1,6 @@
 import AD from "@/services/active-directory/methods";
 
-export default async function handler(req, res) {
+export default async function getMembersDepartament(req, res) {
   try {
     const departament = req.body.departament;
 

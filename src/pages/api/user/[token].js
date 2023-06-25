@@ -2,7 +2,7 @@ import { verify } from "jsonwebtoken";
 
 const KEY = process.env.SECRET_KEY;
 
-export default async function handler(req, res) {
+export default async function decodeToken(req, res) {
   try {
     const token = req.query.token;
     const data = verify(token, KEY);

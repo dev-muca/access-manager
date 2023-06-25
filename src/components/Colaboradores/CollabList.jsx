@@ -3,7 +3,7 @@ export function CollabList({ collabs }) {
     <div>
       <ul>
         {!!collabs && !!collabs ? (
-          collabs.map((collab) => (
+          collabs?.map((collab) => (
             <li
               className="py-1 px-2 border-b flex justify-between items-center hover:bg-gray-100"
               key={collab.username}
