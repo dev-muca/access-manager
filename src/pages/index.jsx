@@ -33,10 +33,10 @@ export default function Home() {
     e.preventDefault();
     setLoader(true);
 
-    const response = await signIn(formData);
+    const { error } = await signIn(formData);
 
-    if (!!response?.error) {
-      setError({ field: response.error.field, message: response.error.message });
+    if (!!error) {
+      setError({ field: error.field, message: error.message });
     }
 
     setLoader(false);

@@ -4,7 +4,7 @@ import baseAPI from "./config";
 const API = {
   signInRequest: async (credentials) => {
     try {
-      const response = await baseAPI.post("/api/auth", credentials);
+      const response = await baseAPI.post(`/api/auth`, credentials);
       return response.data;
     } catch (err) {
       if (isAxiosError(err)) {
@@ -41,6 +41,30 @@ const API = {
   getAllRoles: async () => {
     try {
       const response = await baseAPI.get(`/api/roles/all`);
+      return response.data;
+    } catch (err) {
+      if (isAxiosError(err)) {
+        return err.response.data;
+      }
+      return null;
+    }
+  },
+
+  getProfileInfoByUsername: async (username) => {
+    try {
+      const response = await baseAPI.get(`/api/user/profile/${username}`);
+      return response.data;
+    } catch (err) {
+      if (isAxiosError(err)) {
+        return err.response.data;
+      }
+      return null;
+    }
+  },
+
+  getUsersProfilesByDepartament: async (departament) => {
+    try {
+      const response = await baseAPI.post(`/api/departament/profiles`, { departament });
       return response.data;
     } catch (err) {
       if (isAxiosError(err)) {

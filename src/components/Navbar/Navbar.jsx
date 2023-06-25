@@ -16,8 +16,8 @@ export function Navbar() {
   const [open, setOpen] = useState(false);
 
   const staticOptions = [
-    { id: 1, name: "Colaboradores", icon: "SlPeople", path: "/colaboradores" },
-    { id: 2, name: "Acessos", icon: "RiGitPullRequestLine", path: "/home" },
+    { id: 1, name: "Colaboradores", icon: "ImUsers", path: "/colaboradores" },
+    { id: 2, name: "Acessos", icon: "AiFillStar", path: "/home" },
   ];
 
   return (

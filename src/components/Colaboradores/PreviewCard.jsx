@@ -2,7 +2,7 @@ import { generateUsername } from "@/utils/user";
 
 export function PreviewCard({ fullname, password }) {
   return (
-    <div className="border shadow my-10 py-2 px-4">
+    <div className="border shadow my-10 px-8 py-6">
       <h1 className="text-lg font-medium">Preview:</h1>
       <div className="mt-2 flex flex-col">
         <h1>Credenciais de acesso:</h1>

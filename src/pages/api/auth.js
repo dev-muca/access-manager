@@ -1,6 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 
 import AD from "@/services/active-directory/methods";
+import Dept from "@/services/database/dept-methods";
 import Profile from "@/services/database/profile-methods";
 import User from "@/services/database/user-methods";
 import { hashSync, compareSync } from "bcrypt";
@@ -68,7 +69,10 @@ export default async function authentication(req, res) {
     let token;
     let user;
 
+    // Se o usuário existir no AD e não existir no DB, registra ele no banco
     if (!databaseUserInfo) {
+      await Dept.createDepartament(activedirectoryUserInfo.departament);
+
       const hash = hashSync(password, 16);
 
       const id = await User.createUser({ username, password: hash, ...activedirectoryUserInfo });

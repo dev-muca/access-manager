@@ -20,12 +20,11 @@ const User = {
       };
 
       return data;
-    } catch (error) {
+    } catch (err) {
+      console.log(err);
       return null;
     }
   },
-
-  getUserWithProfileByUsername: async (username) => {},
 
   createUser: async (user) => {
     try {
@@ -42,65 +41,10 @@ const User = {
 
       return result.insertId;
     } catch (err) {
+      console.log(err);
       return null;
     }
   },
 };
 
 export default User;
-
-// export const getUserById = async (id: number): Promise<User | null> => {
-//   try {
-//     const conn = await pool.getConnection();
-//     const query = `SELECT * FROM users WHERE id = ?`;
-//     const [result] = await conn.query<RowDataPacket[]>(query, [id]);
-//     conn.release();
-
-//     const row = result[0];
-//     const user: User = {
-//       id: row.id as number,
-//       email: row.email as string,
-//       password: row.password as string,
-//       username: row.username as string,
-//       fullname: row.fullname as string,
-//       departament: row.departament as string,
-//     };
-
-//     return user;
-//   } catch (error) {
-//     console.log("Erro ao obter usuário (id), info:", error);
-//     return null;
-//   }
-// };
-
-// export const createUser = async (user: User): Promise<number | null> => {
-
-// };
-
-// export const updatePasswordById = async (id: number, password: string): Promise<number | null> => {
-//   try {
-//     const conn = await pool.getConnection();
-//     const query = `UPDATE users SET password = ? WHERE id = ?`;
-//     const [result] = await conn.query<ResultSetHeader>(query, [password, id]);
-//     conn.release();
-
-//     return result.affectedRows;
-//   } catch (error) {
-//     console.log("Erro ao atualizar a senha do usuário (id), info:", error);
-//     return null;
-//   }
-// };
-
-// export const updatePasswordByUsername = async (username: string, password: string): Promise<number | null> => {
-//   try {
-//     const conn = await pool.getConnection();
-//     const query = `UPDATE users SET password = ? WHERE username = ?`;
-//     const [result] = await conn.query<ResultSetHeader>(query, [password, username]);
-//     conn.release();
-
-//     return result.affectedRows;
-//   } catch (error) {
-//     console.log("Erro ao atualizar a senha do usuário (username), info:", error);
-//     return null;
-//   }
-// };

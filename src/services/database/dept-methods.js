@@ -10,6 +10,7 @@ const Dept = {
 
       return result;
     } catch (err) {
+      console.log(err);
       return null;
     }
   },
@@ -23,6 +24,7 @@ const Dept = {
 
       return result[0];
     } catch (err) {
+      console.log(err);
       return null;
     }
   },
@@ -36,6 +38,7 @@ const Dept = {
 
       return result.insertId;
     } catch (err) {
+      console.log(err);
       return null;
     }
   },

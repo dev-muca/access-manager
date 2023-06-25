@@ -1,4 +1,4 @@
-import Role from "@/services/database/role-methods";
+import Role from "@/services/database/roles-methods";
 
 export default async function getAllRoles(req, res) {
   try {

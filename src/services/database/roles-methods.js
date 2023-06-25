@@ -9,7 +9,8 @@ const Role = {
       conn.release();
 
       return result;
-    } catch (error) {
+    } catch (err) {
+      console.log(err);
       return null;
     }
   },
@@ -23,6 +24,7 @@ const Role = {
 
       return result.insertId;
     } catch (err) {
+      console.log(err);
       return null;
     }
   },

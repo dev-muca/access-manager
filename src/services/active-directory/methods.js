@@ -116,6 +116,7 @@ const AD = {
 
       return users;
     } catch (err) {
+      console.log(err.message);
       return null;
     }
   },

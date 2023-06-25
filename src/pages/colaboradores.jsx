@@ -13,13 +13,13 @@ import { generateRandomPassword } from "@/utils/user";
 
 export default function Colaboradores() {
   const { userSession } = useContext(AuthContext);
-  const [users, setUsers] = useState(null);
+  const [members, setMembers] = useState(null);
   const [hidden, setHidden] = useState(false);
 
   useEffect(() => {
-    API.getUsersByDepartament(userSession?.departament)
-      .then((response) => setUsers(response.members))
-      .catch((err) => setUsers(null));
+    API.getUsersProfilesByDepartament(userSession?.departament).then((response) => {
+      setMembers(response.profilesInfos);
+    });
   }, [userSession?.departament]);
 
   const [formData, setFormData] = useState({
@@ -74,7 +74,7 @@ export default function Colaboradores() {
           subtitle="Lista com todos os colaboradores vínculados ao setor/departamento"
           noData
         />
-        <CollabList collabs={users} />
+        <CollabList collabs={members} />
       </section>
     </main>
   );

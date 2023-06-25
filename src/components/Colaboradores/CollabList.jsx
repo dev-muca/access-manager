@@ -4,12 +4,15 @@ export function CollabList({ collabs }) {
       <ul>
         {!!collabs && !!collabs ? (
           collabs?.map((collab) => (
-            <li
-              className="py-1 px-2 border-b flex justify-between items-center hover:bg-gray-100"
-              key={collab.username}
-            >
+            <li key={collab.id} className="py-1 px-2 border-b flex justify-between items-center hover:bg-gray-100">
               <span>{collab.fullname}</span>
-              <span className="text-xs font-medium text-green-500 uppercase">Ativo</span>
+              <p className="text-xs font-medium uppercase">
+                {collab.status ? (
+                  <span className="text-green-500">Ativo</span>
+                ) : (
+                  <span className="text-red-500">Inativo</span>
+                )}
+              </p>
             </li>
           ))
         ) : (

@@ -19,7 +19,7 @@ export default function Detalhes() {
   const [loader, setLoader] = useState(false);
 
   useEffect(() => {
-    setFormData({ fullname: userSession.fullname });
+    setFormData({ fullname: userSession?.fullname });
 
     API.getAllRoles()
       .then((response) => setRoles(response.roles))
