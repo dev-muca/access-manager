@@ -10,7 +10,7 @@ export default function Detalhes() {
   const { userSession, setUserSession } = useContext(AuthContext);
 
   const [formData, setFormData] = useState({
-    role: 0,
+    role: null,
     avatar: null,
     username: "",
     fullname: "",
@@ -20,10 +20,6 @@ export default function Detalhes() {
   const [loader, setLoader] = useState(false);
 
   useEffect(() => {
-    setFormData({ fullname: userSession?.fullname });
-
-    // API.getProfileInfoByUsernameRequest(userSession?.username).then((response) => console.log(response));
-
     API.getAllRolesRequest()
       .then((response) => setRoles(response.roles))
       .catch((err) => setRoles(null));
@@ -40,11 +36,12 @@ export default function Detalhes() {
 
   function handleImageChange(e) {
     const file = e.target.files[0];
-
     const reader = new FileReader();
+
     reader.onloadend = () => {
       setFormData((prevData) => ({ ...prevData, avatar: reader.result }));
     };
+
     reader.readAsDataURL(file);
   }
 
@@ -52,14 +49,13 @@ export default function Detalhes() {
     e.preventDefault();
     setLoader(true);
 
+    console.log(formData);
+
     const updated = await API.updateProfileInfoRequest(userSession?.username, formData);
-    console.log("PROFILE UPDATE:", updated);
     setUserSession((prevData) => ({ ...prevData, avatar: formData.avatar, role: formData.role }));
 
     setLoader(false);
   }
-
-  console.log("ROLE DEFAULT:", userSession);
 
   return (
     <main className="w-full flex flex-col lg:flex-row">
@@ -67,15 +63,22 @@ export default function Detalhes() {
         <Header title="Dados do seu perfil" />
 
         <form onSubmit={handleSubmitForm} className="mt-6 flex flex-col gap-8">
-          <InputFloating text="Nome Completo" name="fullname" value={formData.fullname} onChange={handleInput} />
+          {/* <InputFloating text="Nome Completo" name="fullname" value={formData.fullname} onChange={handleInput} /> */}
           <InputFloating
             type="file"
             name="avatar"
             accept="image/*"
             text="Foto de Avatar"
             onChange={handleImageChange}
+            disabled={false}
           />
-          <Dropdown label="Cargo:" options={roles} defaultValue={userSession?.role} onOptionSelect={handleRole} />
+          {/* <Dropdown
+            label="Cargo:"
+            options={roles}
+            defaultValue={formData.role}
+            onOptionSelect={handleRole}
+            readOnly={true}
+          /> */}
           <Button text="Salvar" loader={loader} />
         </form>
       </section>

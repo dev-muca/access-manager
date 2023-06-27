@@ -16,7 +16,7 @@ export function Dropdown({ label, options, defaultValue, onOptionSelect }) {
             </option>
           ))
         ) : (
-          <option>Nenhum cargo encontrando</option>
+          <option>Nenhum cargo encontrado</option>
         )}
       </select>
     </div>

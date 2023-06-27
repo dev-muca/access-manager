@@ -268,6 +268,7 @@ __metadata:
     autoprefixer: 10.4.14
     axios: ^1.4.0
     bcrypt: ^5.1.0
+    child_process: ^1.0.2
     jsonwebtoken: ^9.0.0
     multer: ^1.4.5-lts.1
     mysql2: ^3.4.0
@@ -599,6 +600,13 @@ __metadata:
   version: 1.0.30001507
   resolution: "caniuse-lite@npm:1.0.30001507"
   checksum: 7044172bdf65140c927cdaaff50368a97676f06a9fd8b515c046613bdf52cb769e9efb832ee491b8f8cc21f82c15f154a896efbab690f431bb064c95f3a2b7a8
+  languageName: node
+  linkType: hard
+
+"child_process@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "child_process@npm:1.0.2"
+  checksum: bd814d82bc8c6e85ed6fb157878978121cd03b5296c09f6135fa3d081fd9a6a617a6d509c50397711df713af403331241a9c0397a7fad30672051485e156c2a1
   languageName: node
   linkType: hard
 

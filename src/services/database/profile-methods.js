@@ -32,17 +32,19 @@ const Profile = {
       const conn = await pool.getConnection();
       const query = `SELECT
                         users.id,
+                        email,
                         username,
                         fullname,
-                        email,
                         departament,
-                        name AS role,
+                        roles.name AS role,
+                        roles.id as id_role,
                         avatar,
                         status
                      FROM users
                         LEFT JOIN profile ON profile.id_user = users.id
                         LEFT JOIN roles ON roles.id = profile.id_role
-                     WHERE username = ?`;
+                     WHERE 
+                        username = ?`;
 
       const [result] = await conn.query(query, [username]);
       conn.release();
