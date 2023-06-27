@@ -15,37 +15,34 @@ export function AuthProvider({ children }) {
     const { ["token"]: token } = parseCookies();
 
     if (token) {
-      API.getUserDataRequest(token)
-        .then((response) => setUserSession(response.data))
-        .catch((err) => {
-          console.log("ERROR:", err);
-          setUserSession(null);
-        })
-        .finally(() => {
-          Router.push("/home");
-          console.log(userSession);
-        });
+      API.getDecodedTokenData(token)
+        .then((decoded) => setUserSession(decoded.data))
+        .catch((err) => setUserSession(null))
+        .finally(() => Router.push("/home"));
     }
   }, []);
 
   async function signIn(data) {
-    const response = await API.signInRequest(data);
+    const signResponse = await API.signInRequest(data);
 
-    if (!!response.token) {
-      setCookie(undefined, "token", response.token);
-      setUserSession(response.user);
+    if (signResponse.token) {
+      setCookie(undefined, "token", signResponse.token);
+      const response = await API.getProfileInfoByUsernameRequest(data.username);
+      setUserSession(response.profileInfo);
       Router.push("/home");
     }
 
-    return response;
+    return signResponse;
   }
 
   async function signOut() {
-    destroyCookie(undefined, "token");
-    setUserSession(null);
     alert("Sua sessão foi encerrada");
     Router.push("/");
+    destroyCookie(undefined, "token");
+    setUserSession(null);
   }
 
-  return <AuthContext.Provider value={{ userSession, signIn, signOut }}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={{ userSession, setUserSession, signIn, signOut }}>{children}</AuthContext.Provider>
+  );
 }

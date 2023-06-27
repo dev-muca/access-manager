@@ -65,12 +65,12 @@ export default async function authentication(req, res) {
       });
     }
 
-    const databaseUserInfo = await User.getUserByUsername(username);
+    const authData = await User.getAuthDataByUsername(username);
     let token;
     let user;
 
     // Se o usuário existir no AD e não existir no DB, registra ele no banco
-    if (!databaseUserInfo) {
+    if (!authData) {
       await Dept.createDepartament(activedirectoryUserInfo.departament);
 
       const hash = hashSync(password, 16);
@@ -85,29 +85,29 @@ export default async function authentication(req, res) {
       };
 
       token = sign(tokenData, KEY, { expiresIn: "1d" });
-      user = tokenData;
+      // user = tokenData;
     } else {
-      const match = compareSync(password, databaseUserInfo.password);
+      const match = compareSync(password, authData.password);
 
       if (!match) {
         await User.updatePasswordByUsername(username);
       }
 
-      const tokenData = await Profile.getProfileInfoByUsername(username);
+      const [tokenData] = await User.getAllUserDataByUsername(username);
 
-      token = sign(...tokenData, KEY, { expiresIn: "1h" });
-      user = { ...tokenData[0] };
+      token = sign(tokenData, KEY, { expiresIn: "1h" });
+      // user = tokenData;
     }
 
-    return res.status(200).send({ token, user, error: null });
+    return res.status(200).send({ token, error: null });
   } catch (err) {
     // Tratar e responder aos erros adequadamente
     console.error(err);
     return res.status(500).send({
       token: null,
-      user: null,
       error: {
         message: "Ocorreu um erro no servidor",
+        more: err.message,
       },
     });
   }

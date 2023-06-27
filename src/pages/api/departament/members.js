@@ -12,6 +12,6 @@ export default async function getMembersDepartament(req, res) {
     res.status(200).send({ members, error: null });
   } catch (err) {
     console.log(err);
-    res.status(500).send({ members, error: { message: "Erro ao obter dados" } });
+    res.status(500).send({ members, error: { message: "Erro ao obter dados", more: err.message } });
   }
 }

@@ -5,6 +5,6 @@ export default async function getAllRoles(req, res) {
     const roles = await Role.getAllRoles();
     res.status(200).send({ roles, error: null });
   } catch (err) {
-    res.status(500).send({ roles: null, error: { message: "Erro ao obter dados" } });
+    res.status(500).send({ roles: null, error: { message: "Erro ao obter dados", more: err.message } });
   }
 }

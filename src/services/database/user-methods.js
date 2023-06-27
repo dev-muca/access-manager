@@ -1,10 +1,10 @@
 import pool from "./config";
 
 const User = {
-  getUserByUsername: async (username) => {
+  getAuthDataByUsername: async (username) => {
     try {
       const conn = await pool.getConnection();
-      const query = `SELECT * FROM users WHERE username = ?`;
+      const query = `SELECT username, password FROM users WHERE username = ?`;
       const [result] = await conn.query(query, [username]);
       conn.release();
 
@@ -21,7 +21,21 @@ const User = {
 
       return data;
     } catch (err) {
-      console.log(err);
+      console.log(`USER: Erro ao obter o usuário ${username}: ${JSON.stringify(err.message)}`);
+      return null;
+    }
+  },
+
+  getAllUserDataByUsername: async (username) => {
+    try {
+      const conn = await pool.getConnection();
+      const query = `SELECT * FROM users WHERE username = ?`;
+      const [result] = await conn.query(query, [username]);
+      conn.release();
+
+      return result;
+    } catch (err) {
+      console.log(`USER: Erro ao obter dados do usuário ${username}: ${JSON.stringify(err.message)}`);
       return null;
     }
   },
@@ -41,7 +55,7 @@ const User = {
 
       return result.insertId;
     } catch (err) {
-      console.log(err);
+      console.log(`USER: Erro ao criar o usuário ${user.username}: ${JSON.stringify(err.message)}`);
       return null;
     }
   },

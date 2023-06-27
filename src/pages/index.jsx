@@ -43,7 +43,7 @@ export default function Home() {
   }
 
   return (
-    <form onSubmit={handleSubmitForm} className="w-screen h-screen flex justify-center items-center bg-slate-500">
+    <form onSubmit={handleSubmitForm} className="w-screen h-screen flex justify-center items-center bg-primary">
       <Card>
         <Title />
         <Input

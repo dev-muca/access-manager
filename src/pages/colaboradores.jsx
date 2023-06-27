@@ -16,8 +16,10 @@ export default function Colaboradores() {
   const [members, setMembers] = useState(null);
   const [hidden, setHidden] = useState(false);
 
+  // console.log("Renderizou!");
+
   useEffect(() => {
-    API.getUsersProfilesByDepartament(userSession?.departament).then((response) => {
+    API.getUsersProfilesByDepartamentRequest(userSession?.departament).then((response) => {
       setMembers(response.profilesInfos);
     });
   }, [userSession?.departament]);

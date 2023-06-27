@@ -10,7 +10,7 @@ const Dept = {
 
       return result;
     } catch (err) {
-      console.log(err);
+      console.log(`DEPT: Erro ao obter os departamentos cadastrados: ${JSON.stringify(err.message)}`);
       return null;
     }
   },
@@ -24,7 +24,7 @@ const Dept = {
 
       return result[0];
     } catch (err) {
-      console.log(err);
+      console.log(`DEPT: Erro ao obter dados do departament ${name}: ${JSON.stringify(err.message)}`);
       return null;
     }
   },
@@ -38,7 +38,7 @@ const Dept = {
 
       return result.insertId;
     } catch (err) {
-      console.log(err);
+      console.log(`DEPT: Erro ao criar o deparatmento ${name}: ${JSON.stringify(err.message)}`);
       return null;
     }
   },

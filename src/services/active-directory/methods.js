@@ -25,7 +25,7 @@ const AD = {
 
       return user;
     } catch (err) {
-      console.log(err);
+      console.log(`AD: Erro ao localizar dados do usuário no Active Directory: ${JSON.stringify(err.message)}`);
       return null;
     }
   },
@@ -55,6 +55,7 @@ const AD = {
 
       return users;
     } catch (err) {
+      console.log(`AD: Erro ao localizar dados dos usuários no Active Directory: ${JSON.stringify(err.message)}`);
       return null;
     }
   },
@@ -87,6 +88,11 @@ const AD = {
 
       return members;
     } catch (err) {
+      console.log(
+        `AD: Erro ao localizar dados dos usuários no Active Directory do departamento ${office}: ${JSON.stringify(
+          err.message
+        )}`
+      );
       return null;
     }
   },
@@ -116,7 +122,7 @@ const AD = {
 
       return users;
     } catch (err) {
-      console.log(err.message);
+      console.log(`AD: Erro ao localizar dados dos usuários no Active Directory: ${JSON.stringify(err.message)}`);
       return null;
     }
   },
@@ -126,13 +132,15 @@ const AD = {
       const auth = await new Promise((resolve, reject) => {
         LDAP.authenticate(username + domain, password, (err, isAuth) => {
           if (err) reject(false);
-          if (!isAuth) reject(false);
+          if (!isAuth) reject(isAuth);
           if (isAuth) resolve(true);
         });
       });
 
       return auth;
     } catch (err) {
+      console.log(err);
+      console.log(`AD: Erro ao autenticar com o Active Directory: ${JSON.stringify(err.message)}`);
       return false;
     }
   },

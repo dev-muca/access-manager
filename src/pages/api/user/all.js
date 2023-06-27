@@ -5,6 +5,6 @@ export default async function getAllUsers(req, res) {
     const users = await AD.findAllUsers();
     res.status(200).send({ users, error: null });
   } catch (err) {
-    res.status(500).send({ users: null, error: { message: "Erro ao obter dados" } });
+    res.status(500).send({ users: null, error: { message: "Erro ao obter dados", more: err.message } });
   }
 }

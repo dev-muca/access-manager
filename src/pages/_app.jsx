@@ -17,7 +17,7 @@ export default function App({ Component, pageProps }) {
   return (
     <>
       <Head>
-        <title>SGA | Sistema Gerenciador Acessos</title>
+        <title>SGA | Sistema gestor de acessos</title>
         <link rel="icon" href="/assets/logo.png" />
       </Head>
       <AuthProvider>

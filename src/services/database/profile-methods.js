@@ -22,7 +22,7 @@ const Profile = {
 
       return result;
     } catch (err) {
-      console.log(err);
+      console.log(`PROFILE: Erro ao obter dados do perfil (ID ${id}): ${JSON.stringify(err.message)}`);
       return null;
     }
   },
@@ -31,6 +31,7 @@ const Profile = {
     try {
       const conn = await pool.getConnection();
       const query = `SELECT
+                        users.id,
                         username,
                         fullname,
                         email,
@@ -48,7 +49,7 @@ const Profile = {
 
       return result;
     } catch (err) {
-      console.log(err);
+      console.log(`PROFILE: Erro ao obter dados do perfil de ${username}: ${JSON.stringify(err.message)}`);
       return null;
     }
   },
@@ -68,21 +69,25 @@ const Profile = {
 
       return result;
     } catch (err) {
-      console.log(err);
+      console.log(
+        `PROFILE: Erro ao obter dados dos perfils vinculados ao departamento ${departament}: ${JSON.stringify(
+          err.message
+        )}`
+      );
       return null;
     }
   },
 
-  updateProfileInfoByUserId: async (id, info) => {
+  updateProfileInfoByUsername: async (data, username) => {
     try {
       const conn = await pool.getConnection();
-      const query = `UPDATE profile SET id_role = ?, avatar = ? WHERE user_id = ?`;
-      const [result] = await conn.query(query, [info.role, info.avatar, id]);
+      const query = `UPDATE profile SET id_role = ?, avatar = ? WHERE id_user = (SELECT id FROM users WHERE username = ?)`;
+      const [result] = await conn.query(query, [data.role, data.avatar, username]);
       conn.release();
 
       return result.affectedRows;
     } catch (err) {
-      console.log(err);
+      console.log(`PROFILE: Erro ao atualizar os dados do perfil de ${username}: ${JSON.stringify(err.message)}`);
       return null;
     }
   },

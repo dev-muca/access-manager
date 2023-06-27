@@ -7,6 +7,6 @@ export default async function getUsersProfilesByDepartament(req, res) {
     res.status(200).send({ profilesInfos });
   } catch (err) {
     console.log(err);
-    res.status(500).send({ error: { message: "Erro ao obter dados" } });
+    res.status(500).send({ error: { message: "Erro ao obter dados", more: err.message } });
   }
 }

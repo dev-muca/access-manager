@@ -15,6 +15,6 @@ export default async function createDepartament(req, res) {
 
     res.status(201).send({ created: { message: "Departamento criado", id }, error: null });
   } catch (err) {
-    res.status(500).send({ created: null, error: { message: "Erro ao criar departamento." } });
+    res.status(500).send({ created: null, error: { message: "Erro ao criar departamento.", more: err.message } });
   }
 }

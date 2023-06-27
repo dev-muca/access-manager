@@ -10,7 +10,7 @@ const Role = {
 
       return result;
     } catch (err) {
-      console.log(err);
+      console.log(`ROLE: Erro ao obter todos os cargos: ${JSON.stringify(err.message)}`);
       return null;
     }
   },
@@ -24,7 +24,7 @@ const Role = {
 
       return result.insertId;
     } catch (err) {
-      console.log(err);
+      console.log(`ROLE: Erro ao criar o cargo: ${JSON.stringify(err.message)}`);
       return null;
     }
   },

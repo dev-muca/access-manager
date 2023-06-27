@@ -24,7 +24,7 @@ export function Navbar() {
     <nav
       className={`${
         open ? "w-80 shadow-2xl" : "w-16 shadow-md"
-      } sticky top-0 w-16 left-0 h-screen border-r flex flex-col items-center duration-300 shrink-0`}
+      } bg-white text-black sticky top-0 w-16 left-0 h-screen border-r flex flex-col items-center duration-300 shrink-0`}
     >
       <Profile fullname={userSession?.fullname} avatar={userSession?.avatar} />
       <Toggle open={open} onClick={() => setOpen(!open)} />

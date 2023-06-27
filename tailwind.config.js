@@ -8,7 +8,13 @@ export const content = [
   "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
 ];
 export const theme = {
-  extend: {},
+  extend: {
+    colors: {
+      primary: "#265D73",
+      secundary: "#408EA0",
+      tertiary: "#77C4D6",
+    },
+  },
 };
 export const plugins = [
   plugin(function ({ addUtilities }) {

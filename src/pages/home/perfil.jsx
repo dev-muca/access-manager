@@ -7,12 +7,13 @@ import API from "@/services/web-api/methods";
 import { useContext, useEffect, useState } from "react";
 
 export default function Detalhes() {
-  const { userSession } = useContext(AuthContext);
+  const { userSession, setUserSession } = useContext(AuthContext);
 
   const [formData, setFormData] = useState({
-    username: null,
-    fullname: null,
     role: 0,
+    avatar: null,
+    username: "",
+    fullname: "",
   });
 
   const [roles, setRoles] = useState([]);
@@ -21,7 +22,9 @@ export default function Detalhes() {
   useEffect(() => {
     setFormData({ fullname: userSession?.fullname });
 
-    API.getAllRoles()
+    // API.getProfileInfoByUsernameRequest(userSession?.username).then((response) => console.log(response));
+
+    API.getAllRolesRequest()
       .then((response) => setRoles(response.roles))
       .catch((err) => setRoles(null));
   }, []);
@@ -35,10 +38,28 @@ export default function Detalhes() {
     setFormData((prevData) => ({ ...prevData, role: value }));
   }
 
-  function handleSubmitForm(e) {
+  function handleImageChange(e) {
+    const file = e.target.files[0];
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setFormData((prevData) => ({ ...prevData, avatar: reader.result }));
+    };
+    reader.readAsDataURL(file);
+  }
+
+  async function handleSubmitForm(e) {
     e.preventDefault();
     setLoader(true);
+
+    const updated = await API.updateProfileInfoRequest(userSession?.username, formData);
+    console.log("PROFILE UPDATE:", updated);
+    setUserSession((prevData) => ({ ...prevData, avatar: formData.avatar, role: formData.role }));
+
+    setLoader(false);
   }
+
+  console.log("ROLE DEFAULT:", userSession);
 
   return (
     <main className="w-full flex flex-col lg:flex-row">
@@ -47,7 +68,14 @@ export default function Detalhes() {
 
         <form onSubmit={handleSubmitForm} className="mt-6 flex flex-col gap-8">
           <InputFloating text="Nome Completo" name="fullname" value={formData.fullname} onChange={handleInput} />
-          <Dropdown label="Cargo:" options={roles} onOptionSelect={handleRole} />
+          <InputFloating
+            type="file"
+            name="avatar"
+            accept="image/*"
+            text="Foto de Avatar"
+            onChange={handleImageChange}
+          />
+          <Dropdown label="Cargo:" options={roles} defaultValue={userSession?.role} onOptionSelect={handleRole} />
           <Button text="Salvar" loader={loader} />
         </form>
       </section>

@@ -6,6 +6,6 @@ export default async function getUserProfileInfo(req, res) {
     const profileInfo = await Profile.getProfileInfoByUsername(username);
     res.status(200).send({ profileInfo: profileInfo[0] });
   } catch (err) {
-    console.log(err);
+    res.status(500).send({ profileInfo: null, error: { message: "Erro ao obter dados", more: err.message } });
   }
 }
