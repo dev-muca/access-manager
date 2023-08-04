@@ -1,5 +1,5 @@
 {
-  "name": "access-manager",
+  "name": "sga",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,21 +9,28 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@loadable/component": "^5.15.3",
-    "activedirectory2": "^2.2.0",
+    "@types/axios": "^0.14.0",
+    "@types/bcrypt": "^5.0.0",
+    "@types/cookies": "^0.7.7",
+    "@types/jsonwebtoken": "^9.0.2",
+    "@types/node": "20.4.1",
+    "@types/nookies": "^2.0.3",
+    "@types/react": "18.2.14",
+    "@types/react-dom": "18.2.6",
+    "@types/react-icons": "^3.0.0",
     "autoprefixer": "10.4.14",
     "axios": "^1.4.0",
     "bcrypt": "^5.1.0",
-    "child_process": "^1.0.2",
-    "jsonwebtoken": "^9.0.0",
-    "multer": "^1.4.5-lts.1",
-    "mysql2": "^3.4.0",
-    "next": "13.4.6",
+    "jsonwebtoken": "^9.0.1",
+    "mysql2": "^3.5.1",
+    "next": "13.4.9",
     "nookies": "^2.5.2",
-    "postcss": "8.4.24",
+    "postcss": "8.4.25",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-icons": "^4.9.0",
-    "tailwindcss": "3.3.2"
+    "react-icons": "^4.10.1",
+    "tailwind-merge": "^1.14.0",
+    "tailwindcss": "3.3.2",
+    "typescript": "5.1.6"
   }
 }
