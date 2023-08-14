@@ -1,22 +1,29 @@
 import { useContext, useState } from "react";
 
-import { NavWrapper } from "./NavWrapper";
 import { ToggleButton } from "./ToggleButton";
 import { LogoutButton } from "./LogoutButton";
-import { Profile } from "./Profile";
 
 import { UserContext } from "@/context/AuthContext";
+import { twMerge } from "tailwind-merge";
+import { FaPeopleCarry } from "react-icons/fa";
+import Link from "next/link";
 
 export function Navbar() {
   const { Logout, session } = useContext(UserContext);
 
   const [open, setOpen] = useState(false);
 
+  const NavClass = twMerge(
+    "w-16 h-full rounded-md bg-white text-black duration-200 relative",
+    `${open ? "w-80 shadow-2xl" : "w-16 shadow-md"}`
+  );
+
   return (
-    <NavWrapper isOpen={open}>
-      <Profile open={open} fullname={session?.fullname} />
-      <ToggleButton isToggled={open} onClick={() => setOpen(!open)} />
-      <LogoutButton onClick={Logout} />
-    </NavWrapper>
+    <nav className="h-[100vh] p-2">
+      <main className={NavClass}>
+        <ToggleButton fullname={session?.fullname} isToggled={open} onClick={() => setOpen(!open)} />
+        <LogoutButton onClick={Logout} />
+      </main>
+    </nav>
   );
 }

@@ -3,6 +3,7 @@ import { compareSync, compare } from "bcrypt";
 import { sign, decode } from "jsonwebtoken";
 
 import UserController from "@/api/controller/user";
+import { IError } from "@/interfaces/generics";
 
 const KEY = String(process.env.SECRET_KEY);
 
@@ -24,8 +25,8 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
       }
 
       if (data.field) {
-        const { field, message } = data;
-        return res.status(404).send({ error: { field, message } });
+        const { code, field, message }: IError = data;
+        return res.status(999).send({ error: { field, message } });
       }
 
       delete data.password;

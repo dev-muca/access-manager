@@ -6,10 +6,5 @@ interface ProfileProps {
 }
 
 export function Profile({ open, fullname }: ProfileProps) {
-  return (
-    <div className={`flex flex-row gap-2 m-[18px] absolute ${open ? "block" : "hidden"}`}>
-      <FaUserCircle size={24} />
-      <span className="shrink-0">{fullname}</span>
-    </div>
-  );
+  return <div className={`flex flex-row gap-2 m-[18px] absolute ${open ? "block" : "hidden"}`}></div>;
 }

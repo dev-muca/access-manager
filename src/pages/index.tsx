@@ -6,6 +6,7 @@ import { Center } from "@/components/Center";
 import { FormCard } from "@/components/FormCard";
 import { UserContext } from "@/context/AuthContext";
 import { ICredentials, IError } from "@/interfaces/generics";
+import { FaInfoCircle } from "react-icons/fa";
 
 export default function Home() {
   const { Authentication } = useContext(UserContext);
@@ -24,6 +25,7 @@ export default function Home() {
     setLoader(true);
 
     const response = await Authentication(credentials);
+    console.log("Front-end Response:", response);
 
     if (response) {
       const { field, message } = response;
@@ -55,6 +57,12 @@ export default function Home() {
           error={error.field === "password" ? error.message : undefined}
         />
         <Button type="submit" label="Entrar" loader={loader} />
+        {error.field === "message" && (
+          <span className="w-full flex justify-center items-center gap-1 text-sm text-red-600 mt-1 pl-0.5">
+            <FaInfoCircle />
+            <p>{error.message}</p>
+          </span>
+        )}
       </FormCard>
     </Center>
   );
