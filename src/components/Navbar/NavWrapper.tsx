@@ -7,12 +7,14 @@ interface NavWrapperProps {
 
 export function NavWrapper({ isOpen, children }: NavWrapperProps) {
   return (
-    <nav
-      className={`bg-white text-black sticky top-0 w-16 left-0 h-[98vh] rounded-md m-2 flex flex-col duration-300 shrink-0 overflow-hidden ${
-        isOpen ? "w-80 shadow-2xl" : "w-16 shadow-md"
-      }`}
-    >
-      {children}
+    <nav className="h-[100vh] p-2">
+      <main
+        className={`w-16 h-full rounded-md bg-white text-black duration-200 relative ${
+          isOpen ? "w-80 shadow-2xl" : "w-16 shadow-md"
+        }`}
+      >
+        {children}
+      </main>
     </nav>
   );
 }

@@ -15,6 +15,7 @@ export function Input({ label, error, className, ...props }: InputProps) {
     }`,
     className
   );
+
   return (
     <label className="flex flex-col">
       <span className="text-sm pl-0.5 mb-0.5">{label}</span>
