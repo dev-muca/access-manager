@@ -9,10 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@loadable/component": "^5.15.3",
     "@types/axios": "^0.14.0",
     "@types/bcrypt": "^5.0.0",
     "@types/cookies": "^0.7.7",
     "@types/jsonwebtoken": "^9.0.2",
+    "@types/loadable__component": "^5.13.4",
     "@types/node": "20.4.1",
     "@types/nookies": "^2.0.3",
     "@types/react": "18.2.14",
@@ -22,6 +24,7 @@
     "axios": "^1.4.0",
     "bcrypt": "^5.1.0",
     "jsonwebtoken": "^9.0.1",
+    "loadable": "^1.0.0",
     "mysql2": "^3.5.1",
     "next": "13.4.9",
     "nookies": "^2.5.2",

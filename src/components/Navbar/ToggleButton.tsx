@@ -6,11 +6,11 @@ import { twMerge } from "tailwind-merge";
 import Link from "next/link";
 
 interface ToggleProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  fullname?: string;
+  displayName?: string;
   isToggled?: boolean;
 }
 
-export function ToggleButton({ fullname, isToggled = false, ...props }: ToggleProps) {
+export function ToggleButton({ displayName, isToggled = false, ...props }: ToggleProps) {
   //
   const ProfileClass = twMerge(
     `${isToggled ? "flex" : "hidden"}`,
@@ -19,10 +19,10 @@ export function ToggleButton({ fullname, isToggled = false, ...props }: TogglePr
 
   return (
     <>
-      <Link href="/">
+      <Link href="#">
         <div className={ProfileClass}>
           <FaUserCircle size={24} />
-          <span className="shrink-0">{fullname}</span>
+          <span className="shrink-0">{displayName}</span>
         </div>
       </Link>
       <button className="w-full flex justify-end" {...props}>

@@ -7,7 +7,7 @@ interface FormCardProps extends FormHTMLAttributes<HTMLFormElement> {
 }
 
 export function FormCard({ children, className, ...props }: FormCardProps) {
-  const formClass = twMerge(`bg-white p-12 rounded shadow-xl flex flex-col gap-8`, className);
+  const formClass = twMerge(`w-[380px] bg-white p-12 rounded shadow-xl flex flex-col gap-8`, className);
   return (
     <form className={formClass} {...props}>
       {children}
