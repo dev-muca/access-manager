@@ -10,7 +10,7 @@ interface ContainerProps {
 
 export function Container({ loading = false, children, className }: ContainerProps) {
   const ContainerClass = twMerge(
-    "w-full h-full max-h-[97.5vh] overflow-hidden bg-white text-black px-5 py-4 rounded-md shadow-md",
+    "w-full h-full overflow-hidden bg-white text-black px-5 py-4 rounded-md shadow-md",
     className
   );
   return (

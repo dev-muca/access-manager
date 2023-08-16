@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { destroyCookie, parseCookies, setCookie } from "nookies";
 import { createContext, ReactNode, useEffect, useState } from "react";
 import { ICredentials } from "@/interfaces/generics";
-import ApiRequest from "@/services/API-Request";
+import API from "@/services/API";
 import { IUser } from "@/interfaces/user";
 
 interface ProviderProps {
@@ -26,7 +26,7 @@ export function UserProvider({ children }: ProviderProps) {
     const { ["sga-auth@token"]: token } = parseCookies();
 
     if (token)
-      ApiRequest.GetInfo(token)
+      API.User.GetInfo(token)
         .then((response) => {
           setSession(response!.user);
           router.push("/dashboard");
@@ -36,7 +36,7 @@ export function UserProvider({ children }: ProviderProps) {
 
   async function Authentication({ username, password }: ICredentials) {
     try {
-      const response = await ApiRequest.Authenticate({ username, password });
+      const response = await API.User.Authenticate({ username, password });
 
       if (response?.user?.validationToken) {
         setCookie(undefined, "sga-auth@token", response.user.validationToken, { expiresIn: 60 * 60 * 1 });

@@ -1,5 +1,7 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 
+import API from "@/services/API";
+
 import { Input } from "@/components/Input";
 import { Table } from "@/components/Table";
 import { Button } from "@/components/Button";
@@ -13,18 +15,22 @@ interface IAccess {
 
 export default function Access() {
   const [loading, setLoading] = useState<boolean>(true);
-  const [dataRows, SetDataRows] = useState<IAccess[]>(null!);
+  const [dataRows, setDataRows] = useState<IAccess[]>(null!);
   const [searchValue, setSearchValue] = useState<number | string>();
 
-  const filteredRows = searchValue
-    ? dataRows.filter(
-        (acesso) =>
-          acesso.name.toLowerCase().includes(String(searchValue).toLowerCase()) || acesso.id === Number(searchValue)
-      )
-    : dataRows;
+  const filteredRows =
+    searchValue && dataRows
+      ? dataRows.filter(
+          (acesso) =>
+            acesso.name.toLowerCase().includes(String(searchValue).toLowerCase()) || acesso.id === Number(searchValue)
+        )
+      : dataRows;
 
   useEffect(() => {
-    setTimeout(() => setLoading(false), 1500);
+    API.Access.GetAll()
+      .then((response) => setDataRows(response.accesses))
+      .catch((err) => console.log(err))
+      .finally(() => setLoading(false));
   }, []);
 
   function onSubmitForm(e: FormEvent<HTMLFormElement>) {

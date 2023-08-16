@@ -12,8 +12,11 @@ export function Table({ headers, rows }: TableProps) {
         {headers && (
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 sticky top-0">
             <tr>
-              {headers?.map((header) => (
-                <th scope="col" className="px-6 py-3">
+              {headers?.map((header, i) => (
+                <th
+                  scope="col"
+                  className={`px-6 py-3 ${i == 2 ? "hidden sm:block" : ""} ${i == 0 || i == 3 ? "text-center" : ""}`}
+                >
                   {header}
                 </th>
               ))}
@@ -23,10 +26,10 @@ export function Table({ headers, rows }: TableProps) {
         <tbody>
           {rows?.map((row) => (
             <tr key={row.id} className="odd:bg-white even:bg-gray-50 border-b text-gray-800">
-              <td className="px-6 py-4">{row.id}</td>
+              <td className="px-6 py-4 text-center">{row.id}</td>
               <td className="px-6 py-4">{row.name}</td>
-              <td className="px-6 py-4">{row.description.substring(0, 45) + "..."}</td>
-              <td className="px-6 py-4">
+              <td className="px-6 py-4 hidden sm:block">{row.description.substring(0, 75) + "..."}</td>
+              <td className="px-6 py-4 text-center">
                 <Link href={`#${row.id}`} className="text-blue-700 underline">
                   Solicitar
                 </Link>

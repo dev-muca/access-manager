@@ -41,7 +41,6 @@ const UserController = {
       return user;
     } catch (err: any) {
       let error: IError = {
-        code: 500,
         field: "message",
         message: err.message,
       };
@@ -49,7 +48,6 @@ const UserController = {
       if (err.message.includes("ETIMEDOUT")) error.message = "Sem resposta do servidor";
 
       if (err.message.includes("NOTFOUND")) {
-        error.code = 401;
         error.field = "username";
         error.message = "Usuário inválido";
       }

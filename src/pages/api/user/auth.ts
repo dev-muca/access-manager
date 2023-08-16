@@ -25,7 +25,7 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
       }
 
       if (data.field) {
-        const { code, field, message }: IError = data;
+        const { field, message }: IError = data;
         return res.status(999).send({ error: { field, message } });
       }
 
