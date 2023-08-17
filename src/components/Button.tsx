@@ -8,7 +8,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   className?: string;
 }
 
-export function Button({ label, className, loader = false }: ButtonProps) {
+export function Button({ label, loader = false, className }: ButtonProps) {
   const buttonClass = twMerge(
     `h-[40px] bg-tertiary px-2 py-1 rounded shadow text-white uppercase font-medium hover:brightness-105 flex justify-center items-center mt-0.5`,
     className

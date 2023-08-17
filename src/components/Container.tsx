@@ -3,22 +3,26 @@ import { twMerge } from "tailwind-merge";
 import { BiLoaderAlt } from "react-icons/bi";
 
 interface ContainerProps {
+  title?: string;
   loading?: boolean;
   children: ReactNode;
   className?: string;
 }
 
-export function Container({ loading = false, children, className }: ContainerProps) {
+export function Container({ title, loading = false, children, className }: ContainerProps) {
   const ContainerClass = twMerge(
-    "w-full h-full overflow-hidden bg-white text-black px-5 py-4 rounded-md shadow-md",
+    "w-full h-full overflow-hidden bg-white text-black px-10 py-6 rounded-md shadow-md",
     className
   );
   return (
-    <main className="w-full py-2 pr-2 flex justify-center items-center">
+    <main className="w-full p-2 flex justify-center items-center">
       {loading ? (
         <BiLoaderAlt size={32} className="animate-spin" color="#FFF" />
       ) : (
-        <section className={ContainerClass}>{children}</section>
+        <section className={ContainerClass}>
+          {title && <h1 className="text-xl mt-2 mb-8 ml-1">{title}</h1>}
+          {children}
+        </section>
       )}
     </main>
   );

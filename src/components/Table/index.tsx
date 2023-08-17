@@ -8,7 +8,7 @@ interface TableProps {
 
 export function Table({ headers, rows }: TableProps) {
   return (
-    <section className="relative overflow-x-auto sm:rounded-md max-h-[calc(100vh-120px)] border-b">
+    <section className="relative overflow-x-auto sm:rounded-md max-h-[calc(100vh-200px)] border-b">
       <table className="w-full text-sm text-left text-gray-50 overflow-auto">
         {headers && (
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 sticky top-0">

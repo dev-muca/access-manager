@@ -34,8 +34,8 @@ export default function Access() {
   }
 
   return (
-    <Container loading={loading} className="space-y-5">
-      <header className="w-full">
+    <Container loading={loading}>
+      <header className="w-full mb-12">
         <form onSubmit={onSubmitForm} className="flex flex-row gap-2 justify-center items-center">
           <Input
             name="search"
