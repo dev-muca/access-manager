@@ -5,13 +5,8 @@ import API from "@/services/API";
 import { Input } from "@/components/Input";
 import { Table } from "@/components/Table";
 import { Button } from "@/components/Button";
+import { IAccess } from "@/interfaces/access";
 import { Container } from "@/components/Container";
-
-interface IAccess {
-  id: number;
-  name: string;
-  description: string;
-}
 
 export default function Access() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -27,7 +22,7 @@ export default function Access() {
       : dataRows;
 
   useEffect(() => {
-    API.Access.GetAll()
+    API.Access.GetInfo()
       .then((response) => setDataRows(response.accesses))
       .catch((err) => console.log(err))
       .finally(() => setLoading(false));

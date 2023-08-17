@@ -35,9 +35,9 @@ const API = {
   },
 
   Access: {
-    GetAll: async () => {
+    GetInfo: async (id?: number) => {
       try {
-        const response = await baseAPI.get("/api/access");
+        const response = await baseAPI.get("/api/access", { params: { reqId: id } });
         return response.data;
       } catch (err: any) {
         if (isAxiosError(err)) return err.response?.data;

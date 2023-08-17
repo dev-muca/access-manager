@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { basename } from "path";
 
 interface TableProps {
   headers?: any[];
@@ -14,6 +15,7 @@ export function Table({ headers, rows }: TableProps) {
             <tr>
               {headers?.map((header, i) => (
                 <th
+                  key={i}
                   scope="col"
                   className={`px-6 py-3 ${i == 2 ? "hidden sm:block" : ""} ${i == 0 || i == 3 ? "text-center" : ""}`}
                 >
@@ -30,7 +32,7 @@ export function Table({ headers, rows }: TableProps) {
               <td className="px-6 py-4">{row.name}</td>
               <td className="px-6 py-4 hidden sm:block">{row.description.substring(0, 75) + "..."}</td>
               <td className="px-6 py-4 text-center">
-                <Link href={`#${row.id}`} className="text-blue-700 underline">
+                <Link href={`/access/${row.id}`} className="text-blue-700 underline">
                   Solicitar
                 </Link>
               </td>
