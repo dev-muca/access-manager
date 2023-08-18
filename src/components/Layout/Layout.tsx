@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
-import { Navbar } from "./Navbar/Navbar";
-import { AuthMiddleware } from "./AuthMiddleware";
+import { Navbar } from "../Navbar/Navbar";
+import { AuthMiddleware } from "../Middleware/AuthMiddleware";
 
 interface LayoutProps {
   excludeNavbar: any;

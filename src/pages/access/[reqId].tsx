@@ -1,14 +1,12 @@
-import { FcInfo } from "react-icons/fc";
 import { GetServerSideProps } from "next";
 
 import API from "@/services/API";
-import { Container } from "@/components/Container";
-import { InfoBox } from "@/components/InfoBox";
-import { Checkbox } from "@/components/Checkbox";
-import { FormGroup } from "@/components/FormGroup";
-import { Input } from "@/components/Input";
 import { FormEvent, useState } from "react";
-import { Button } from "@/components/Button";
+import { Button } from "@/components/Form/Button";
+import { Container } from "@/components/Form/Container";
+import { FormGroup } from "@/components/Form/FormGroup";
+import { Input } from "@/components/Form/Input";
+import { Checkbox } from "@/components/Form/Checkbox";
 
 export default function Request({ access }: any) {
   const [loader, setLoader] = useState<boolean>(false);
@@ -24,9 +22,9 @@ export default function Request({ access }: any) {
 
   return (
     <Container title="Requisição de Novos Acessos">
-      <form onSubmit={onSubmitForm}>
+      <form onSubmit={onSubmitForm} className="flex flex-col justify-around">
         <FormGroup label="Dados do acesso:">
-          <div className="p-4 pl-6 flex flex-col gap-2">
+          <div className="w-full p-4 pl-6 flex flex-col gap-2">
             <p className="flex gap-2">
               <span className="font-medium">Nome:</span>
               <span>{access.name}</span>
@@ -35,6 +33,10 @@ export default function Request({ access }: any) {
               <span className="font-medium">Descrição:</span>
               <span>{access.description}</span>
             </p>
+            <ul className="mt-4">
+              <p className="font-medium">Aprovadores:</p>
+              <li className="even:bg-gray-100 odd:bg-white px-2 py-0.5">{access.approver}</li>
+            </ul>
           </div>
         </FormGroup>
 
@@ -67,8 +69,8 @@ export default function Request({ access }: any) {
 export const getServerSideProps: GetServerSideProps<{}> = async (context) => {
   //
   const reqId = context.query.reqId;
-  const response = await API.Access.GetInfo(Number(reqId));
-  const data = response.accesses[0];
+  const response = await API.Access.GetApprover(Number(reqId));
+  const data = response.access[0];
 
   return {
     props: {

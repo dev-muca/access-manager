@@ -11,11 +11,12 @@ interface ContainerProps {
 
 export function Container({ title, loading = false, children, className }: ContainerProps) {
   const ContainerClass = twMerge(
-    "w-full h-full overflow-hidden bg-white text-black px-10 py-6 rounded-md shadow-md",
+    "h-full bg-white text-black px-10 py-6 rounded-md shadow-md overflow-y-auto",
     className
   );
+
   return (
-    <main className="w-full p-2 flex justify-center items-center">
+    <main className="w-full p-2 border border-red-600">
       {loading ? (
         <BiLoaderAlt size={32} className="animate-spin" color="#FFF" />
       ) : (

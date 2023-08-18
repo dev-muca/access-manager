@@ -26,7 +26,7 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
 
       if (data.field) {
         const { field, message }: IError = data;
-        return res.status(999).send({ error: { field, message } });
+        return res.status(401).send({ error: { field, message } });
       }
 
       delete data.password;

@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { basename } from "path";
 
 interface TableProps {
   headers?: any[];

@@ -2,11 +2,11 @@ import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 
 import API from "@/services/API";
 
-import { Input } from "@/components/Input";
 import { Table } from "@/components/Table";
-import { Button } from "@/components/Button";
+import { Input } from "@/components/Form/Input";
+import { Button } from "@/components/Form/Button";
 import { IAccess } from "@/interfaces/access";
-import { Container } from "@/components/Container";
+import { Container } from "@/components/Form/Container";
 
 export default function Access() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -23,7 +23,7 @@ export default function Access() {
 
   useEffect(() => {
     API.Access.GetInfo()
-      .then((response) => setDataRows(response.accesses))
+      .then((response) => setDataRows(response.access))
       .catch((err) => console.log(err))
       .finally(() => setLoading(false));
   }, []);

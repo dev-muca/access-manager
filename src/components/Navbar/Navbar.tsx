@@ -33,7 +33,7 @@ export function Navbar() {
       <main className={NavClass}>
         <ToggleButton displayName={session?.fullname} isToggled={open} onClick={toggleNav} />
 
-        <ul>
+        <ul className="h-4/5 overflow-hidden">
           <Option
             name={"Dashboard"}
             icon={<AiOutlineDashboard size={24} />}

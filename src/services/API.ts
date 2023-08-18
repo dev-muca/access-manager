@@ -3,7 +3,7 @@ import { IUser } from "@/interfaces/user";
 import axios, { isAxiosError } from "axios";
 
 const baseAPI = axios.create({
-  baseURL: "http://localhost:3000",
+  baseURL: "http://10.10.203.91:3000",
 });
 
 interface AuthResponse {
@@ -38,6 +38,16 @@ const API = {
     GetInfo: async (id?: number) => {
       try {
         const response = await baseAPI.get("/api/access", { params: { reqId: id } });
+        return response.data;
+      } catch (err: any) {
+        if (isAxiosError(err)) return err.response?.data;
+        return null;
+      }
+    },
+
+    GetApprover: async (id?: number) => {
+      try {
+        const response = await baseAPI.get("/api/access/approver", { params: { reqId: id } });
         return response.data;
       } catch (err: any) {
         if (isAxiosError(err)) return err.response?.data;
