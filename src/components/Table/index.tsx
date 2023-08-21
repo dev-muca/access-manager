@@ -7,7 +7,7 @@ interface TableProps {
 
 export function Table({ headers, rows }: TableProps) {
   return (
-    <section className="relative overflow-x-auto sm:rounded-md max-h-[calc(100vh-200px)] border-b">
+    <section className="relative overflow-x-auto sm:rounded-md max-h-[calc(100vh-120px)] border-b">
       <table className="w-full text-sm text-left text-gray-50 overflow-auto">
         {headers && (
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 sticky top-0">
@@ -31,7 +31,7 @@ export function Table({ headers, rows }: TableProps) {
               <td className="px-6 py-4">{row.name}</td>
               <td className="px-6 py-4 hidden sm:block">{row.description.substring(0, 75) + "..."}</td>
               <td className="px-6 py-4 text-center">
-                <Link href={`/access/${row.id}`} className="text-blue-700 underline">
+                <Link href={{ pathname: "/request", query: { reqId: row.id } }} className="text-blue-700 underline">
                   Solicitar
                 </Link>
               </td>

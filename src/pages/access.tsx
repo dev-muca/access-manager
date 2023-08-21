@@ -35,7 +35,7 @@ export default function Access() {
 
   return (
     <Container loading={loading}>
-      <header className="w-full mb-12">
+      <header className="py-6">
         <form onSubmit={onSubmitForm} className="flex flex-row gap-2 justify-center items-center">
           <Input
             name="search"

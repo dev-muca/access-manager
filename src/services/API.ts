@@ -3,7 +3,7 @@ import { IUser } from "@/interfaces/user";
 import axios, { isAxiosError } from "axios";
 
 const baseAPI = axios.create({
-  baseURL: "http://10.10.203.91:3000",
+  baseURL: process.env.API_BASE_URL,
 });
 
 interface AuthResponse {

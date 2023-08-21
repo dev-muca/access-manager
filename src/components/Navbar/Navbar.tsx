@@ -20,7 +20,9 @@ export function Navbar() {
   const toggleNav = () => setOpen(!open);
   const navigateTo = (path: string) => {
     setOpen(false);
-    router.push(path);
+    router.push({
+      pathname: path,
+    });
   };
 
   const NavClass = twMerge(
