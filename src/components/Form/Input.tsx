@@ -4,7 +4,7 @@ import { FaInfoCircle } from "react-icons/fa";
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement | HTMLTextAreaElement> {
   label?: string;
-  error?: string;
+  error?: string | false;
   multiline?: true;
   className?: string;
 }
@@ -12,14 +12,14 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement | HTMLTextArea
 export function Input({ label, error, multiline, className, ...props }: InputProps) {
   const inputClass = twMerge(
     `h-[40px] rounded shadow px-2.5 py-1 border  ${
-      error ? "border-red-600 text-red-600 placeholder:text-red-600" : "border-gray-300"
+      error ? "border-red-600 text-red-600 placeholder:text-red-600 outline-red-600" : "border-gray-300"
     }`,
     className
   );
 
   const textAreaClass = twMerge(
-    `w-full rounded shadow px-2.5 py-1 border  ${
-      error ? "border-red-600 text-red-600 placeholder:text-red-600" : "border-gray-300"
+    `w-full h-full rounded shadow px-2.5 py-1 border  ${
+      error ? "border-red-600 text-red-600 placeholder:text-red-600 outline-red-600" : "border-gray-300"
     }`,
     className
   );

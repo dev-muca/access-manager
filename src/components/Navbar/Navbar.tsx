@@ -8,12 +8,12 @@ import { Option } from "./Option";
 import { ToggleButton } from "./ToggleButton";
 import { LogoutButton } from "./LogoutButton";
 
-import { UserContext } from "@/context/AuthContext";
+import { AuthContext } from "@/context/AuthContext";
 
 export function Navbar() {
   const router = useRouter();
 
-  const { Logout, session } = useContext(UserContext);
+  const { Logout, session } = useContext(AuthContext);
 
   const [open, setOpen] = useState(false);
 

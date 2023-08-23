@@ -15,7 +15,7 @@ interface UserContextProps {
   Logout: () => void;
 }
 
-export const UserContext = createContext({} as UserContextProps);
+export const AuthContext = createContext({} as UserContextProps);
 
 export function UserProvider({ children }: ProviderProps) {
   //
@@ -57,6 +57,6 @@ export function UserProvider({ children }: ProviderProps) {
     router.push("/");
   }
 
-  return <UserContext.Provider value={{ Authentication, Logout, session }}>{children}</UserContext.Provider>;
+  return <AuthContext.Provider value={{ Authentication, Logout, session }}>{children}</AuthContext.Provider>;
   //
 }

@@ -38,8 +38,8 @@ export default function Request() {
 
   return (
     <Container title="Solicitação de novos acessos:" loading={loader}>
-      <form onSubmit={onSubmitForm} className="w-full h-full flex flex-col">
-        <FormGroup label="Dados do acesso:">
+      <form onSubmit={onSubmitForm} className="w-full h-full flex flex-col justify-between">
+        <FormGroup label="Dados do acesso:" className="flex-1">
           <div className="w-full p-4 pl-6 flex flex-col gap-2">
             <p className="flex gap-2">
               <span className="font-medium">Nome:</span>
@@ -66,7 +66,7 @@ export default function Request() {
           </div>
         </FormGroup>
 
-        <FormGroup label="Dados complementares:">
+        <FormGroup label="Dados complementares:" className="flex-1">
           <div className="w-full p-4 px-6 flex flex-col justify-start">
             <Input
               label="Justificativa:"
