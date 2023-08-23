@@ -4,7 +4,7 @@ import { IUser } from "@/interfaces/user";
 import { IError } from "@/interfaces/generics";
 
 const UserController = {
-  GetInfo: async (username: string): Promise<any> => {
+  getInfo: async (username: string): Promise<any> => {
     try {
       const conn = await pool.getConnection();
       const query = `SELECT * FROM user WHERE username = ?`;

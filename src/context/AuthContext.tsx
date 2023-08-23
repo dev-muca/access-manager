@@ -26,7 +26,7 @@ export function UserProvider({ children }: ProviderProps) {
     const { ["sga-auth@token"]: token } = parseCookies();
 
     if (token)
-      API.User.GetInfo(token)
+      API.User.getInfo(token)
         .then((response) => {
           setSession(response!.user);
           router.push("/dashboard");
@@ -36,7 +36,7 @@ export function UserProvider({ children }: ProviderProps) {
 
   async function Authentication({ username, password }: ICredentials) {
     try {
-      const response = await API.User.Authenticate({ username, password });
+      const response = await API.User.authentication({ username, password });
 
       if (response?.user?.validationToken) {
         setCookie(undefined, "sga-auth@token", response.user.validationToken, { expiresIn: 60 * 60 * 1 });

@@ -13,7 +13,7 @@ interface AuthResponse {
 
 const API = {
   User: {
-    Authenticate: async ({ username, password }: ICredentials): Promise<AuthResponse | null> => {
+    authentication: async ({ username, password }: ICredentials): Promise<AuthResponse | null> => {
       try {
         const response = await baseAPI.post("/api/user/auth", { username, password });
         return response.data;
@@ -23,7 +23,7 @@ const API = {
       }
     },
 
-    GetInfo: async (token: string): Promise<AuthResponse | null> => {
+    getInfo: async (token: string): Promise<AuthResponse | null> => {
       try {
         const response = await baseAPI.get("/api/user/auth", { params: { validationToken: token } });
         return response.data;
@@ -35,7 +35,7 @@ const API = {
   },
 
   Access: {
-    GetInfo: async (id?: number) => {
+    getInfo: async (id?: number) => {
       try {
         const response = await baseAPI.get("/api/access", { params: { reqId: id } });
         return response.data;
@@ -45,7 +45,7 @@ const API = {
       }
     },
 
-    GetApprover: async (id?: number) => {
+    getApprover: async (id?: number) => {
       try {
         const response = await baseAPI.get("/api/access/approver", { params: { reqId: id } });
         return response.data;

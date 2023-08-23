@@ -15,7 +15,7 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
       if (!username) return res.status(400).send({ error: { field: "username", message: "Forneça seu usuário" } });
       if (!password) return res.status(400).send({ error: { field: "password", message: "Forneça sua senha" } });
 
-      const data = await UserController.GetInfo(username);
+      const data = await UserController.getInfo(username);
 
       if (!data.username) return res.status(401).send({ error: { field: data.field, message: data.message } });
 

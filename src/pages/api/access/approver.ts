@@ -5,7 +5,7 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
   const reqId = req.query.reqId;
 
   if (req.method === "GET") {
-    const data = await AccessController.GetApprover(Number(reqId));
+    const data = await AccessController.getApprover(Number(reqId));
     res.status(200).send({ access: data });
   }
 
