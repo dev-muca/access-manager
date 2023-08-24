@@ -1,37 +1,14 @@
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { ChangeEvent } from "react";
 
-import API from "@/services/API";
+import useSearch from "@/hooks/useSearch";
 
 import { Table } from "@/components/Table";
 import { Input } from "@/components/Form/Input";
 import { Button } from "@/components/Form/Button";
-import { IAccess } from "@/interfaces/access";
 import { Container } from "@/components/Form/Container";
 
 export default function Search() {
-  const [loading, setLoading] = useState<boolean>(true);
-  const [dataRows, setDataRows] = useState<IAccess[]>(null!);
-  const [searchValue, setSearchValue] = useState<number | string>();
-
-  const filteredRows =
-    searchValue && dataRows
-      ? dataRows.filter(
-          (acesso) =>
-            acesso.name.toLowerCase().includes(String(searchValue).toLowerCase()) || acesso.id === Number(searchValue)
-        )
-      : dataRows;
-
-  useEffect(() => {
-    API.Access.getInfo()
-      .then((response) => setDataRows(response.access))
-      .catch((err) => console.log(err))
-      .finally(() => setLoading(false));
-  }, []);
-
-  function onSubmitForm(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    console.log(searchValue);
-  }
+  const { loading, searchValue, filteredRows, setSearchValue, onSubmitForm } = useSearch();
 
   return (
     <Container loading={loading}>

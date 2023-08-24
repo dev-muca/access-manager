@@ -1,9 +1,10 @@
 import { useRouter } from "next/router";
 import { destroyCookie, parseCookies, setCookie } from "nookies";
 import { createContext, ReactNode, useEffect, useState } from "react";
-import { ICredentials } from "@/interfaces/generics";
-import API from "@/services/API";
+
+import useApi from "@/hooks/useApi";
 import { IUser } from "@/interfaces/user";
+import { ICredentials } from "@/interfaces/generics";
 
 interface ProviderProps {
   children: ReactNode;
@@ -20,23 +21,24 @@ export const AuthContext = createContext({} as UserContextProps);
 export function UserProvider({ children }: ProviderProps) {
   //
   const router = useRouter();
+  const { authentication, getUserInfo } = useApi();
   const [session, setSession] = useState<IUser | null>(null);
 
   useEffect(() => {
     const { ["sga-auth@token"]: token } = parseCookies();
 
     if (token)
-      API.User.getInfo(token)
+      getUserInfo(token)
         .then((response) => {
           setSession(response!.user);
-          router.push("/dashboard");
+          router.push({ pathname: "/dashboard" });
         })
         .catch((err) => console.log(err));
   }, []);
 
   async function Authentication({ username, password }: ICredentials) {
     try {
-      const response = await API.User.authentication({ username, password });
+      const response = await authentication({ username, password });
 
       if (response?.user?.validationToken) {
         setCookie(undefined, "sga-auth@token", response.user.validationToken, { expiresIn: 60 * 60 * 1 });
