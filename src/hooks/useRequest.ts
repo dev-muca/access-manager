@@ -24,9 +24,7 @@ const useRequest = () => {
 
   async function onSubmitForm(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-
     setLoader(true);
-
     setTimeout(() => setLoader(false), 2300);
   }
 

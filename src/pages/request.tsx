@@ -9,8 +9,10 @@ import { Checkbox } from "@/components/Form/Checkbox";
 import { Container } from "@/components/Form/Container";
 import { FormGroup } from "@/components/Form/FormGroup";
 import useRequest from "@/hooks/useRequest";
+import useDate from "@/hooks/useDate";
 
 export default function Request() {
+  const { getFullDateTime } = useDate();
   const { loader, access, justification, setJustification, onSubmitForm } = useRequest();
 
   return (

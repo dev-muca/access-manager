@@ -2,7 +2,7 @@ import { Children, ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
 
 interface GroupProps {
-  label?: string;
+  label?: string | any;
   className?: string;
   children: ReactNode;
 }
