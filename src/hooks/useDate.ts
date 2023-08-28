@@ -1,5 +1,9 @@
 const date = new Date();
 
+interface IOptions {
+  format: "web" | "database";
+}
+
 const useDate = () => {
   function getTime() {
     const hour = date.getHours();
@@ -11,17 +15,20 @@ const useDate = () => {
     return currentTime;
   }
 
-  function getDate() {
+  function getDate({ format }: IOptions) {
     const day = date.getDate();
     const month = date.getMonth();
     const year = date.getFullYear();
-    const currentDate = `${day < 9 ? "0" + day : day}/${month < 9 ? "0" + month : month}/${year}`;
+    const currentDate =
+      format === "web"
+        ? `${day < 9 ? "0" + day : day}/${month < 9 ? "0" + month : month}/${year}`
+        : `${year}-${month < 9 ? "0" + month : month}-${day < 9 ? "0" + day : day}`;
     return currentDate;
   }
 
   function getFullDateTime() {
     const time = getTime();
-    const date = getDate();
+    const date = getDate({ format: "database" });
     const datetime = `${date} ${time}`;
     return datetime;
   }

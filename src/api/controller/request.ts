@@ -1,29 +1,19 @@
 import { ResultSetHeader, RowDataPacket } from "mysql2/promise";
 
 import pool from "../model/pool";
-import { IRequest } from "@/interfaces/IRequest";
+import { IRequest } from "@/interfaces/request";
 
 const RequestController = {
-  createRequest: async ({
-    id,
-    idAccess,
-    idRequester,
-    justification,
-    approverOwner,
-    requestDate,
-    approvalDate,
-    idStatus,
-  }: IRequest) => {
+  createRequest: async ({ idAccess, idRequester, justification, approverOwner, requestDate }: IRequest) => {
     try {
       const conn = await pool.getConnection();
-      const query = `INSERT INTO access (id_access, id_requester, justification, approver_owner, request_date, id_status) VALUES (?, ?, ?, ?, ?, ?)`;
+      const query = `INSERT INTO request (id_access, id_requester, justification, approver_owner, request_date) VALUES (?, ?, ?, ?, ?)`;
       const [result] = await conn.query<ResultSetHeader>(query, [
         idAccess,
         idRequester,
         justification,
         approverOwner,
         requestDate,
-        idStatus,
       ]);
       conn.release();
 

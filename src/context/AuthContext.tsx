@@ -21,7 +21,7 @@ export const AuthContext = createContext({} as UserContextProps);
 export function UserProvider({ children }: ProviderProps) {
   //
   const router = useRouter();
-  const { authentication, getUserInfo } = useApi();
+  const { postAuth, getUserInfo } = useApi();
   const [session, setSession] = useState<IUser | null>(null);
 
   useEffect(() => {
@@ -38,7 +38,7 @@ export function UserProvider({ children }: ProviderProps) {
 
   async function Authentication({ username, password }: ICredentials) {
     try {
-      const response = await authentication({ username, password });
+      const response = await postAuth({ username, password });
 
       if (response?.user?.validationToken) {
         setCookie(undefined, "sga-auth@token", response.user.validationToken, { expiresIn: 60 * 60 * 1 });

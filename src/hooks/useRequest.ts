@@ -15,8 +15,8 @@ const useRequest = () => {
   useEffect(() => {
     getAcessApprover(Number(reqId))
       .then((response) => {
-        setAccess(response.access);
         console.log(response.access);
+        setAccess(response.access);
       })
       .catch((err) => console.log(err))
       .finally(() => setLoader(false));
@@ -25,7 +25,6 @@ const useRequest = () => {
   async function onSubmitForm(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setLoader(true);
-    setTimeout(() => setLoader(false), 2300);
   }
 
   return { loader, access, justification, setJustification, onSubmitForm };

@@ -2,11 +2,14 @@ import { NextApiRequest, NextApiResponse } from "next";
 import AccessController from "@/api/controller/access";
 
 export default async function handle(req: NextApiRequest, res: NextApiResponse) {
-  const reqId = req.query.reqId;
-
   if (req.method === "GET") {
-    const data = await AccessController.getApprover(Number(reqId));
-    res.status(200).send({ access: data });
+    try {
+      const reqId = req.query.reqId;
+      const data = await AccessController.getApprover(Number(reqId));
+      res.status(200).send({ access: data });
+    } catch (err: any) {
+      res.status(400).send({ error: { field: "message", message: err.message } });
+    }
   }
 
   if (req.method === "POST") {
