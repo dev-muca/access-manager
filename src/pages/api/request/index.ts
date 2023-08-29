@@ -8,7 +8,7 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
       const { idAccess, idRequester, justification, approverOwner, requestDate, approver }: IRequest = req.body;
 
       if (!idAccess || !idRequester || !requestDate || !approver?.length)
-        return res.status(500).send({ error: { field: "message", message: "Ocorreu algum erro interno" } });
+        return res.status(400).send({ error: { field: "message", message: "Campos ausentes!" } });
 
       if (!approverOwner && !justification)
         return res.status(400).send({ error: { field: "justification", message: "Preencha a justificativa" } });
@@ -19,6 +19,7 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
         justification,
         approverOwner,
         requestDate,
+        approver,
       });
 
       res.status(201).send({ requestNumber });
