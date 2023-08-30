@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import { FormEvent, useEffect, useState } from "react";
 
+import useRequest from "@/hooks/useRequest";
 import { IAccess } from "@/interfaces/access";
 
 import { Input } from "@/components/Form/Input";
@@ -8,12 +9,10 @@ import { Button } from "@/components/Form/Button";
 import { Checkbox } from "@/components/Form/Checkbox";
 import { Container } from "@/components/Form/Container";
 import { FormGroup } from "@/components/Form/FormGroup";
-import useRequest from "@/hooks/useRequest";
-import useDate from "@/hooks/useDate";
 
 export default function Request() {
-  const { getFullDateTime } = useDate();
-  const { loader, access, justification, setJustification, onSubmitForm } = useRequest();
+  const { loader, access, request, approverOwner, handleInputChange, handleChangeJustification, onSubmitForm } =
+    useRequest();
 
   return (
     <Container title="Solicitação de novos acessos:" loading={loader}>
@@ -48,21 +47,24 @@ export default function Request() {
         <FormGroup label="Dados complementares:" className="flex-1">
           <div className="w-full p-4 px-6 flex flex-col justify-start">
             <Input
+              name="justification"
               label="Justificativa:"
               placeholder={
-                justification
+                approverOwner
                   ? "Solicitações para aprovador não requerem justificativa"
                   : "Insira aqui uma justificativa para sua solicitação"
               }
+              value={request?.justification}
+              onChange={handleInputChange}
+              disabled={approverOwner}
               multiline
-              disabled={justification}
             />
 
             <Checkbox
               label="Aprovador"
               hasInfo
               infoMessage="Ao marcar esta opção, você irá solicitar para ser aprovador deste acesso."
-              onChange={() => setJustification(!justification)}
+              onChange={handleChangeJustification}
             />
           </div>
         </FormGroup>

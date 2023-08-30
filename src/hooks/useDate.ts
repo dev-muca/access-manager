@@ -1,3 +1,5 @@
+import { useMemo, useState } from "react";
+
 const date = new Date();
 
 interface IOptions {
@@ -5,6 +7,10 @@ interface IOptions {
 }
 
 const useDate = () => {
+  const [time, setTime] = useState<string>();
+  const [data, setData] = useState<string>();
+  const [full, setFull] = useState<string>();
+
   function getTime() {
     const hour = date.getHours();
     const minutes = date.getMinutes();
@@ -15,25 +21,32 @@ const useDate = () => {
     return currentTime;
   }
 
-  function getDate({ format }: IOptions) {
-    const day = date.getDate();
-    const month = date.getMonth();
-    const year = date.getFullYear();
-    const currentDate =
-      format === "web"
-        ? `${day < 9 ? "0" + day : day}/${month < 9 ? "0" + month : month}/${year}`
-        : `${year}-${month < 9 ? "0" + month : month}-${day < 9 ? "0" + day : day}`;
-    return currentDate;
-  }
+  // function getDate({ format }: IOptions) {
+  //   const day = date.getDate();
+  //   const month = date.getMonth();
+  //   const year = date.getFullYear();
+  //   const currentDate =
+  //     format === "web"
+  //       ? `${day < 9 ? "0" + day : day}/${month < 9 ? "0" + month : month}/${year}`
+  //       : `${year}-${month < 9 ? "0" + month : month}-${day < 9 ? "0" + day : day}`;
+  //   return currentDate;
+  // }
 
-  function getFullDateTime() {
-    const time = getTime();
-    const date = getDate({ format: "database" });
-    const datetime = `${date} ${time}`;
-    return datetime;
-  }
+  // function getFullDateTime() {
+  //   const time = getTime();
+  //   const date = getDate({ format: "database" });
+  //   const datetime = `${date} ${time}`;
+  //   return datetime;
+  // }
 
-  return { getTime, getDate, getFullDateTime };
+  // const getFullTime = useMemo(() => {
+  //   const time = getTime();
+  //   const date = getDate({ format: "database" });
+  //   const datetime = `${date} ${time}`;
+  //   return datetime;
+  // }, []);
+
+  // return { getTime, getDate, getFullDateTime, getFullTime };
 };
 
 export default useDate;
