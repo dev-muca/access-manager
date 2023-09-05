@@ -3,6 +3,7 @@ import { RowDataPacket } from "mysql2/promise";
 import pool from "../model/pool";
 import { Access } from "@/interfaces/access";
 import { Approver } from "@/interfaces/approver";
+import { Error } from "@/interfaces/generics";
 
 const AccessController = {
   getInfo: async (id?: number) => {
@@ -31,7 +32,8 @@ const AccessController = {
                      FROM approver AP
                         LEFT JOIN access A ON A.id = AP.id_access
                         LEFT JOIN user U ON U.id = AP.id_user
-                     WHERE A.id = ?`;
+                     WHERE A.id = ?
+                     HAVING approver IS NOT NULL`;
 
       const [result] = await conn.query<RowDataPacket[]>(query, [id]);
       conn.release();
@@ -55,9 +57,14 @@ const AccessController = {
         approver: row.approver ? row.approver.split(";").map(parseApprover) : [],
       };
 
-      return access;
+      return { access };
     } catch (err: any) {
-      return err.message;
+      const error: Error = {
+        field: "message",
+        message: "Acesso sem aprovador(es)",
+      };
+
+      return { error };
     }
   },
 };

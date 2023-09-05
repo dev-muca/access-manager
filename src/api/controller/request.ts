@@ -15,20 +15,21 @@ const RequestController = {
         approverOwner,
         requestDate,
       ]);
+      conn.release();
 
       const requestNumber = result.insertId;
 
       approver?.forEach(async (approver) => {
         const approvalQuery = `INSERT INTO approval (id_user) VALUES (?)`;
         const [result] = await conn.query<ResultSetHeader>(approvalQuery, [approver.id]);
+        conn.release();
 
         const idApproval = result.insertId;
 
         const approvalRequestQuery = `INSERT INTO approval_request (id_request, id_approval) VALUES (?, ?)`;
         await conn.query(approvalRequestQuery, [requestNumber, idApproval]);
+        conn.release();
       });
-
-      conn.release();
 
       return requestNumber;
     } catch (err: any) {

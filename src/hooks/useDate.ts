@@ -1,10 +1,4 @@
-import { useMemo, useState } from "react";
-
-const date = new Date();
-
-interface Options {
-  format: "web" | "database";
-}
+import { useState } from "react";
 
 const useDate = () => {
   const [time, setTime] = useState("");

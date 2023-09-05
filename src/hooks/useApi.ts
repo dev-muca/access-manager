@@ -44,7 +44,7 @@ const useApi = () => {
     }
   };
 
-  const getAcessApprover = async (id?: number) => {
+  const getAccessApprover = async (id?: number) => {
     try {
       const response = await baseAPI.get("/api/access/approver", { params: { reqId: id } });
       return response.data;
@@ -89,7 +89,7 @@ const useApi = () => {
     }
   };
 
-  return { postAuth, getUserInfo, getAccessInfo, getAcessApprover, postRequest, getRequestsInfo };
+  return { postAuth, getUserInfo, getAccessInfo, getAccessApprover, postRequest, getRequestsInfo };
 };
 
 export default useApi;

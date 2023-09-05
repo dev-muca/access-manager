@@ -12,7 +12,7 @@ const useRequest = () => {
   const { session } = useContext(AuthContext);
 
   const { getTime } = useDate();
-  const { getAcessApprover, postRequest } = useApi();
+  const { getAccessApprover, postRequest } = useApi();
 
   const router = useRouter();
   const { reqId } = router.query;
@@ -23,11 +23,9 @@ const useRequest = () => {
   const [request, setRequest] = useState<Request>({ approverOwner });
 
   useEffect(() => {
-    getAcessApprover(Number(reqId))
-      .then((response) => {
-        setAccess(response.access);
-      })
-      .catch((err) => console.log(err))
+    getAccessApprover(Number(reqId))
+      .then(({ access }) => setAccess(access))
+      .catch((err) => console.log("ERRO:", err))
       .finally(() => setLoader(false));
   }, []);
 
