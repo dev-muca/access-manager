@@ -1,14 +1,15 @@
 import { RowDataPacket } from "mysql2/promise";
 
 import pool from "../model/pool";
-import { IAccess } from "@/interfaces/access";
-import { IApprover } from "@/interfaces/approver";
+import { Access } from "@/interfaces/access";
+import { Approver } from "@/interfaces/approver";
 
 const AccessController = {
   getInfo: async (id?: number) => {
     try {
       const conn = await pool.getConnection();
       const query = `SELECT id, name, description FROM access ORDER BY name`;
+
       const [result] = await conn.query<RowDataPacket[]>(query, [id]);
       conn.release();
 
@@ -31,6 +32,7 @@ const AccessController = {
                         LEFT JOIN access A ON A.id = AP.id_access
                         LEFT JOIN user U ON U.id = AP.id_user
                      WHERE A.id = ?`;
+
       const [result] = await conn.query<RowDataPacket[]>(query, [id]);
       conn.release();
 
@@ -38,7 +40,7 @@ const AccessController = {
 
       const row = result[0];
 
-      const parseApprover = (approver: string): IApprover => {
+      const parseApprover = (approver: string): Approver => {
         const [_id, _fullname] = approver.split("-");
         const id = Number(_id);
         const fullname = String(_fullname);
@@ -46,7 +48,7 @@ const AccessController = {
         return { id, fullname };
       };
 
-      const access: IAccess = {
+      const access: Access = {
         id: row.id,
         name: row.name,
         description: row.description,

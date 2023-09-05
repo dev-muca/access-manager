@@ -1,14 +1,14 @@
 import { ChangeEvent, FormEvent, useContext, useState } from "react";
 
 import { AuthContext } from "@/context/AuthContext";
-import { ICredentials, IError } from "@/interfaces/generics";
+import { Credentials, Error } from "@/interfaces/generics";
 
 const useLogin = () => {
   const { Authentication } = useContext(AuthContext);
 
   const [loader, setLoader] = useState<boolean>(false);
-  const [error, setError] = useState<IError>({ field: "", message: "" });
-  const [credentials, setCredentials] = useState<ICredentials>({ username: "", password: "" });
+  const [error, setError] = useState<Error>({ field: "", message: "" });
+  const [credentials, setCredentials] = useState<Credentials>({ username: "", password: "" });
 
   function handleInputChange(e: ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.currentTarget;

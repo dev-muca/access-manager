@@ -9,7 +9,7 @@ import { UserProvider } from "@/context/AuthContext";
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
 
-  const excludeNavbarPages = ["/"];
+  const excludeNavbarPages = ["/", "404"];
 
   const excludeNavbar = excludeNavbarPages.includes(router.pathname);
 

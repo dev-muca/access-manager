@@ -1,20 +1,20 @@
 import axios, { isAxiosError } from "axios";
 
-import { IUser } from "@/interfaces/user";
-import { ICredentials, IError } from "@/interfaces/generics";
-import { IRequest } from "@/interfaces/request";
+import { User } from "@/interfaces/user";
+import { Credentials, Error } from "@/interfaces/generics";
+import { Request } from "@/interfaces/request";
 
 const baseAPI = axios.create({
   baseURL: process.env.API_BASE_URL,
 });
 
 interface AuthResponse {
-  user: IUser;
-  error: IError;
+  user: User;
+  error: Error;
 }
 
 const useApi = () => {
-  const postAuth = async ({ username, password }: ICredentials): Promise<AuthResponse | null> => {
+  const postAuth = async ({ username, password }: Credentials): Promise<AuthResponse | null> => {
     try {
       const response = await baseAPI.post("/api/user/auth", { username, password });
       return response.data;
@@ -61,17 +61,15 @@ const useApi = () => {
     approverOwner,
     requestDate,
     approver,
-  }: IRequest) => {
+  }: Request) => {
     try {
       const response = await baseAPI.post("/api/request/", {
-        body: {
-          idAccess,
-          idRequester,
-          justification,
-          approverOwner,
-          requestDate,
-          approver,
-        },
+        idAccess,
+        idRequester,
+        justification,
+        approverOwner,
+        requestDate,
+        approver,
       });
 
       return response.data;
@@ -81,7 +79,17 @@ const useApi = () => {
     }
   };
 
-  return { postAuth, getUserInfo, getAccessInfo, getAcessApprover, postRequest };
+  const getRequestsInfo = async (id?: number) => {
+    try {
+      const response = await baseAPI.get("/api/request", { params: { reqId: id } });
+      return response.data;
+    } catch (err: any) {
+      if (isAxiosError(err)) return err.response?.data;
+      return null;
+    }
+  };
+
+  return { postAuth, getUserInfo, getAccessInfo, getAcessApprover, postRequest, getRequestsInfo };
 };
 
 export default useApi;

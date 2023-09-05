@@ -2,12 +2,12 @@ import { FormEvent, useEffect, useState } from "react";
 
 import useApi from "./useApi";
 
-import { IAccess } from "@/interfaces/access";
+import { Access } from "@/interfaces/access";
 
 const useSearch = () => {
   const { getAccessInfo } = useApi();
   const [loading, setLoading] = useState<boolean>(true);
-  const [dataRows, setDataRows] = useState<IAccess[]>(null!);
+  const [dataRows, setDataRows] = useState<Access[]>(null!);
   const [searchValue, setSearchValue] = useState<number | string>();
 
   useEffect(() => {

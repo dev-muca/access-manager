@@ -1,6 +1,6 @@
-import { IApprover } from "./approver";
+import { Approver } from "./approver";
 
-export interface IRequest {
+export interface Request {
   id?: number;
   idAccess?: number;
   idRequester?: number;
@@ -9,5 +9,16 @@ export interface IRequest {
   requestDate?: string;
   approvalDate?: string;
   idStatus?: number;
-  approver?: IApprover[];
+  approver?: Approver[];
+}
+
+export interface Requests {
+  id?: number;
+  name?: string;
+  approver_owner?: boolean;
+  justification?: string;
+  request_date?: string;
+  username?: string;
+  fullname?: string;
+  status?: string;
 }

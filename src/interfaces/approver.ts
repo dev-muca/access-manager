@@ -1,4 +1,4 @@
-export interface IApprover {
+export interface Approver {
   id: number;
   fullname: string;
 }

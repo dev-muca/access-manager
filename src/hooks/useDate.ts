@@ -2,51 +2,25 @@ import { useMemo, useState } from "react";
 
 const date = new Date();
 
-interface IOptions {
+interface Options {
   format: "web" | "database";
 }
 
 const useDate = () => {
-  const [time, setTime] = useState<string>();
-  const [data, setData] = useState<string>();
-  const [full, setFull] = useState<string>();
+  const [time, setTime] = useState("");
 
-  function getTime() {
-    const hour = date.getHours();
-    const minutes = date.getMinutes();
-    const seconds = date.getSeconds();
-    const currentTime = `${hour < 9 ? "0" + hour : hour}:${minutes < 9 ? "0" + minutes : minutes}:${
-      seconds < 9 ? "0" + seconds : seconds
-    }`;
-    return currentTime;
-  }
+  const getTime = () => {
+    const date = new Date().toLocaleString();
+    const arr = date.split(", ");
+    const currentDate = arr[0].split("/").reverse().join("-");
+    const currentTime = arr[1];
 
-  // function getDate({ format }: IOptions) {
-  //   const day = date.getDate();
-  //   const month = date.getMonth();
-  //   const year = date.getFullYear();
-  //   const currentDate =
-  //     format === "web"
-  //       ? `${day < 9 ? "0" + day : day}/${month < 9 ? "0" + month : month}/${year}`
-  //       : `${year}-${month < 9 ? "0" + month : month}-${day < 9 ? "0" + day : day}`;
-  //   return currentDate;
-  // }
+    const currentDateTime = `${currentDate} ${currentTime}`;
+    setTime(currentDateTime);
+    return currentDateTime;
+  };
 
-  // function getFullDateTime() {
-  //   const time = getTime();
-  //   const date = getDate({ format: "database" });
-  //   const datetime = `${date} ${time}`;
-  //   return datetime;
-  // }
-
-  // const getFullTime = useMemo(() => {
-  //   const time = getTime();
-  //   const date = getDate({ format: "database" });
-  //   const datetime = `${date} ${time}`;
-  //   return datetime;
-  // }, []);
-
-  // return { getTime, getDate, getFullDateTime, getFullTime };
+  return { getTime };
 };
 
 export default useDate;

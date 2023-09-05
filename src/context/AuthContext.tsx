@@ -3,16 +3,16 @@ import { destroyCookie, parseCookies, setCookie } from "nookies";
 import { createContext, ReactNode, useEffect, useState } from "react";
 
 import useApi from "@/hooks/useApi";
-import { IUser } from "@/interfaces/user";
-import { ICredentials } from "@/interfaces/generics";
+import { User } from "@/interfaces/user";
+import { Credentials } from "@/interfaces/generics";
 
 interface ProviderProps {
   children: ReactNode;
 }
 
 interface UserContextProps {
-  session: IUser | null;
-  Authentication: ({ username, password }: ICredentials) => Promise<any>;
+  session: User | null;
+  Authentication: ({ username, password }: Credentials) => Promise<any>;
   Logout: () => void;
 }
 
@@ -22,7 +22,7 @@ export function UserProvider({ children }: ProviderProps) {
   //
   const router = useRouter();
   const { postAuth, getUserInfo } = useApi();
-  const [session, setSession] = useState<IUser | null>(null);
+  const [session, setSession] = useState<User | null>(null);
 
   useEffect(() => {
     const { ["sga-auth@token"]: token } = parseCookies();
@@ -36,7 +36,7 @@ export function UserProvider({ children }: ProviderProps) {
         .catch((err) => console.log(err));
   }, []);
 
-  async function Authentication({ username, password }: ICredentials) {
+  async function Authentication({ username, password }: Credentials) {
     try {
       const response = await postAuth({ username, password });
 

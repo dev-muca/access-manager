@@ -1,8 +1,8 @@
-import { IApprover } from "./approver";
+import { Approver } from "./approver";
 
-export interface IAccess {
+export interface Access {
   id: number;
   name: string;
   description: string;
-  approver: IApprover[];
+  approver: Approver[];
 }

@@ -4,8 +4,8 @@ import { useState, useEffect, FormEvent, ChangeEvent, useContext } from "react";
 import useApi from "./useApi";
 import useDate from "./useDate";
 
-import { IAccess } from "@/interfaces/access";
-import { IRequest } from "@/interfaces/request";
+import { Access } from "@/interfaces/access";
+import { Request } from "@/interfaces/request";
 import { AuthContext } from "@/context/AuthContext";
 
 const useRequest = () => {
@@ -18,9 +18,9 @@ const useRequest = () => {
   const { reqId } = router.query;
 
   const [loader, setLoader] = useState<boolean>(true);
-  const [access, setAccess] = useState<IAccess>(null!);
+  const [access, setAccess] = useState<Access>(null!);
   const [approverOwner, setApproverOwner] = useState<boolean>(false);
-  const [request, setRequest] = useState<IRequest>({ approverOwner });
+  const [request, setRequest] = useState<Request>({ approverOwner });
 
   useEffect(() => {
     getAcessApprover(Number(reqId))
@@ -30,6 +30,14 @@ const useRequest = () => {
       .catch((err) => console.log(err))
       .finally(() => setLoader(false));
   }, []);
+
+  useEffect(() => {
+    if (request?.idAccess && request?.idRequester && request?.requestDate) {
+      postRequest(request)
+        .then(({ requestNumber }) => setRequest({ id: requestNumber }))
+        .catch((err) => console.log(err));
+    }
+  }, [request]);
 
   function handleInputChange(e: ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.currentTarget;
@@ -43,21 +51,14 @@ const useRequest = () => {
 
   async function onSubmitForm(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    // setLoader(true);
-
-    const currentDate = getTime();
 
     setRequest((prevData) => ({
       ...prevData,
       idAccess: access.id,
       idRequester: session?.id,
       approver: access.approver,
-      requestDate: String(currentDate),
+      requestDate: getTime(),
     }));
-
-    console.log(request);
-
-    // const response = await postRequest();
   }
 
   return {
@@ -65,7 +66,6 @@ const useRequest = () => {
     access,
     request,
     approverOwner,
-    setJustification: setApproverOwner,
     handleInputChange,
     handleChangeJustification,
     onSubmitForm,

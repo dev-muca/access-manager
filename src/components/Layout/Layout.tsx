@@ -3,7 +3,7 @@ import { Navbar } from "../Navbar/Navbar";
 import { AuthMiddleware } from "../Middleware/AuthMiddleware";
 
 interface LayoutProps {
-  excludeNavbar: any;
+  excludeNavbar: boolean;
   children: ReactNode;
 }
 

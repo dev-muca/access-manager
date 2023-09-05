@@ -1,9 +1,9 @@
-export interface ICredentials {
+export interface Credentials {
   username: string;
   password: string;
 }
 
-export interface IError {
+export interface Error {
   code?: number;
   field: string;
   message: string;
