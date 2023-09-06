@@ -14,7 +14,7 @@ interface AuthResponse {
 }
 
 const useApi = () => {
-  const postAuth = async ({ username, password }: Credentials): Promise<AuthResponse | null> => {
+  const postAuth = async ({ username, password }: Credentials) => {
     try {
       const response = await baseAPI.post("/api/user/auth", { username, password });
       return response.data;

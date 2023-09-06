@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useState, useEffect, FormEvent, ChangeEvent, useContext } from "react";
+import { useState, useEffect, FormEvent, ChangeEvent, useContext, FocusEventHandler } from "react";
 
 import useApi from "./useApi";
 import useDate from "./useDate";
@@ -7,6 +7,7 @@ import useDate from "./useDate";
 import { Access } from "@/interfaces/access";
 import { Request } from "@/interfaces/request";
 import { AuthContext } from "@/context/AuthContext";
+import { Error } from "@/interfaces/generics";
 
 const useRequest = () => {
   const { session } = useContext(AuthContext);
@@ -17,27 +18,32 @@ const useRequest = () => {
   const router = useRouter();
   const { reqId } = router.query;
 
-  const [loader, setLoader] = useState<boolean>(true);
   const [access, setAccess] = useState<Access>(null!);
+  const [loader, setLoader] = useState<boolean>(true);
+  const [request, setRequest] = useState<Request>(null!);
+  const [loaderBtn, setLoaderBtn] = useState<boolean>(false);
   const [approverOwner, setApproverOwner] = useState<boolean>(false);
-  const [request, setRequest] = useState<Request>({ approverOwner });
+  const [error, setError] = useState<Error>({ field: "", message: "" });
 
   useEffect(() => {
     getAccessApprover(Number(reqId))
       .then(({ access }) => setAccess(access))
-      .catch((err) => console.log("ERRO:", err))
+      .catch((err) => console.log(err))
       .finally(() => setLoader(false));
   }, []);
 
-  useEffect(() => {
-    if (request?.idAccess && request?.idRequester && request?.requestDate) {
-      postRequest(request)
-        .then(({ requestNumber }) => setRequest({ id: requestNumber }))
-        .catch((err) => console.log(err));
-    }
-  }, [request]);
+  // useEffect(() => {
+  //   if (request?.idAccess && request?.idRequester && request?.requestDate) {
+  //     setLoaderBtn(true);
 
-  function handleInputChange(e: ChangeEvent<HTMLInputElement>) {
+  //     postRequest(request)
+  //       .then(({ requestNumber }) => setRequest({ id: requestNumber }))
+  //       .catch((err) => console.log(err))
+  //       .finally(() => setLoader(false));
+  //   }
+  // }, [request]);
+
+  function handleInputChange(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
     const { name, value } = e.currentTarget;
     setRequest((prevData) => ({ ...prevData, [name]: value }));
   }
@@ -47,22 +53,43 @@ const useRequest = () => {
     setApproverOwner(!approverOwner);
   }
 
+  // async function fillRequest() {
+  //   setRequest((prevData) => ({
+  //     ...prevData,
+  //     idAccess: access.id,
+  //     idRequester: session?.id,
+  //     approver: access.approver,
+  //     requestDate: getTime(),
+  //   }));
+  // }
+
   async function onSubmitForm(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    setRequest((prevData) => ({
-      ...prevData,
+    await postRequest({
       idAccess: access.id,
+      requestDate: getTime(),
       idRequester: session?.id,
       approver: access.approver,
-      requestDate: getTime(),
-    }));
+      justification: request?.justification,
+      approverOwner: request?.approverOwner,
+    })
+      .then(({ requestNumber, error }) => {
+        console.log({ requestNumber, error });
+
+        if (error) setError(error);
+        setRequest({ id: requestNumber });
+      })
+      .catch((err) => console.log(err))
+      .finally(() => setLoader(false));
   }
 
   return {
-    loader,
+    error,
     access,
+    loader,
     request,
+    loaderBtn,
     approverOwner,
     handleInputChange,
     handleChangeJustification,

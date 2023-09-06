@@ -1,4 +1,4 @@
-import { InputHTMLAttributes, ReactNode } from "react";
+import { FocusEventHandler, InputHTMLAttributes, ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
 import { FaInfoCircle } from "react-icons/fa";
 

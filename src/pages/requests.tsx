@@ -8,6 +8,16 @@ import { Requests } from "@/interfaces/request";
 export default function Request() {
   const { loader, requests } = useRequests();
 
+  const colors = (status: keyof typeof cores) => {
+    const cores = {
+      Pendente: "bg-yellow-500",
+      Aprovado: "bg-green-500",
+      Reprovado: "bg-red-500",
+    };
+
+    return cores[status];
+  };
+
   return (
     <Container title="Minhas solicitações" loading={loader}>
       {requests?.length ? (
