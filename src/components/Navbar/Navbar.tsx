@@ -1,12 +1,12 @@
+import { useRouter } from "next/router";
 import { twMerge } from "tailwind-merge";
 import { TbLockUp } from "react-icons/tb";
-import { useRouter } from "next/router";
-import { AiOutlineDashboard } from "react-icons/ai";
 import { useContext, useState } from "react";
+import { AiOutlineDashboard } from "react-icons/ai";
 
+import { Menu } from "./Menu";
+import { Exit } from "./Exit";
 import { Option } from "./Option";
-import { ToggleButton } from "./ToggleButton";
-import { LogoutButton } from "./LogoutButton";
 
 import { AuthContext } from "@/context/AuthContext";
 
@@ -33,7 +33,7 @@ export function Navbar() {
   return (
     <nav className="h-[100vh] p-2">
       <main className={NavClass}>
-        <ToggleButton displayName={session?.fullname} isToggled={open} onClick={toggleNav} />
+        <Menu displayName={session?.fullname} isToggled={open} onClick={toggleNav} />
 
         <ul className="h-4/5 overflow-hidden">
           <Option
@@ -50,7 +50,7 @@ export function Navbar() {
           />
         </ul>
 
-        <LogoutButton onClick={Logout} />
+        <Exit onClick={Logout} />
       </main>
     </nav>
   );

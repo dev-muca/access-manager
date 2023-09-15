@@ -1,9 +1,10 @@
 import { RowDataPacket } from "mysql2/promise";
 
 import pool from "../model/pool";
+
 import { Access } from "@/interfaces/access";
 import { Approver } from "@/interfaces/approver";
-import { Error } from "@/interfaces/generics";
+import { Errors } from "@/interfaces/errors";
 
 const AccessController = {
   getInfo: async (id?: number) => {
@@ -59,7 +60,7 @@ const AccessController = {
 
       return { access };
     } catch (err: any) {
-      const error: Error = {
+      const error: Errors = {
         field: "message",
         message: "Acesso sem aprovador(es)",
       };

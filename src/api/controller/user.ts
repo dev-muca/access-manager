@@ -1,7 +1,7 @@
 import { RowDataPacket } from "mysql2/promise";
 import pool from "../model/pool";
 import { User } from "@/interfaces/user";
-import { Error } from "@/interfaces/generics";
+import { Errors } from "@/interfaces/errors";
 
 const UserController = {
   getInfo: async (username: string): Promise<any> => {
@@ -40,7 +40,7 @@ const UserController = {
 
       return user;
     } catch (err: any) {
-      let error: Error = {
+      let error: Errors = {
         field: "message",
         message: err.message,
       };

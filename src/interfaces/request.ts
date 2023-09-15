@@ -15,9 +15,9 @@ export interface Request {
 export interface Requests {
   id?: number;
   name?: string;
-  approver_owner?: boolean;
+  approverOwner?: boolean;
   justification?: string;
-  request_date?: string;
+  requestDate?: string;
   username?: string;
   fullname?: string;
   status?: string;

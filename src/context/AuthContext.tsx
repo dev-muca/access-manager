@@ -4,7 +4,7 @@ import { createContext, ReactNode, useEffect, useState } from "react";
 
 import useApi from "@/hooks/useApi";
 import { User } from "@/interfaces/user";
-import { Credentials } from "@/interfaces/generics";
+import { Credentials } from "@/interfaces/credentials";
 
 interface ProviderProps {
   children: ReactNode;
@@ -21,7 +21,7 @@ export const AuthContext = createContext({} as UserContextProps);
 export function UserProvider({ children }: ProviderProps) {
   //
   const router = useRouter();
-  const { postAuth, getUserInfo } = useApi();
+  const { getAuth, getUserInfo } = useApi();
   const [session, setSession] = useState<User | null>(null);
 
   useEffect(() => {
@@ -38,7 +38,7 @@ export function UserProvider({ children }: ProviderProps) {
 
   async function Authentication({ username, password }: Credentials) {
     try {
-      const response = await postAuth({ username, password });
+      const response = await getAuth({ username, password });
 
       if (response?.user?.validationToken) {
         setCookie(undefined, "sga-auth@token", response.user.validationToken, { expiresIn: 60 * 60 * 1 });

@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 import useRequest from "@/hooks/useRequest";
@@ -80,7 +79,7 @@ export default function Request() {
           </div>
         </FormGroup>
 
-        <Button label="Solicitar" className="w-full" loader={loaderBtn} />
+        <Button label="Solicitar" className="w-full mb-10" loader={loaderBtn} />
 
         {request?.id && (
           <Alert

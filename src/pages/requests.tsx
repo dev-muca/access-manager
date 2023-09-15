@@ -8,16 +8,6 @@ import { Requests } from "@/interfaces/request";
 export default function Request() {
   const { loader, requests } = useRequests();
 
-  const colors = (status: keyof typeof cores) => {
-    const cores = {
-      Pendente: "bg-yellow-500",
-      Aprovado: "bg-green-500",
-      Reprovado: "bg-red-500",
-    };
-
-    return cores[status];
-  };
-
   return (
     <Container title="Minhas solicitações" loading={loader}>
       {requests?.length ? (
@@ -48,7 +38,7 @@ export default function Request() {
                   <td className="px-6 py-4 text-center">{row.id}</td>
                   <td className="px-6 py-4 hidden sm:block">{row.name}</td>
                   <td className="px-6 py-4 text-center">
-                    {row.request_date?.split(" ")[0].split("-").reverse().join("/")}
+                    {row.requestDate?.split(" ")[0].split("-").reverse().join("/")}
                   </td>
                   <td
                     className={`px-6 py-4 font-bold text-center ${

@@ -1,8 +1,8 @@
 import axios, { isAxiosError } from "axios";
 
 import { User } from "@/interfaces/user";
-import { Credentials, Error } from "@/interfaces/generics";
 import { Request } from "@/interfaces/request";
+import { Credentials } from "@/interfaces/credentials";
 
 const baseAPI = axios.create({
   baseURL: process.env.API_BASE_URL,
@@ -14,7 +14,7 @@ interface AuthResponse {
 }
 
 const useApi = () => {
-  const postAuth = async ({ username, password }: Credentials) => {
+  const getAuth = async ({ username, password }: Credentials) => {
     try {
       const response = await baseAPI.post("/api/user/auth", { username, password });
       return response.data;
@@ -54,7 +54,7 @@ const useApi = () => {
     }
   };
 
-  const postRequest = async ({
+  const createRequest = async ({
     idAccess,
     idRequester,
     justification,
@@ -89,7 +89,7 @@ const useApi = () => {
     }
   };
 
-  return { postAuth, getUserInfo, getAccessInfo, getAccessApprover, postRequest, getRequestsInfo };
+  return { getAuth, getUserInfo, getAccessInfo, getAccessApprover, createRequest, getRequestsInfo };
 };
 
 export default useApi;

@@ -8,7 +8,7 @@ const useSearch = () => {
   const { getAccessInfo } = useApi();
   const [loading, setLoading] = useState<boolean>(true);
   const [dataRows, setDataRows] = useState<Access[]>(null!);
-  const [searchValue, setSearchValue] = useState<number | string>();
+  const [searchValue, setSearchValue] = useState<number | string>("");
 
   useEffect(() => {
     getAccessInfo()

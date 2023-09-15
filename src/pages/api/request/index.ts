@@ -1,6 +1,7 @@
-import RequestController from "@/api/controller/request";
-import { Request } from "@/interfaces/request";
 import { NextApiRequest, NextApiResponse } from "next";
+
+import { Request } from "@/interfaces/request";
+import RequestController from "@/api/controller/request";
 
 export default async function handle(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "GET") {
@@ -16,8 +17,6 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
   if (req.method === "POST") {
     try {
       const { idAccess, idRequester, justification, approverOwner, requestDate, approver }: Request = req.body;
-
-      //console.log("API RECEIVED:", { idAccess, idRequester, justification, approverOwner, requestDate, approver });
 
       if (!idAccess || !idRequester || !requestDate || !approver?.length)
         return res.status(400).send({ error: { field: "message", message: "Campos ausentes!" } });

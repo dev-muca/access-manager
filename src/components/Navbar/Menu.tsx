@@ -1,16 +1,16 @@
-import { ButtonHTMLAttributes } from "react";
-import { GiHamburgerMenu } from "react-icons/gi";
-import { BiLeftArrowAlt } from "react-icons/bi";
-import { FaUserCircle } from "react-icons/fa";
-import { twMerge } from "tailwind-merge";
 import Link from "next/link";
+import { twMerge } from "tailwind-merge";
+import { ButtonHTMLAttributes } from "react";
+import { FaUserCircle } from "react-icons/fa";
+import { BiLeftArrowAlt } from "react-icons/bi";
+import { GiHamburgerMenu } from "react-icons/gi";
 
 interface ToggleProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   displayName?: string;
   isToggled?: boolean;
 }
 
-export function ToggleButton({ displayName, isToggled = false, ...props }: ToggleProps) {
+export function Menu({ displayName, isToggled = false, ...props }: ToggleProps) {
   //
   const ProfileClass = twMerge(
     `${isToggled ? "flex" : "hidden"}`,

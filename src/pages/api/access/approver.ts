@@ -1,6 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import AccessController from "@/api/controller/access";
-import { error } from "console";
 
 export default async function handle(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "GET") {

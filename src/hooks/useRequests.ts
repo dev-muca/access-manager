@@ -5,12 +5,8 @@ import useApi from "./useApi";
 
 import { Requests } from "@/interfaces/request";
 import { AuthContext } from "@/context/AuthContext";
-import { IndexInfo } from "typescript";
 
 const useRequests = () => {
-  const router = useRouter();
-  const { reqId } = router.query;
-
   const { session } = useContext(AuthContext);
   const { getRequestsInfo } = useApi();
 
