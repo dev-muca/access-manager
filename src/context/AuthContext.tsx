@@ -10,43 +10,45 @@ interface ProviderProps {
   children: ReactNode;
 }
 
-interface UserContextProps {
+interface AuthContextProps {
   session: User | null;
   Authentication: ({ username, password }: Credentials) => Promise<any>;
   Logout: () => void;
 }
 
-export const AuthContext = createContext({} as UserContextProps);
+export const AuthContext = createContext({} as AuthContextProps);
 
-export function UserProvider({ children }: ProviderProps) {
+export function AuthProvider({ children }: ProviderProps) {
   //
   const router = useRouter();
   const { getAuth, getUserInfo } = useApi();
-  const [session, setSession] = useState<User | null>(null);
+  const [session, setSession] = useState<User>(null!);
 
   useEffect(() => {
     const { ["sga-auth@token"]: token } = parseCookies();
 
     if (token)
       getUserInfo(token)
-        .then((response) => {
-          setSession(response!.user);
+        .then(({ user, error }) => {
+          if (error) console.log(error);
+
+          setSession(user!);
           router.push({ pathname: "/dashboard" });
         })
-        .catch((err) => console.log(err));
+        .catch((err) => console.log(err.message));
   }, []);
 
   async function Authentication({ username, password }: Credentials) {
     try {
-      const response = await getAuth({ username, password });
+      const { user, error } = await getAuth({ username, password });
 
-      if (response?.user?.validationToken) {
-        setCookie(undefined, "sga-auth@token", response.user.validationToken, { expiresIn: 60 * 60 * 1 });
-        setSession(response.user);
+      if (error) return error;
+
+      if (user?.validationToken) {
+        setCookie(undefined, "sga-auth@token", user.validationToken, { expiresIn: 60 * 60 * 1 });
+        setSession(user);
         router.push("/dashboard");
       }
-
-      return response?.error;
     } catch (err: any) {
       console.log("Context Error:", err);
       return err;

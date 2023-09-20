@@ -18,16 +18,16 @@ const useRequest = () => {
   const router = useRouter();
   const { reqId } = router.query;
 
-  const [access, setAccess] = useState<Access>(null!);
+  const [access, setAccess] = useState<Access[]>();
   const [loader, setLoader] = useState<boolean>(true);
-  const [request, setRequest] = useState<Request>(null!);
+  const [request, setRequest] = useState<Request>();
   const [loaderBtn, setLoaderBtn] = useState<boolean>(false);
   const [approverOwner, setApproverOwner] = useState<boolean>(false);
-  const [error, setError] = useState<Errors>({ field: "", message: "" });
+  const [error, setError] = useState<Errors>({ code: 200, field: "", message: "" });
 
   useEffect(() => {
     getAccessApprover(Number(reqId))
-      .then(({ access }) => setAccess(access))
+      .then(({ access }) => setAccess(access!))
       .catch((err) => console.log(err))
       .finally(() => setLoader(false));
   }, []);
@@ -46,18 +46,18 @@ const useRequest = () => {
     e.preventDefault();
 
     await createRequest({
-      idAccess: access.id,
+      idAccess: access?.[0].id,
       requestDate: getTime(),
       idRequester: session?.id,
-      approver: access.approver,
+      approver: access?.[0].approver,
       justification: request?.justification,
       approverOwner: request?.approverOwner,
     })
       .then(({ requestNumber, error }) => {
-        console.log({ requestNumber, error });
+        console.log({ request, error });
 
         if (error) setError(error);
-        setRequest({ id: requestNumber });
+        setRequest({ id: request?.id });
       })
       .catch((err) => console.log(err))
       .finally(() => setLoader(false));

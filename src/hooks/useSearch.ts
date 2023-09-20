@@ -7,17 +7,21 @@ import { Access } from "@/interfaces/access";
 const useSearch = () => {
   const { getAccessInfo } = useApi();
   const [loading, setLoading] = useState<boolean>(true);
-  const [dataRows, setDataRows] = useState<Access[]>(null!);
+  const [dataRows, setDataRows] = useState<Access[]>([]);
   const [searchValue, setSearchValue] = useState<number | string>("");
+  const [order, setOrder] = useState<string>("name");
 
   useEffect(() => {
     getAccessInfo()
-      .then((response) => setDataRows(response.access))
+      .then(({ access, error }) => {
+        if (error) console.log(error);
+        setDataRows(access!);
+      })
       .catch((err) => console.log(err))
       .finally(() => setLoading(false));
   }, []);
 
-  const filteredRows =
+  const rows =
     searchValue && dataRows
       ? dataRows.filter(
           (access) =>
@@ -27,10 +31,9 @@ const useSearch = () => {
 
   function onSubmitForm(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    console.log(searchValue);
   }
 
-  return { loading, searchValue, filteredRows, setSearchValue, onSubmitForm };
+  return { loading, searchValue, rows, order, setOrder, setSearchValue, onSubmitForm };
 };
 
 export default useSearch;

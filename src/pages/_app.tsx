@@ -3,8 +3,9 @@ import "@/styles/globals.css";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import type { AppProps } from "next/app";
+
 import { Layout } from "@/components/Layout/Layout";
-import { UserProvider } from "@/context/AuthContext";
+import { AuthProvider } from "@/context/AuthContext";
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
@@ -19,11 +20,11 @@ export default function App({ Component, pageProps }: AppProps) {
         <title>SGA | Sistema Gestor Acessos</title>
         <link rel="icon" href="/logo.png" />
       </Head>
-      <UserProvider>
+      <AuthProvider>
         <Layout excludeNavbar={excludeNavbar}>
           <Component {...pageProps} />
         </Layout>
-      </UserProvider>
+      </AuthProvider>
     </>
   );
 }

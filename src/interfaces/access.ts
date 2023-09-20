@@ -4,5 +4,5 @@ export interface Access {
   id: number;
   name: string;
   description: string;
-  approver: Approver[];
+  approver?: Approver[];
 }

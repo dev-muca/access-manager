@@ -1,5 +1,5 @@
 export interface Errors {
-  code?: number;
+  code: number;
   field: string;
   message: string;
 }

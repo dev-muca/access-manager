@@ -1,10 +1,13 @@
 import { RowDataPacket } from "mysql2/promise";
+
 import pool from "../model/pool";
+
 import { User } from "@/interfaces/user";
 import { Errors } from "@/interfaces/errors";
+import { UserOrError } from "@/interfaces/responses";
 
 const UserController = {
-  getInfo: async (username: string): Promise<any> => {
+  getInfo: async (username: string): Promise<UserOrError> => {
     try {
       const conn = await pool.getConnection();
       const query = `SELECT * FROM user WHERE username = ?`;
@@ -38,9 +41,10 @@ const UserController = {
         active: row.active ? true : false,
       };
 
-      return user;
+      return { user };
     } catch (err: any) {
       let error: Errors = {
+        code: 500,
         field: "message",
         message: err.message,
       };
@@ -52,7 +56,7 @@ const UserController = {
         error.message = "Usuário inválido";
       }
 
-      return error;
+      return { error };
     }
   },
 };

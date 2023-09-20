@@ -1,4 +1,5 @@
 import { ChangeEvent } from "react";
+import { GoTriangleDown } from "react-icons/go";
 
 import useSearch from "@/hooks/useSearch";
 
@@ -8,7 +9,7 @@ import { Container } from "@/components/Form/Container";
 import Link from "next/link";
 
 export default function Search() {
-  const { loading, searchValue, filteredRows, setSearchValue, onSubmitForm } = useSearch();
+  const { loading, searchValue, rows, order, setOrder, setSearchValue, onSubmitForm } = useSearch();
 
   return (
     <Container loading={loading}>
@@ -27,14 +28,26 @@ export default function Search() {
         <table className="w-full text-sm text-left text-gray-50 overflow-auto">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 sticky top-0">
             <tr>
-              <th scope="col" className="px-6 py-3 text-center font-bold">
-                ###
+              <th
+                scope="col"
+                className="px-6 py-3 text-center font-bold cursor-pointer hover:bg-gray-100"
+                onClick={() => setOrder("id")}
+              >
+                <span className="flex items-center gap-2">ID {order === "id" && <GoTriangleDown />}</span>
               </th>
-              <th scope="col" className="px-6 py-3 text-center font-bold">
-                Nome
+              <th
+                scope="col"
+                className="px-6 py-3 text-center font-bold cursor-pointer hover:bg-gray-100"
+                onClick={() => setOrder("name")}
+              >
+                <span className="flex items-center gap-2">Nome {order === "name" && <GoTriangleDown />}</span>
               </th>
-              <th scope="col" className="px-6 py-3 text-center font-bold">
-                Descrição
+              <th
+                scope="col"
+                className="px-6 py-3 text-center font-bold cursor-pointer hover:bg-gray-100 hidden sm:block"
+                onClick={() => setOrder("description")}
+              >
+                <span>Descrição {order === "description" && "↓"}</span>
               </th>
               <th scope="col" className="px-6 py-3 text-center font-bold">
                 Ações
@@ -42,7 +55,7 @@ export default function Search() {
             </tr>
           </thead>
           <tbody>
-            {filteredRows?.map((row) => (
+            {rows?.map((row) => (
               <tr key={row.id} className="odd:bg-white even:bg-gray-50 border-b text-gray-800">
                 <td className="px-6 py-4 text-center">{row.id}</td>
                 <td className="px-6 py-4">{row.name}</td>

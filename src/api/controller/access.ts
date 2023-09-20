@@ -4,25 +4,35 @@ import pool from "../model/pool";
 
 import { Access } from "@/interfaces/access";
 import { Approver } from "@/interfaces/approver";
-import { Errors } from "@/interfaces/errors";
+import * as Response from "@/interfaces/responses";
 
 const AccessController = {
-  getInfo: async (id?: number) => {
+  getInfo: async (id?: number, orderBy: string = "name"): Promise<Response.AccessOrError> => {
     try {
+      // const access: Access[] = [];
       const conn = await pool.getConnection();
-      const query = `SELECT id, name, description FROM access ORDER BY name`;
+      const query = `SELECT id, name, description FROM access ORDER BY ${orderBy}`;
 
-      const [result] = await conn.query<RowDataPacket[]>(query, [id]);
+      const [result] = await conn.query<RowDataPacket[]>(query);
       conn.release();
 
-      const access = id ? result.filter((access) => access.id == id) : result;
-      return access;
+      const _mapData = result.map((row) => {
+        const _id: number = row.id;
+        const _name: string = row.name;
+        const _description: string = row.description;
+
+        return { id: _id, name: _name, description: _description };
+      });
+
+      const access = id ? _mapData.filter((access) => access.id === id) : _mapData;
+
+      return { access };
     } catch (err: any) {
-      return err.message;
+      return { error: err };
     }
   },
 
-  getApprover: async (id: number) => {
+  getApprover: async (id: number): Promise<Response.AccessApproverOrError> => {
     try {
       const conn = await pool.getConnection();
       const query = `SELECT A.id,
@@ -60,12 +70,7 @@ const AccessController = {
 
       return { access };
     } catch (err: any) {
-      const error: Errors = {
-        field: "message",
-        message: "Acesso sem aprovador(es)",
-      };
-
-      return { error };
+      return { error: err };
     }
   },
 };

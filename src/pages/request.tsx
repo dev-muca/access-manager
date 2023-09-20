@@ -30,16 +30,16 @@ export default function Request() {
           <div className="w-full p-4 pl-6 flex flex-col gap-2">
             <p className="flex gap-2">
               <span className="font-medium">Nome:</span>
-              <span>{access?.name}</span>
+              <span>{access.name}</span>
             </p>
             <p className="flex gap-2">
               <span className="font-medium">Descrição:</span>
-              <span>{access?.description}</span>
+              <span>{access.description}</span>
             </p>
             <ul className="mt-4">
               <span className="font-medium">Aprovadores:</span>
-              {access?.approver.length ? (
-                access?.approver?.map((approver, i) => (
+              {access.approver?.length ? (
+                access.approver?.map((approver, i) => (
                   <li key={i} className="even:bg-gray-100 odd:bg-white px-2 py-0.5">
                     {approver.fullname}
                   </li>
