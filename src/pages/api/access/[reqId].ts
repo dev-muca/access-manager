@@ -3,7 +3,8 @@ import AccessController from "@/api/controller/access";
 
 export default async function handle(req: NextApiRequest, res: NextApiResponse) {
   try {
-    const { access, error } = await AccessController.getInfo();
+    const reqId = req.query.reqId;
+    const { access, error } = await AccessController.getInfo(Number(reqId));
 
     if (error) {
       const { code, field, message } = error;

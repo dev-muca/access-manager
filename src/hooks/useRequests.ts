@@ -14,9 +14,9 @@ const useRequests = () => {
   const [requests, setRequests] = useState<Requests[]>();
 
   useEffect(() => {
-    getRequestsInfo(Number(session?.id))
-      .then(({ requests }) => {
-        console.log(requests);
+    getRequestsInfo(session?.id)
+      .then(({ requests, error }) => {
+        if (error) throw new Error(error.message);
         setRequests(requests);
       })
       .catch((err) => console.log(err))

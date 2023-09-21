@@ -18,7 +18,7 @@ const useRequest = () => {
   const router = useRouter();
   const { reqId } = router.query;
 
-  const [access, setAccess] = useState<Access[]>();
+  const [access, setAccess] = useState<Access>();
   const [loader, setLoader] = useState<boolean>(true);
   const [request, setRequest] = useState<Request>();
   const [loaderBtn, setLoaderBtn] = useState<boolean>(false);
@@ -27,7 +27,10 @@ const useRequest = () => {
 
   useEffect(() => {
     getAccessApprover(Number(reqId))
-      .then(({ access }) => setAccess(access!))
+      .then(({ access }) => {
+        console.log({ access });
+        setAccess(access!);
+      })
       .catch((err) => console.log(err))
       .finally(() => setLoader(false));
   }, []);
@@ -46,18 +49,16 @@ const useRequest = () => {
     e.preventDefault();
 
     await createRequest({
-      idAccess: access?.[0].id,
+      idAccess: access?.id,
       requestDate: getTime(),
       idRequester: session?.id,
-      approver: access?.[0].approver,
+      approver: access?.approver,
       justification: request?.justification,
       approverOwner: request?.approverOwner,
     })
       .then(({ requestNumber, error }) => {
-        console.log({ request, error });
-
         if (error) setError(error);
-        setRequest({ id: request?.id });
+        setRequest({ id: requestNumber });
       })
       .catch((err) => console.log(err))
       .finally(() => setLoader(false));

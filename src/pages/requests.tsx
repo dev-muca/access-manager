@@ -42,11 +42,11 @@ export default function Request() {
                   </td>
                   <td
                     className={`px-6 py-4 font-bold text-center ${
-                      row?.status == "Pendente"
+                      row?.status === "Pendente"
                         ? "text-amber-500"
-                        : row?.status == "Aprovado"
+                        : row?.status === "Aprovado"
                         ? "text-emerald-600"
-                        : row?.status == "Reprovado"
+                        : row?.status === "Reprovado"
                         ? "text-red-600"
                         : "text-black"
                     }`}

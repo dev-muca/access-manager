@@ -1,6 +1,6 @@
 import { Access } from "./access";
 import { Errors } from "./errors";
-import { Request } from "./request";
+import { Requests } from "./request";
 import { User } from "./user";
 
 export interface UserOrError {
@@ -19,6 +19,11 @@ export interface AccessApproverOrError {
 }
 
 export interface RequestOrError {
+  requests?: Requests[];
+  error?: Errors;
+}
+
+export interface RequestNumberOrError {
   requestNumber?: number;
   error?: Errors;
 }

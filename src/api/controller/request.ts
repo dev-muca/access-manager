@@ -2,9 +2,17 @@ import { ResultSetHeader, RowDataPacket } from "mysql2/promise";
 
 import pool from "../model/pool";
 import { Request } from "@/interfaces/request";
+import * as Response from "@/interfaces/responses";
 
 const RequestController = {
-  createRequest: async ({ idAccess, idRequester, justification, approverOwner, requestDate, approver }: Request) => {
+  createRequest: async ({
+    idAccess,
+    idRequester,
+    justification,
+    approverOwner,
+    requestDate,
+    approver,
+  }: Request): Promise<Response.RequestNumberOrError> => {
     try {
       const conn = await pool.getConnection();
       const requestQuery = `INSERT INTO request (id_access, id_requester, justification, approver_owner, request_date) VALUES (?, ?, ?, ?, ?)`;
@@ -31,9 +39,9 @@ const RequestController = {
         conn.release();
       });
 
-      return requestNumber;
+      return { requestNumber };
     } catch (err: any) {
-      return err.message;
+      return { error: { code: 500, field: "message", message: err.message } };
     }
   },
 
@@ -43,12 +51,11 @@ const RequestController = {
       const query = `SELECT
                         R.id,
                         A.name,
-                        R.approver_owner,
+                        R.approver_owner AS approverOwner,
                         R.justification,
-                        R.request_date,
                         U.username,
                         U.fullname,
-                        DATE_FORMAT(R.request_date, '%Y-%m-%d %H:%i:%s') AS request_date,
+                        DATE_FORMAT(R.request_date, '%Y-%m-%d %H:%i:%s') AS requestDate,
                         S.status
                      FROM request R
                         LEFT JOIN user U ON R.id_requester = U.id

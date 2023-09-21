@@ -29,18 +29,20 @@ const useApi = () => {
 
   const getAccessInfo = async (id?: number): Promise<Response.AccessOrError> => {
     try {
-      const response = await baseAPI.get("/api/access", { params: { reqId: id } });
+      const response = await baseAPI.get(`/api/access/${id}`);
       return response.data;
     } catch (err: any) {
+      console.log("Erro ao obter dados de um acesso");
       return err.response?.data;
     }
   };
 
-  const getAccessApprover = async (id?: number): Promise<Response.AccessOrError> => {
+  const getAccessApprover = async (id?: number): Promise<Response.AccessApproverOrError> => {
     try {
       const response = await baseAPI.get("/api/access/approver", { params: { reqId: id } });
       return response.data;
     } catch (err: any) {
+      console.log("Erro ao obter dados de acesso com aprovador");
       return err.response?.data;
     }
   };
@@ -69,18 +71,16 @@ const useApi = () => {
     }
   };
 
-  // const getRequestsInfo = async (id?: number) => {
-  //   try {
-  //     const response = await baseAPI.get("/api/request", { params: { reqId: id } });
-  //     return response.data;
-  //   } catch (err: any) {
-  //     if (isAxiosError(err)) return err.response?.data;
-  //     return null;
-  //   }
-  // };
+  const getRequestsInfo = async (id?: number): Promise<Response.RequestOrError> => {
+    try {
+      const response = await baseAPI.get("/api/request", { params: { reqId: id } });
+      return response.data;
+    } catch (err: any) {
+      return err.response?.data;
+    }
+  };
 
-  // return { getAuth, getUserInfo, getAccessInfo, getAccessApprover, createRequest, getRequestsInfo };
-  return { getAuth, getUserInfo, getAccessInfo, getAccessApprover, createRequest };
+  return { getAuth, getUserInfo, getAccessInfo, getAccessApprover, createRequest, getRequestsInfo };
 };
 
 export default useApi;
