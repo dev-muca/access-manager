@@ -1,0 +1,32 @@
+{
+  "sqltools.connections": [
+    {
+      "mysqlOptions": {
+        "authProtocol": "default",
+        "enableSsl": "Disabled"
+      },
+      "previewLimit": 50,
+      "server": "127.0.0.1",
+      "port": 3306,
+      "driver": "MariaDB",
+      "name": "SGA Local",
+      "database": "sga",
+      "username": "root",
+      "password": "root"
+    },
+    {
+      "mysqlOptions": {
+        "authProtocol": "default",
+        "enableSsl": "Disabled"
+      },
+      "previewLimit": 50,
+      "server": "26.246.216.159",
+      "port": 3306,
+      "driver": "MariaDB",
+      "name": "SGA Remoto",
+      "database": "sga",
+      "username": "root",
+      "password": "113551gg@"
+    }
+  ]
+}
