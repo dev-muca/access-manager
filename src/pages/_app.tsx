@@ -4,14 +4,13 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import type { AppProps } from "next/app";
 
-import { Layout } from "@/components/Layout/Layout";
+import Layout from "@/components/Layout";
 import { AuthProvider } from "@/context/AuthContext";
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
 
-  const excludeNavbarPages = ["/", "404"];
-
+  const excludeNavbarPages = ["/", "/private", "/Private"];
   const excludeNavbar = excludeNavbarPages.includes(router.pathname);
 
   return (

@@ -3,16 +3,16 @@ import { destroyCookie, parseCookies, setCookie } from "nookies";
 import { createContext, ReactNode, useEffect, useState } from "react";
 
 import useApi from "@/hooks/useApi";
-import { User } from "@/interfaces/user";
-import { Credentials } from "@/interfaces/credentials";
+import IUser from "@/@types/IUser";
+import ICredentials from "@/@types/Icredentials";
 
 interface ProviderProps {
   children: ReactNode;
 }
 
 interface AuthContextProps {
-  session: User | null;
-  Authentication: ({ username, password }: Credentials) => Promise<any>;
+  session: IUser;
+  Authentication: ({ username, password }: ICredentials) => Promise<any>;
   Logout: () => void;
 }
 
@@ -22,7 +22,7 @@ export function AuthProvider({ children }: ProviderProps) {
   //
   const router = useRouter();
   const { getAuth, getUserInfo } = useApi();
-  const [session, setSession] = useState<User>(null!);
+  const [session, setSession] = useState<IUser>(null!);
 
   useEffect(() => {
     const { ["sga-auth@token"]: token } = parseCookies();
@@ -33,12 +33,12 @@ export function AuthProvider({ children }: ProviderProps) {
           if (error) console.log(error);
 
           setSession(user!);
-          router.push({ pathname: "/dashboard" });
+          router.push({ pathname: "/Dashboard" });
         })
         .catch((err) => console.log(err.message));
   }, []);
 
-  async function Authentication({ username, password }: Credentials) {
+  async function Authentication({ username, password }: ICredentials) {
     try {
       const { user, error } = await getAuth({ username, password });
 
@@ -47,11 +47,11 @@ export function AuthProvider({ children }: ProviderProps) {
       if (user?.validationToken) {
         setCookie(undefined, "sga-auth@token", user.validationToken, { expiresIn: 60 * 60 * 1 });
         setSession(user);
-        router.push("/dashboard");
+        router.push("/Dashboard");
       }
     } catch (err: any) {
       console.log("Context Error:", err);
-      return err;
+      // return err;
     }
   }
 

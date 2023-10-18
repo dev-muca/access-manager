@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 
-import useApi from "./useApi";
+import useApi from "@/hooks/useApi";
 
 import { Requests } from "@/interfaces/request";
 import { AuthContext } from "@/context/AuthContext";

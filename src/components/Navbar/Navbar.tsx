@@ -4,13 +4,13 @@ import { TbLockUp } from "react-icons/tb";
 import { useContext, useState } from "react";
 import { AiOutlineDashboard } from "react-icons/ai";
 
-import { Menu } from "./Menu";
-import { Exit } from "./Exit";
-import { Option } from "./Option";
+import Menu from "./Components/Menu";
+import Option from "./Components/Option";
+import Exit from "./Components/Exit";
 
 import { AuthContext } from "@/context/AuthContext";
 
-export function Navbar() {
+const Navbar = () => {
   const router = useRouter();
 
   const { Logout, session } = useContext(AuthContext);
@@ -18,6 +18,7 @@ export function Navbar() {
   const [open, setOpen] = useState(false);
 
   const toggleNav = () => setOpen(!open);
+
   const navigateTo = (path: string) => {
     setOpen(false);
     router.push({
@@ -39,13 +40,13 @@ export function Navbar() {
           <Option
             name={"Dashboard"}
             icon={<AiOutlineDashboard size={24} />}
-            onClick={() => navigateTo("/dashboard")}
+            onClick={() => navigateTo("/Dashboard")}
             open={open}
           />
           <Option
             name={"Meus acessos"}
             icon={<TbLockUp size={24} />}
-            onClick={() => navigateTo("/access")}
+            onClick={() => navigateTo("/Access")}
             open={open}
           />
         </ul>
@@ -54,4 +55,6 @@ export function Navbar() {
       </main>
     </nav>
   );
-}
+};
+
+export default Navbar;
