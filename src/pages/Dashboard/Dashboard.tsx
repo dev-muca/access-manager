@@ -1,4 +1,5 @@
 import Alert from "@/components/Alert";
+import Badge from "@/components/Badge";
 import Container from "@/components/Container";
 
 const Dashboard = () => {

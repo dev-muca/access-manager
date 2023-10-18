@@ -63,7 +63,7 @@ const Search = () => {
                 <td className="px-6 py-4">{row.name}</td>
                 <td className="px-6 py-4 hidden sm:block">{row.description?.substring(0, 75) + "..."}</td>
                 <td className="px-6 py-4 text-center">
-                  <Link href={{ pathname: "/request", query: { reqId: row.id } }} className="text-blue-700 underline">
+                  <Link href={{ pathname: "/Request", query: { id: row.id } }} className="text-blue-700 underline">
                     Solicitar
                   </Link>
                 </td>

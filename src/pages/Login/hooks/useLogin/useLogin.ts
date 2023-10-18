@@ -2,10 +2,10 @@ import { ChangeEvent, FormEvent, useContext, useState } from "react";
 
 import IError from "@/@types/IError";
 import { AuthContext } from "@/context/AuthContext";
-import ICredentials from "@/@types/Icredentials";
+import ICredentials from "@/@types/ICredentials";
 
 const useLogin = () => {
-  const { Authentication } = useContext(AuthContext);
+  const { Auth } = useContext(AuthContext);
 
   const [loader, setLoader] = useState<boolean>(false);
   const [error, setError] = useState<IError>({ field: "", message: "" });
@@ -20,7 +20,7 @@ const useLogin = () => {
     e.preventDefault();
     setLoader(true);
 
-    const response = await Authentication(credentials);
+    const response = await Auth(credentials);
 
     if (response) {
       const { field, message } = response;

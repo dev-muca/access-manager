@@ -2,20 +2,18 @@ import { FormEvent, useEffect, useState } from "react";
 
 import useApi from "@/hooks/useApi";
 import IAccess from "@/@types/IAccess";
+import { access } from "fs";
 
 const useSearch = () => {
-  const { getAccessInfo } = useApi();
   const [loading, setLoading] = useState<boolean>(true);
   const [dataRows, setDataRows] = useState<IAccess[]>([]);
   const [searchValue, setSearchValue] = useState<number | string>("");
   const [order, setOrder] = useState<string>("name");
 
   useEffect(() => {
-    getAccessInfo()
-      .then(({ access, error }) => {
-        if (error) console.log(error);
-        setDataRows(access!);
-      })
+    fetch("http://localhost:3000/api/access", { method: "GET" })
+      .then((res) => res.json())
+      .then((data) => setDataRows(data))
       .catch((err) => console.log(err))
       .finally(() => setLoading(false));
   }, []);

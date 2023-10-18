@@ -3,8 +3,7 @@ import { RowDataPacket } from "mysql2";
 import pool from "./pool";
 
 class Access {
-  /* Obtem todos os dados de acessos disponiveis
-  se for informado um ID, obtem somente referente a este ID */
+  // Obtem todos os dados de acessos disponiveis
   async getInfo(id?: number, orderBy: string = "name") {
     try {
       const conn = await pool.getConnection();

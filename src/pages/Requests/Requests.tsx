@@ -3,12 +3,13 @@ import Link from "next/link";
 
 import useRequests from "./hooks/useRequests";
 import IRequests from "@/@types/IRequests";
+import Badge from "@/components/Badge";
 
 const Requests = () => {
   const { loader, requests } = useRequests();
 
   return (
-    <Container title="Minhas solicitações" loading={loader}>
+    <Container title="Minhas Solicitações" loading={loader}>
       {requests?.length ? (
         <section className="relative overflow-x-auto sm:rounded-md max-h-[calc(100vh-120px)] border-b">
           <table className="w-full text-sm text-left text-gray-50 overflow-auto">
@@ -23,11 +24,11 @@ const Requests = () => {
                 <th scope="col" className="px-6 py-3 text-center font-bold">
                   Data da Solicitação
                 </th>
-                <th scope="col" className="px-6 py-3 text-center font-bold">
+                <th scope="col" className="px-6 py-3 pr-8 text-center font-bold">
                   Status
                 </th>
                 <th scope="col" className="px-6 py-3 text-center font-bold">
-                  Status
+                  Ações
                 </th>
               </tr>
             </thead>
@@ -39,18 +40,21 @@ const Requests = () => {
                   <td className="px-6 py-4 text-center">
                     {row.requestDate?.split(" ")[0].split("-").reverse().join("/")}
                   </td>
-                  <td
-                    className={`px-6 py-4 font-bold text-center ${
-                      row?.status === "Pendente"
-                        ? "text-amber-500"
-                        : row?.status === "Aprovado"
-                        ? "text-emerald-600"
-                        : row?.status === "Reprovado"
-                        ? "text-red-600"
-                        : "text-black"
-                    }`}
-                  >
-                    {row.status}
+                  <td className="flex justify-center items-center px-6 py-4 font-bold text-center">
+                    <Badge
+                      color={
+                        row?.status === "Pendente"
+                          ? "yellow"
+                          : row?.status === "Aprovado"
+                          ? "green"
+                          : row?.status === "Reprovado"
+                          ? "red"
+                          : "default"
+                      }
+                      className="flex w-24 justify-center"
+                    >
+                      {row.status}
+                    </Badge>
                   </td>
                   <td className="px-6 py-4 text-center">
                     <Link href={`#${row.id}`} className="text-blue-700 underline">

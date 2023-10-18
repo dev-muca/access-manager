@@ -1,23 +1,17 @@
 import { useState, useEffect, useContext } from "react";
-
-import useApi from "@/hooks/useApi";
-
-import { Requests } from "@/interfaces/request";
 import { AuthContext } from "@/context/AuthContext";
+import IRequest from "@/@types/IRequest";
 
 const useRequests = () => {
   const { session } = useContext(AuthContext);
-  const { getRequestsInfo } = useApi();
 
   const [loader, setLoader] = useState<boolean>(true);
-  const [requests, setRequests] = useState<Requests[]>();
+  const [requests, setRequests] = useState<IRequest[]>();
 
   useEffect(() => {
-    getRequestsInfo(session?.id)
-      .then(({ requests, error }) => {
-        if (error) throw new Error(error.message);
-        setRequests(requests);
-      })
+    fetch(`http://localhost:3000/api/request?reqId=${session?.id}`)
+      .then((res) => res.json())
+      .then((data) => setRequests(data))
       .catch((err) => console.log(err))
       .finally(() => setLoader(false));
   }, []);

@@ -8,7 +8,7 @@ import Button from "@/components/Button";
 import useLogin from "./hooks/useLogin";
 
 const Login = () => {
-  const { loader, credentials, error, onInputChange, onSubmitForm } = useLogin();
+  const { error, loader, credentials, onInputChange, onSubmitForm } = useLogin();
 
   return (
     <Center>

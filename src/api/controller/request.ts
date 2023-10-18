@@ -1,18 +1,10 @@
 import { ResultSetHeader, RowDataPacket } from "mysql2/promise";
 
 import pool from "../model/pool";
-import { Request } from "@/interfaces/request";
-import * as Response from "@/interfaces/responses";
+import IRequest from "@/@types/IRequest";
 
 const RequestController = {
-  createRequest: async ({
-    idAccess,
-    idRequester,
-    justification,
-    approverOwner,
-    requestDate,
-    approver,
-  }: Request): Promise<Response.RequestNumberOrError> => {
+  createRequest: async ({ idAccess, idRequester, justification, approverOwner, requestDate, approver }: IRequest) => {
     try {
       const conn = await pool.getConnection();
       const requestQuery = `INSERT INTO request (id_access, id_requester, justification, approver_owner, request_date) VALUES (?, ?, ?, ?, ?)`;
@@ -39,6 +31,8 @@ const RequestController = {
         conn.release();
       });
 
+      conn.release();
+
       return { requestNumber };
     } catch (err: any) {
       return { error: { code: 500, field: "message", message: err.message } };
@@ -61,7 +55,8 @@ const RequestController = {
                         LEFT JOIN user U ON R.id_requester = U.id
                         LEFT JOIN access A ON R.id_access = A.id
                         LEFT JOIN status S ON R.id_status = S.id
-                     WHERE U.id = ?`;
+                     WHERE U.id = ?
+                     ORDER BY requestDate DESC`;
       const [result] = await conn.query<RowDataPacket[]>(query, [id]);
       conn.release();
 

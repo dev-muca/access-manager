@@ -1,32 +1,33 @@
 import { useRouter } from "next/navigation";
 
-import useRequest from "@/hooks/useRequest";
+import Alert from "@/components/Alert";
+import Group from "@/components/Group";
+import Input from "@/components/Input";
+import Button from "@/components/Button";
+import Checkbox from "@/components/Checkbox";
+import Container from "@/components/Container";
 
-import { Input } from "@/components/Form/Input";
-import { Button } from "@/components/Form/Button";
-import { Checkbox } from "@/components/Form/Checkbox";
-import { Container } from "@/components/Form/Container";
-import { FormGroup } from "@/components/Form/FormGroup";
-import { Alert } from "@/components/Layout/Alert";
+import useRequest from "./hooks/useRequest";
 
 export default function Request() {
   const router = useRouter();
+
   const {
     error,
-    loader,
     access,
     request,
-    loaderBtn,
     approverOwner,
-    handleInputChange,
-    handleChangeJustification,
+    pageLoader,
+    buttonLoader,
     onSubmitForm,
+    onInputChange,
+    onChangeJustification,
   } = useRequest();
 
   return (
-    <Container title={request?.id ? "Solicitação criada" : "Solicitação de novos acessos:"} loading={loader}>
+    <Container title={request?.id ? "Solicitação criada" : "Solicitação de novos acessos:"} loading={pageLoader}>
       <form onSubmit={onSubmitForm} className="w-full h-full flex flex-col justify-between">
-        <FormGroup label="Dados do acesso:" className="flex-1">
+        <Group label="Dados do acesso:" className="flex-1">
           <div className="w-full p-4 pl-6 flex flex-col gap-2">
             <p className="flex gap-2">
               <span className="font-medium">Nome:</span>
@@ -46,14 +47,14 @@ export default function Request() {
                 ))
               ) : (
                 <span className="w-fit text-red-600 font-medium rounded-md px-2 py-0.5 animate-pulse">
-                  não há aprovadores
+                  ERRO | Não á aprovadores
                 </span>
               )}
             </ul>
           </div>
-        </FormGroup>
+        </Group>
 
-        <FormGroup label="Dados complementares:" className="flex-1">
+        <Group label="Dados complementares:" className="flex-1">
           <div className="w-full p-4 px-6 flex flex-col justify-start">
             <Input
               name="justification"
@@ -64,7 +65,7 @@ export default function Request() {
                   : "Insira aqui uma justificativa para sua solicitação"
               }
               value={request?.justification}
-              onChange={handleInputChange}
+              onChange={onInputChange}
               disabled={approverOwner}
               error={error?.field === "justification" && error.message}
               multiline
@@ -74,19 +75,19 @@ export default function Request() {
               label="Aprovador"
               hasInfo
               infoMessage="Ao marcar esta opção, você irá solicitar para ser aprovador deste acesso."
-              onChange={handleChangeJustification}
+              onChange={onChangeJustification}
             />
           </div>
-        </FormGroup>
+        </Group>
 
-        <Button label="Solicitar" className="w-full mb-10" loader={loaderBtn} />
+        <Button label="Solicitar" className="w-full mb-10" loader={buttonLoader} />
 
         {request?.id && (
           <Alert
             title="Solicitação criada!"
             subtitle={`O número da sua solicitação é: #${request?.id}`}
             hasConfirm
-            onConfirm={() => router.back()}
+            onConfirm={() => router.push("/Requests")}
           />
         )}
       </form>

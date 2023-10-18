@@ -1,15 +1,13 @@
+import ICredentials from "@/@types/ICredentials";
+import IRequest from "@/@types/IRequest";
 import axios from "axios";
-
-import { Request } from "@/interfaces/request";
-import * as Response from "@/interfaces/responses";
-import { Credentials } from "@/interfaces/credentials";
 
 const baseAPI = axios.create({
   baseURL: process.env.API_BASE_URL,
 });
 
 const useApi = () => {
-  const getAuth = async ({ username, password }: Credentials): Promise<Response.UserOrError> => {
+  const getAuth = async ({ username, password }: ICredentials): Promise<any> => {
     try {
       const response = await baseAPI.post("/api/user/auth", { username, password });
       return response.data;
@@ -18,7 +16,7 @@ const useApi = () => {
     }
   };
 
-  const getUserInfo = async (token: string): Promise<Response.UserOrError> => {
+  const getUserInfo = async (token: string): Promise<any> => {
     try {
       const response = await baseAPI.get("/api/user/auth", { params: { validationToken: token } });
       return response.data;
@@ -27,17 +25,17 @@ const useApi = () => {
     }
   };
 
-  const getAccessInfo = async (id?: number): Promise<Response.AccessOrError> => {
+  const getAccessInfo = async (id?: number): Promise<any> => {
     try {
       const response = await baseAPI.get(`/api/access/${id}`);
       return response.data;
     } catch (err: any) {
-      console.log("Erro ao obter dados de um acesso");
+      console.log("Erro ao obter dados de um acesso, more:", err.message);
       return err.response?.data;
     }
   };
 
-  const getAccessApprover = async (id?: number): Promise<Response.AccessApproverOrError> => {
+  const getAccessApprover = async (id?: number): Promise<any> => {
     try {
       const response = await baseAPI.get("/api/access/approver", { params: { reqId: id } });
       return response.data;
@@ -54,7 +52,7 @@ const useApi = () => {
     approverOwner,
     requestDate,
     approver,
-  }: Request): Promise<Response.RequestOrError> => {
+  }: IRequest): Promise<any> => {
     try {
       const response = await baseAPI.post("/api/request/", {
         idAccess,
@@ -71,7 +69,7 @@ const useApi = () => {
     }
   };
 
-  const getRequestsInfo = async (id?: number): Promise<Response.RequestOrError> => {
+  const getRequestsInfo = async (id?: number): Promise<any> => {
     try {
       const response = await baseAPI.get("/api/request", { params: { reqId: id } });
       return response.data;
@@ -83,4 +81,4 @@ const useApi = () => {
   return { getAuth, getUserInfo, getAccessInfo, getAccessApprover, createRequest, getRequestsInfo };
 };
 
-export default useApi;
+// export default useApi;

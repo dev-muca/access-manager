@@ -2,9 +2,10 @@ import { useRouter } from "next/router";
 import { destroyCookie, parseCookies, setCookie } from "nookies";
 import { createContext, ReactNode, useEffect, useState } from "react";
 
-import useApi from "@/hooks/useApi";
+// import useApi from "@/hooks/useApi";
 import IUser from "@/@types/IUser";
-import ICredentials from "@/@types/Icredentials";
+import ICredentials from "@/@types/ICredentials";
+import useApi from "@/hooks/useApi";
 
 interface ProviderProps {
   children: ReactNode;
@@ -12,7 +13,7 @@ interface ProviderProps {
 
 interface AuthContextProps {
   session: IUser;
-  Authentication: ({ username, password }: ICredentials) => Promise<any>;
+  Auth: ({ username, password }: ICredentials) => Promise<any>;
   Logout: () => void;
 }
 
@@ -21,27 +22,28 @@ export const AuthContext = createContext({} as AuthContextProps);
 export function AuthProvider({ children }: ProviderProps) {
   //
   const router = useRouter();
-  const { getAuth, getUserInfo } = useApi();
   const [session, setSession] = useState<IUser>(null!);
 
   useEffect(() => {
     const { ["sga-auth@token"]: token } = parseCookies();
 
-    if (token)
-      getUserInfo(token)
-        .then(({ user, error }) => {
-          if (error) console.log(error);
-
-          setSession(user!);
-          router.push({ pathname: "/Dashboard" });
-        })
-        .catch((err) => console.log(err.message));
+    if (token) {
+      fetch(`http://localhost:3000/api/user/auth?validationToken=${token}`, { method: "GET" })
+        .then((res) => res.json())
+        .then(({ user }) => setSession(user))
+        .catch((err) => console.log(err));
+    }
   }, []);
 
-  async function Authentication({ username, password }: ICredentials) {
+  async function Auth({ username, password }: ICredentials) {
     try {
-      const { user, error } = await getAuth({ username, password });
+      const res = await fetch("http://localhost:3000/api/user/auth", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
+      });
 
+      const { user, error } = await res.json();
       if (error) return error;
 
       if (user?.validationToken) {
@@ -61,6 +63,6 @@ export function AuthProvider({ children }: ProviderProps) {
     router.push("/");
   }
 
-  return <AuthContext.Provider value={{ Authentication, Logout, session }}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ Auth, Logout, session }}>{children}</AuthContext.Provider>;
   //
 }
