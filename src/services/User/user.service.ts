@@ -1,4 +1,3 @@
-import IUser from "@/@types/IUser";
 import pool from "@/utils/pool";
 import { RowDataPacket } from "mysql2";
 
@@ -14,7 +13,7 @@ const UserService = {
 
       return result;
     } catch (err: any) {
-      console.log(err.message);
+      console.log("ERROR | User Service | Get User | more:", err.message);
       return null;
     }
   },

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ChangeEvent } from "react";
+import { BiSearch } from "react-icons/bi";
 import { GoTriangleDown } from "react-icons/go";
 
 import Input from "@/components/Input";
@@ -7,12 +8,14 @@ import Button from "@/components/Button";
 import Container from "@/components/Container";
 
 import useSearch from "./hooks/useSearch";
+import Group from "@/components/Group";
 
 const Search = () => {
   const { loading, searchValue, rows, order, setOrder, setSearchValue, onSubmitForm } = useSearch();
 
   return (
     <Container loading={loading}>
+      <Group label="Pesquisar">Olá</Group>
       <header className="py-6">
         <form onSubmit={onSubmitForm} className="flex flex-row gap-2 justify-center items-center">
           <Input
@@ -21,7 +24,9 @@ const Search = () => {
             value={searchValue}
             onChange={(e: ChangeEvent<HTMLInputElement>) => setSearchValue(e.currentTarget.value)}
           />
-          <Button label="Pesquisar" />
+          <Button>
+            <BiSearch size={20} className="mx-2" />
+          </Button>
         </form>
       </header>
       <section className="relative overflow-x-auto sm:rounded-md max-h-[calc(100vh-120px)] border-b">
@@ -33,7 +38,9 @@ const Search = () => {
                 className="px-6 py-3 text-center font-bold cursor-pointer hover:bg-gray-100"
                 onClick={() => setOrder("id")}
               >
-                <span className="flex items-center gap-2">ID {order === "id" && <GoTriangleDown />}</span>
+                <span className="flex items-center justify-center gap-2">
+                  ID {order === "id" && <GoTriangleDown />}
+                </span>
               </th>
               <th
                 scope="col"

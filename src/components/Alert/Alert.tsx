@@ -17,44 +17,47 @@ const Alert = ({ title, subtitle, hasActions, hasConfirm, onConfirm, onCancel }:
   return (
     <>
       {show && (
-        <div className="absolute top-0 left-0 bg-opacity-50 w-screen h-screen bg-black">
+        <div className="absolute top-0 left-0 bg-opacity-50 w-screen h-screen bg-black z-[999999]">
           <div className="w-full h-full relative">
             <div className="flex flex-col gap-4 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2/5 p-6 bg-white shadow-2xl rounded">
               <header className="flex justify-end items-center">
-                {title && <h1 className="text-lg font-medium">{title}</h1>}
+                {title && <h1 className="text-lg font-medium w-full">{title}</h1>}
                 <GrFormClose size={24} className="cursor-pointer" onClick={() => setShow(false)} />
               </header>
               {subtitle && <p className="text-justify">{subtitle}</p>}
               {hasActions && (
                 <footer className="w-full flex justify-end gap-4">
                   <Button
-                    label="Cancelar"
                     className="bg-red-500"
                     onClick={() => {
                       setShow(false);
                       onCancel ? onCancel!() : () => null;
                     }}
-                  />
+                  >
+                    Cancelar
+                  </Button>
                   <Button
-                    label="Confirmar"
                     className="bg-emerald-500"
                     onClick={() => {
                       setShow(false);
                       onConfirm ? onConfirm!() : () => null;
                     }}
-                  />
+                  >
+                    Confirmar
+                  </Button>
                 </footer>
               )}
               {hasConfirm && (
                 <footer className="w-full flex justify-end gap-4">
                   <Button
-                    label="OK"
                     className="w-full"
                     onClick={() => {
                       setShow(false);
                       onConfirm ? onConfirm!() : () => null;
                     }}
-                  />
+                  >
+                    OK
+                  </Button>
                 </footer>
               )}
             </div>

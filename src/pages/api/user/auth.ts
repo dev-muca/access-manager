@@ -33,6 +33,7 @@ async function POST(req: NextApiRequest, res: NextApiResponse) {
     if (!password) return res.status(400).send({ error: { field: "password", message: "Forneça sua senha" } });
 
     const data = await User.getUser(username);
+    if (!data) return res.status(401).send({ error: { field: "username", message: "Usuário inválido" } });
 
     const row = data![0];
     const user: IUser = {
@@ -57,8 +58,6 @@ async function POST(req: NextApiRequest, res: NextApiResponse) {
       description: row.description,
       active: row.active ? true : false,
     };
-
-    if (!user) return res.status(401).send({ error: { field: "username", message: "Usuário inválido" } });
 
     if (user.password) {
       const match = compareSync(password, user.password);

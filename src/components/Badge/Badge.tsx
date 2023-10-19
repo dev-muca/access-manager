@@ -7,7 +7,7 @@ interface BadgeProps {
   className?: string;
 }
 
-const Badge = ({ children, className, color = "Default" }: BadgeProps) => {
+const Badge = ({ children, className, color = "default" }: BadgeProps) => {
   const colorClass: any = {
     default: "bg-blue-100 text-blue-800 border border-blue-400",
     dark: "bg-red-100 text-red-800 border border-red-400",

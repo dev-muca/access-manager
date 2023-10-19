@@ -1,13 +1,13 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
-import RequestController from "@/api/controller/request";
+import Request from "@/services/Request";
 import IRequest from "@/@types/IRequest";
 
 export default async function handle(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "GET") {
     try {
       const reqId = Number(req.query.reqId);
-      const data = await RequestController.getRequests(reqId);
+      const data = await Request.getRequests(reqId);
       res.status(200).send(data);
     } catch (err: any) {
       res.status(500).send({ error: { field: "message", message: err.message } });
@@ -24,7 +24,7 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
       if (!approverOwner && !justification)
         return res.status(400).send({ error: { field: "justification", message: "Preencha a justificativa" } });
 
-      const requestNumber = await RequestController.createRequest({
+      const requestNumber = await Request.createRequest({
         idAccess,
         idRequester,
         justification,

@@ -30,7 +30,9 @@ const Login = () => {
           onChange={onInputChange}
           error={error.field === "password" && error.message}
         />
-        <Button type="submit" label="Entrar" loader={loader} />
+        <Button type="submit" loader={loader}>
+          Entrar
+        </Button>
         {error.field === "message" && (
           <span className="w-full flex justify-center items-center gap-1 text-sm text-red-600 mt-1 pl-0.5">
             <FaInfoCircle />

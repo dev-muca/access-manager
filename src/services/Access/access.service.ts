@@ -22,7 +22,7 @@ const AccessService = {
 
       return result;
     } catch (err: any) {
-      console.log(err.message);
+      console.log("ERROR | Access Service | Get Access | more:", err.message);
       return null;
     }
   },

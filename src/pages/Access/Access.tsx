@@ -1,16 +1,20 @@
 import Link from "next/link";
 
 import Container from "@/components/Container";
+import Button from "@/components/Button";
+import { useRouter } from "next/navigation";
 
 const Access = () => {
+  const router = useRouter();
+
   return (
-    <Container title="Meus acessos" className="flex flex-col gap-4">
-      <Link className="underline text-blue-600" href={{ pathname: "/Search" }}>
+    <Container title="Meus Acessos" className="flex flex-row gap-4">
+      <Button className="flex-1" onClick={() => router.push("/Search")}>
         Solicitar novos acessos
-      </Link>
-      <Link className="underline text-blue-600" href={{ pathname: "/Requests" }}>
+      </Button>
+      <Button className="flex-1" onClick={() => router.push("/Requests")}>
         Minhas solicitações
-      </Link>
+      </Button>
     </Container>
   );
 };

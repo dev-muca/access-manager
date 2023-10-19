@@ -11,7 +11,7 @@ const useSearch = () => {
   const [order, setOrder] = useState<string>("name");
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/access", { method: "GET" })
+    fetch(`http://localhost:3000/api/access?orderBy=${order}`, { method: "GET" })
       .then((res) => res.json())
       .then((data) => setDataRows(data))
       .catch((err) => console.log(err))

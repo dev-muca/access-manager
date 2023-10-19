@@ -80,7 +80,9 @@ export default function Request() {
           </div>
         </Group>
 
-        <Button label="Solicitar" className="w-full mb-10" loader={buttonLoader} />
+        <Button className="w-full mb-10" loader={buttonLoader}>
+          Solicitar
+        </Button>
 
         {request?.id && (
           <Alert

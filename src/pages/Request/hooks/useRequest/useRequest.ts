@@ -1,10 +1,11 @@
 import { useRouter } from "next/router";
 import { useState, useEffect, FormEvent, ChangeEvent, useContext } from "react";
 
-import useDate from "@/hooks/useDate";
 import { AuthContext } from "@/context/AuthContext";
-import IAccess from "@/@types/IAccess";
+
+import useDate from "@/hooks/useDate";
 import IError from "@/@types/IError";
+import IAccess from "@/@types/IAccess";
 import IRequest from "@/@types/IRequest";
 
 const useRequest = () => {
@@ -58,31 +59,10 @@ const useRequest = () => {
     });
 
     const { requestNumber, error } = await res.json();
-    console.log(requestNumber);
-
     setButtonLoader(false);
 
-    if (error) {
-      setError(error);
-      return;
-    }
-
+    if (error) return setError(error);
     setRequest({ id: requestNumber });
-
-    // await createRequest({
-    //   idAccess: access?.id,
-    //   requestDate: getTime(),
-    //   idRequester: session?.id,
-    //   approver: access?.approver,
-    //   justification: request?.justification,
-    //   approverOwner: request?.approverOwner,
-    // })
-    //   .then(({ requestNumber, error }) => {
-    //     if (error) setError(error);
-    //     setRequest({ id: requestNumber });
-    //   })
-    //   .catch((err) => console.log(err))
-    //   .finally(() => setLoader(false));
   }
 
   return {
