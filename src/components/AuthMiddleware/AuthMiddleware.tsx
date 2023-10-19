@@ -7,13 +7,13 @@ interface MiddleProps {
 }
 
 const AuthMiddleware = ({ children }: MiddleProps) => {
-  const Router = useRouter();
+  const router = useRouter();
 
   useEffect(() => {
     const { ["sga-auth@token"]: token } = parseCookies();
 
-    if (!token) Router.push("/");
-  }, []);
+    if (!token) router.push("/");
+  }, [router]);
 
   return children;
 };
