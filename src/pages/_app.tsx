@@ -10,7 +10,7 @@ import { AuthProvider } from "@/context/AuthContext";
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
 
-  const excludeNavbarPages = ["/", "/private", "/Private"];
+  const excludeNavbarPages = ["/", "/_error"];
   const excludeNavbar = excludeNavbarPages.includes(router.pathname);
 
   return (

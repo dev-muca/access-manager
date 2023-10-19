@@ -1,12 +1,25 @@
 import Container from "@/components/Container";
 import Link from "next/link";
 
-import useRequests from "./hooks/useRequests";
+import IRequest from "@/@types/IRequest";
 import IRequests from "@/@types/IRequests";
 import Badge from "@/components/Badge";
+import { AuthContext } from "@/context/AuthContext";
+import { useContext, useEffect, useState } from "react";
 
 const Requests = () => {
-  const { loader, requests } = useRequests();
+  const { session } = useContext(AuthContext);
+
+  const [loader, setLoader] = useState<boolean>(true);
+  const [requests, setRequests] = useState<IRequest[]>();
+
+  useEffect(() => {
+    fetch(`http://localhost:3000/api/request?reqId=${session.id}`)
+      .then((res) => res.json())
+      .then((data) => setRequests(data))
+      .catch((err) => console.log(err))
+      .finally(() => setLoader(false));
+  }, [session.id]);
 
   return (
     <Container title="Minhas Solicitações" loading={loader}>

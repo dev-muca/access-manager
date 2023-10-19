@@ -1,17 +1,40 @@
 import Link from "next/link";
-import { ChangeEvent } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { BiSearch } from "react-icons/bi";
 import { GoTriangleDown } from "react-icons/go";
 
-import Input from "@/components/Input";
 import Button from "@/components/Button";
 import Container from "@/components/Container";
+import Input from "@/components/Input";
 
-import useSearch from "./hooks/useSearch";
+import IAccess from "@/@types/IAccess";
 import Group from "@/components/Group";
 
 const Search = () => {
-  const { loading, searchValue, rows, order, setOrder, setSearchValue, onSubmitForm } = useSearch();
+  const [loading, setLoading] = useState<boolean>(true);
+  const [dataRows, setDataRows] = useState<IAccess[]>([]);
+  const [searchValue, setSearchValue] = useState<number | string>("");
+  const [order, setOrder] = useState<string>("name");
+
+  useEffect(() => {
+    fetch(`http://localhost:3000/api/access?orderBy=${order}`, { method: "GET" })
+      .then((res) => res.json())
+      .then((data) => setDataRows(data))
+      .catch((err) => console.log(err))
+      .finally(() => setLoading(false));
+  }, [order]);
+
+  const rows =
+    searchValue && dataRows
+      ? dataRows.filter(
+          (access) =>
+            access.name.toLowerCase().includes(String(searchValue).toLowerCase()) || access.id === Number(searchValue)
+        )
+      : dataRows;
+
+  function onSubmitForm(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+  }
 
   return (
     <Container loading={loading}>

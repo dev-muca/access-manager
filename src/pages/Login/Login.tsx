@@ -5,10 +5,36 @@ import Form from "@/components/Form";
 import Title from "@/components/Title";
 import Input from "@/components/Input";
 import Button from "@/components/Button";
-import useLogin from "./hooks/useLogin";
+import ICredentials from "@/@types/ICredentials";
+import IError from "@/@types/IError";
+import { AuthContext } from "@/context/AuthContext";
+import { useContext, useState, ChangeEvent, FormEvent } from "react";
 
 const Login = () => {
-  const { error, loader, credentials, onInputChange, onSubmitForm } = useLogin();
+  const { Auth } = useContext(AuthContext);
+
+  const [loader, setLoader] = useState<boolean>(false);
+  const [error, setError] = useState<IError>({ field: "", message: "" });
+  const [credentials, setCredentials] = useState<ICredentials>({ username: "", password: "" });
+
+  const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.currentTarget;
+    setCredentials((prevData) => ({ ...prevData, [name]: value }));
+  };
+
+  const onSubmitForm = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoader(true);
+
+    const response = await Auth(credentials);
+
+    if (response) {
+      const { field, message } = response;
+      if (field && error) setError({ field, message });
+    }
+
+    setLoader(false);
+  };
 
   return (
     <Center>

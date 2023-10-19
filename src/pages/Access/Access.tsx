@@ -1,7 +1,5 @@
-import Link from "next/link";
-
-import Container from "@/components/Container";
 import Button from "@/components/Button";
+import Container from "@/components/Container";
 import { useRouter } from "next/navigation";
 
 const Access = () => {

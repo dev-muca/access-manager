@@ -32,7 +32,9 @@ async function GET(req: NextApiRequest, res: NextApiResponse) {
   res.status(200).send(accesses);
 }
 
-async function POST(req: NextApiRequest, res: NextApiResponse) {}
+async function POST(req: NextApiRequest, res: NextApiResponse) {
+  res.send({ ACCESS_POST: true });
+}
 
 // export default async function GET(req: NextApiRequest, res: NextApiResponse) {
 //   const id = Number(req.query.id);

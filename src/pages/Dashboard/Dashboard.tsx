@@ -1,17 +1,18 @@
 import Alert from "@/components/Alert";
 import Badge from "@/components/Badge";
 import Container from "@/components/Container";
-import useDashboard from "./hooks/useDashboard";
 import Group from "@/components/Group";
+import { AuthContext } from "@/context/AuthContext";
+import { useContext } from "react";
 
 const Dashboard = () => {
-  const { fullname } = useDashboard();
+  const { session } = useContext(AuthContext);
 
   return (
     <Container title="Dashboard">
       <Alert
         title="Seja bem-vindo 😄"
-        subtitle={`Olá ${fullname}, seja bem-vindo ao SGA (Sistema Gestor de Acessos)`}
+        subtitle={`Olá ${session.fullname}, seja bem-vindo ao SGA (Sistema Gestor de Acessos)`}
         hasConfirm
       />
 
