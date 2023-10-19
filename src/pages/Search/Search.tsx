@@ -9,6 +9,7 @@ import Input from "@/components/Input";
 
 import IAccess from "@/@types/IAccess";
 import Group from "@/components/Group";
+import BASE_URL from "@/utils/host";
 
 const Search = () => {
   const [loading, setLoading] = useState<boolean>(true);
@@ -17,7 +18,7 @@ const Search = () => {
   const [order, setOrder] = useState<string>("name");
 
   useEffect(() => {
-    fetch(`http://localhost:3000/api/access?orderBy=${order}`, { method: "GET" })
+    fetch(`${BASE_URL}/api/access?orderBy=${order}`, { method: "GET" })
       .then((res) => res.json())
       .then((data) => setDataRows(data))
       .catch((err) => console.log(err))

@@ -6,6 +6,7 @@ import IRequests from "@/@types/IRequests";
 import Badge from "@/components/Badge";
 import { AuthContext } from "@/context/AuthContext";
 import { useContext, useEffect, useState } from "react";
+import BASE_URL from "@/utils/host";
 
 const Requests = () => {
   const { session } = useContext(AuthContext);
@@ -14,7 +15,7 @@ const Requests = () => {
   const [requests, setRequests] = useState<IRequest[]>();
 
   useEffect(() => {
-    fetch(`http://localhost:3000/api/request?reqId=${session?.id}`)
+    fetch(`${BASE_URL}/api/request?reqId=${session?.id}`)
       .then((res) => res.json())
       .then((data) => setRequests(data))
       .catch((err) => console.log(err))

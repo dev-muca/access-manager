@@ -13,6 +13,7 @@ import IRequest from "@/@types/IRequest";
 import { AuthContext } from "@/context/AuthContext";
 import useDate from "@/hooks/useDate";
 import { ChangeEvent, FormEvent, useContext, useEffect, useState } from "react";
+import BASE_URL from "@/utils/host";
 
 export default function Request() {
   const router = useRouter();
@@ -29,7 +30,7 @@ export default function Request() {
   const [error, setError] = useState<IError>({ field: "", message: "" });
 
   useEffect(() => {
-    fetch(`http://localhost:3000/api/access?id=${id}`, { method: "GET" })
+    fetch(`${BASE_URL}/api/access?id=${id}`, { method: "GET" })
       .then((res) => res.json())
       .then((data) => setAccess(data[0]))
       .catch((err) => console.log(err))
