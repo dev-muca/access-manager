@@ -12,7 +12,7 @@ const Dashboard = () => {
     <Container title="Dashboard">
       <Alert
         title="Seja bem-vindo 😄"
-        subtitle={`Olá ${session.fullname}, seja bem-vindo ao SGA (Sistema Gestor de Acessos)`}
+        subtitle={`Olá ${session?.fullname}, seja bem-vindo ao SGA (Sistema Gestor de Acessos)`}
         hasConfirm
       />
 

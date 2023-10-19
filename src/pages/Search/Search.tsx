@@ -38,7 +38,6 @@ const Search = () => {
 
   return (
     <Container loading={loading}>
-      <Group label="Pesquisar">Olá</Group>
       <header className="py-6">
         <form onSubmit={onSubmitForm} className="flex flex-row gap-2 justify-center items-center">
           <Input

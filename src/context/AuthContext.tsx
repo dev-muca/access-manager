@@ -5,7 +5,6 @@ import { createContext, ReactNode, useEffect, useState } from "react";
 // import useApi from "@/hooks/useApi";
 import IUser from "@/@types/IUser";
 import ICredentials from "@/@types/ICredentials";
-import useApi from "@/hooks/useApi";
 
 interface ProviderProps {
   children: ReactNode;
@@ -53,7 +52,7 @@ export function AuthProvider({ children }: ProviderProps) {
       }
     } catch (err: any) {
       console.log("Context Error:", err);
-      // return err;
+      // return err;S
     }
   }
 

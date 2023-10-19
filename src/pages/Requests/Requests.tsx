@@ -14,12 +14,12 @@ const Requests = () => {
   const [requests, setRequests] = useState<IRequest[]>();
 
   useEffect(() => {
-    fetch(`http://localhost:3000/api/request?reqId=${session.id}`)
+    fetch(`http://localhost:3000/api/request?reqId=${session?.id}`)
       .then((res) => res.json())
       .then((data) => setRequests(data))
       .catch((err) => console.log(err))
       .finally(() => setLoader(false));
-  }, [session.id]);
+  }, [session?.id]);
 
   return (
     <Container title="Minhas Solicitações" loading={loader}>
