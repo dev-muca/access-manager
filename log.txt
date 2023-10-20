@@ -1,0 +1,11 @@
+{"time":"19/10/2023, 23:10:00","httpMethod":"GET","url":"http://localhost:3000/_next/static/development/_devPagesManifest.json","device":"desktop"}
+{"time":"19/10/2023, 23:10:01","httpMethod":"GET","url":"http://localhost:3000/","device":"desktop"}
+{"time":"19/10/2023, 23:10:01","httpMethod":"GET","url":"http://localhost:3000/_next/static/chunks/react-refresh.js?ts=1697767801088","device":"desktop"}
+{"time":"19/10/2023, 23:10:01","httpMethod":"GET","url":"http://localhost:3000/_next/static/chunks/webpack.js?ts=1697767801088","device":"desktop"}
+{"time":"19/10/2023, 23:10:01","httpMethod":"GET","url":"http://localhost:3000/_next/static/chunks/main.js?ts=1697767801088","device":"desktop"}
+{"time":"19/10/2023, 23:10:01","httpMethod":"GET","url":"http://localhost:3000/_next/static/chunks/pages/_app.js?ts=1697767801088","device":"desktop"}
+{"time":"19/10/2023, 23:10:01","httpMethod":"GET","url":"http://localhost:3000/_next/static/development/_buildManifest.js?ts=1697767801088","device":"desktop"}
+{"time":"19/10/2023, 23:10:01","httpMethod":"GET","url":"http://localhost:3000/_next/static/chunks/pages/index.js?ts=1697767801088","device":"desktop"}
+{"time":"19/10/2023, 23:10:01","httpMethod":"GET","url":"http://localhost:3000/_next/static/development/_ssgManifest.js?ts=1697767801088","device":"desktop"}
+{"time":"19/10/2023, 23:10:03","httpMethod":"GET","url":"http://localhost:3000/_next/static/development/_devMiddlewareManifest.json","device":"desktop"}
+{"time":"19/10/2023, 23:10:03","httpMethod":"GET","url":"http://localhost:3000/logo.png","device":"desktop"}
