@@ -10,8 +10,9 @@ export default async function handleHttp(req: NextApiRequest, res: NextApiRespon
 
 async function GET(req: NextApiRequest, res: NextApiResponse) {
   try {
-    const reqId = Number(req.query.reqId);
-    const data = await Request.getRequests(reqId);
+    const session = Number(req.query.session);
+    const status = req.query.status;
+    const data = await Request.getRequests(session, status as string);
     res.status(200).send(data);
   } catch (err: any) {
     res.status(500).send({ error: { field: "message", message: err.message } });

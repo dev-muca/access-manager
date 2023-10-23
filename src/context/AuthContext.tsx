@@ -2,10 +2,10 @@ import { useRouter } from "next/router";
 import { destroyCookie, parseCookies, setCookie } from "nookies";
 import { createContext, ReactNode, useEffect, useState } from "react";
 
-// import useApi from "@/hooks/useApi";
 import IUser from "@/@types/IUser";
 import ICredentials from "@/@types/ICredentials";
 import BASE_URL from "@/utils/host";
+import useFetch from "@/hooks/useFetch";
 
 interface ProviderProps {
   children: ReactNode;
@@ -52,8 +52,7 @@ export function AuthProvider({ children }: ProviderProps) {
         router.push("/Dashboard");
       }
     } catch (err: any) {
-      console.log("Context Error:", err);
-      // return err;S
+      console.log("ERROR | use Context | more:", err.message);
     }
   }
 

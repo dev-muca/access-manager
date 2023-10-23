@@ -14,6 +14,7 @@ import { AuthContext } from "@/context/AuthContext";
 import useDate from "@/hooks/useDate";
 import BASE_URL from "@/utils/host";
 import { ChangeEvent, FormEvent, useContext, useEffect, useState } from "react";
+import useFetch from "@/hooks/useFetch";
 
 export default function Request() {
   const router = useRouter();
@@ -22,20 +23,19 @@ export default function Request() {
   const { getTime } = useDate();
   const { session } = useContext(AuthContext);
 
-  const [access, setAccess] = useState<IAccess>();
+  const { data, pageLoader } = useFetch<IAccess>({
+    endpoint: `/api/access?id=${id}`,
+    method: "GET",
+    dependencies: [id],
+  });
+
+  const [access, setAccess] = useState<IAccess>(null!);
   const [request, setRequest] = useState<IRequest>();
-  const [pageLoader, setPageLoader] = useState<boolean>(true);
   const [buttonLoader, setButtonLoader] = useState<boolean>(false);
   const [approverOwner, setApproverOwner] = useState<boolean>(false);
   const [error, setError] = useState<IError>({ field: "", message: "" });
 
-  useEffect(() => {
-    fetch(`${BASE_URL}/api/access?id=${id}`, { method: "GET" })
-      .then((res) => res.json())
-      .then((data) => setAccess(data[0]))
-      .catch((err) => console.log(err))
-      .finally(() => setPageLoader(false));
-  }, [id]);
+  useEffect(() => setAccess(data), [data]);
 
   const onInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.currentTarget;
@@ -94,7 +94,7 @@ export default function Request() {
                 ))
               ) : (
                 <span className="w-fit text-red-600 font-medium rounded-md px-2 py-0.5 animate-pulse">
-                  ERRO | Não á aprovadores
+                  ERRO | Não há aprovadores
                 </span>
               )}
             </ul>
@@ -134,7 +134,7 @@ export default function Request() {
         {request?.id && (
           <Alert
             title="Solicitação criada!"
-            subtitle={`O número da sua solicitação é: #${request?.id}`}
+            content={`O número da sua solicitação é: #${request?.id}`}
             hasConfirm
             onConfirm={() => router.push("/Requests")}
           />

@@ -4,14 +4,14 @@ import Button from "../Button";
 
 interface AlertProps {
   title?: string;
-  subtitle?: string;
+  content?: string;
   hasActions?: true;
   hasConfirm?: true;
   onConfirm?: () => void;
   onCancel?: () => void;
 }
 
-const Alert = ({ title, subtitle, hasActions, hasConfirm, onConfirm, onCancel }: AlertProps) => {
+const Alert = ({ title, content, hasActions, hasConfirm, onConfirm, onCancel }: AlertProps) => {
   const [show, setShow] = useState(true);
 
   return (
@@ -24,7 +24,7 @@ const Alert = ({ title, subtitle, hasActions, hasConfirm, onConfirm, onCancel }:
                 {title && <h1 className="text-lg font-medium w-full">{title}</h1>}
                 <GrFormClose size={24} className="cursor-pointer" onClick={() => setShow(false)} />
               </header>
-              {subtitle && <p className="text-justify">{subtitle}</p>}
+              {content && <p className="text-justify">{content}</p>}
               {hasActions && (
                 <footer className="w-full flex justify-end gap-4">
                   <Button

@@ -18,22 +18,20 @@ async function POST(req: NextApiRequest, res: NextApiResponse) {
 
   try {
     fs.access(`./logs/log__${currentDate}.txt`, fs.constants.F_OK, (err) => {
-      //   console.log(err ? "não existe" : "existe");
-
       if (err?.code === "ENOENT") {
         fs.appendFileSync(`./logs/log__${currentDate}.txt`, JSON.stringify(req.body));
         fs.appendFileSync(`./logs/log__${currentDate}.txt`, "\n");
-        res.send({ logged: "Criado #1" });
+        return res.end();
       }
 
       fs.appendFileSync(`./logs/log__${currentDate}.txt`, JSON.stringify(req.body));
       fs.appendFileSync(`./logs/log__${currentDate}.txt`, "\n");
-      return res.send({ logged: "Encontrado #1" });
+      return res.end();
     });
   } catch (err: any) {
     fs.appendFileSync(`./logs/log__${currentDate}.txt`, JSON.stringify(req.body));
     fs.appendFileSync(`./logs/log__${currentDate}.txt`, "\n");
     console.log("Log gravado!");
-    res.send({ logged: "Criado #2" });
+    return res.end();
   }
 }

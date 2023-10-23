@@ -1,31 +1,52 @@
 import Container from "@/components/Container";
 import Link from "next/link";
 
-import IRequest from "@/@types/IRequest";
 import IRequests from "@/@types/IRequests";
 import Badge from "@/components/Badge";
 import { AuthContext } from "@/context/AuthContext";
-import { useContext, useEffect, useState } from "react";
-import BASE_URL from "@/utils/host";
+import { useContext, useState } from "react";
+
+import useFetch from "@/hooks/useFetch";
+import Group from "@/components/Group";
+import path from "path";
 
 const Requests = () => {
   const { session } = useContext(AuthContext);
+  const [filter, setFilter] = useState("pendente");
 
-  const [loader, setLoader] = useState<boolean>(true);
-  const [requests, setRequests] = useState<IRequest[]>();
-
-  useEffect(() => {
-    fetch(`${BASE_URL}/api/request?reqId=${session?.id}`)
-      .then((res) => res.json())
-      .then((data) => setRequests(data))
-      .catch((err) => console.log(err))
-      .finally(() => setLoader(false));
-  }, [session?.id]);
+  const { data, pageLoader } = useFetch({
+    endpoint: `/api/request?session=${session?.id}&status=${filter}`,
+    method: "GET",
+    dependencies: [session?.id, filter],
+  });
 
   return (
-    <Container title="Minhas Solicitações" loading={loader}>
-      {requests?.length ? (
-        <section className="relative overflow-x-auto sm:rounded-md max-h-[calc(100vh-120px)] border-b">
+    <Container title="Minhas Solicitações" loading={pageLoader}>
+      <Group label="Filtrar:" className="px-4">
+        <Badge
+          color="yellow"
+          className={`cursor-pointer ${filter == "pendente" ? "opacity-100" : "opacity-25"} hover:opacity-100`}
+          onClick={() => setFilter("pendente")}
+        >
+          Pendentes
+        </Badge>
+        <Badge
+          color="green"
+          className={`cursor-pointer ${filter == "aprovado" ? "opacity-100" : "opacity-25"} hover:opacity-100`}
+          onClick={() => setFilter("aprovado")}
+        >
+          Aprovados
+        </Badge>
+        <Badge
+          color="red"
+          className={`cursor-pointer ${filter == "reprovado" ? "opacity-100" : "opacity-25"} hover:opacity-100`}
+          onClick={() => setFilter("reprovado")}
+        >
+          Reprovados
+        </Badge>
+      </Group>
+      {data?.length ? (
+        <section className="relative overflow-x-auto sm:rounded-md max-h-[calc(100vh-240px)] border-b">
           <table className="w-full text-sm text-left text-gray-50 overflow-auto">
             <thead className="text-xs text-gray-700 uppercase bg-gray-50 sticky top-0">
               <tr>
@@ -47,7 +68,7 @@ const Requests = () => {
               </tr>
             </thead>
             <tbody>
-              {requests?.map((row: IRequests) => (
+              {data?.map((row: IRequests) => (
                 <tr key={row.id} className="odd:bg-white even:bg-gray-50 border-b text-gray-800">
                   <td className="px-6 py-4 text-center">{row.id}</td>
                   <td className="px-6 py-4 hidden sm:block">{row.name}</td>
@@ -71,7 +92,10 @@ const Requests = () => {
                     </Badge>
                   </td>
                   <td className="px-6 py-4 text-center">
-                    <Link href={`#${row.id}`} className="text-blue-700 underline">
+                    <Link
+                      href={{ pathname: "/Progress", query: { requestId: row.id } }}
+                      className="text-blue-700 underline"
+                    >
                       Ver andamento
                     </Link>
                   </td>

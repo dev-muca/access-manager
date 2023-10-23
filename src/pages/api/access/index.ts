@@ -29,7 +29,7 @@ async function GET(req: NextApiRequest, res: NextApiResponse) {
     approver: access.approver.split(";").map(parseApprover),
   }));
 
-  res.status(200).send(accesses);
+  res.status(200).send(id ? accesses[0] : accesses);
 }
 
 async function POST(req: NextApiRequest, res: NextApiResponse) {

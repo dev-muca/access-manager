@@ -8,37 +8,34 @@ import Container from "@/components/Container";
 import Input from "@/components/Input";
 
 import IAccess from "@/@types/IAccess";
-import Group from "@/components/Group";
 import BASE_URL from "@/utils/host";
+import useFetch from "@/hooks/useFetch";
 
 const Search = () => {
-  const [loading, setLoading] = useState<boolean>(true);
-  const [dataRows, setDataRows] = useState<IAccess[]>([]);
   const [searchValue, setSearchValue] = useState<number | string>("");
   const [order, setOrder] = useState<string>("name");
 
-  useEffect(() => {
-    fetch(`${BASE_URL}/api/access?orderBy=${order}`, { method: "GET" })
-      .then((res) => res.json())
-      .then((data) => setDataRows(data))
-      .catch((err) => console.log(err))
-      .finally(() => setLoading(false));
-  }, [order]);
+  const { data, pageLoader } = useFetch<IAccess>({
+    endpoint: `/api/access?orderBy=${order}`,
+    method: "GET",
+    dependencies: [order],
+  });
 
   const rows =
-    searchValue && dataRows
-      ? dataRows.filter(
-          (access) =>
+    searchValue && data
+      ? data.filter(
+          (access: IAccess) =>
             access.name.toLowerCase().includes(String(searchValue).toLowerCase()) || access.id === Number(searchValue)
         )
-      : dataRows;
+      : data;
 
   function onSubmitForm(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    console.log("Você encontrou o Easter-Egg 🥚");
   }
 
   return (
-    <Container loading={loading}>
+    <Container loading={pageLoader}>
       <header className="py-6">
         <form onSubmit={onSubmitForm} className="flex flex-row gap-2 justify-center items-center">
           <Input
@@ -47,7 +44,7 @@ const Search = () => {
             value={searchValue}
             onChange={(e: ChangeEvent<HTMLInputElement>) => setSearchValue(e.currentTarget.value)}
           />
-          <Button>
+          <Button type="submit">
             <BiSearch size={20} className="mx-2" />
           </Button>
         </form>
@@ -87,7 +84,7 @@ const Search = () => {
             </tr>
           </thead>
           <tbody>
-            {rows?.map((row) => (
+            {rows?.map((row: IAccess) => (
               <tr key={row.id} className="odd:bg-white even:bg-gray-50 border-b text-gray-800">
                 <td className="px-6 py-4 text-center">{row.id}</td>
                 <td className="px-6 py-4">{row.name}</td>

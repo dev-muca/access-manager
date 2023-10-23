@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 const useDate = () => {
-  const [time, setTime] = useState("");
+  const [ , setTime] = useState("");
 
   const getTime = () => {
     const date = new Date().toLocaleString();

@@ -1,16 +1,15 @@
-import { ReactNode } from "react";
+import { ButtonHTMLAttributes, ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
 
-interface BadgeProps {
-  color?: string;
+interface BadgeProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  color?: "default" | "dark" | "red" | "green" | "yellow" | "indigo" | "purple" | "pink";
   children: ReactNode;
   className?: string;
 }
 
-const Badge = ({ children, className, color = "default" }: BadgeProps) => {
+const Badge = ({ children, className, color = "default", ...props }: BadgeProps) => {
   const colorClass: any = {
     default: "bg-blue-100 text-blue-800 border border-blue-400",
-    dark: "bg-red-100 text-red-800 border border-red-400",
     red: "bg-red-100 text-red-800 border border-red-400",
     green: "bg-green-100 text-green-800 border border-green-400",
     yellow: "bg-yellow-100 text-yellow-800 border border-yellow-300",
@@ -25,7 +24,11 @@ const Badge = ({ children, className, color = "default" }: BadgeProps) => {
     className
   );
 
-  return <span className={badgeClass}>{children}</span>;
+  return (
+    <span className={badgeClass} {...props}>
+      {children}
+    </span>
+  );
 };
 
 export default Badge;
