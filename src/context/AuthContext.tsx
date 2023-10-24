@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { destroyCookie, parseCookies, setCookie } from "nookies";
-import { createContext, ReactNode, useEffect, useState } from "react";
+import { createContext, Dispatch, ReactNode, SetStateAction, useEffect, useState } from "react";
 
 import IUser from "@/@types/IUser";
 import ICredentials from "@/@types/ICredentials";
@@ -13,6 +13,8 @@ interface ProviderProps {
 
 interface AuthContextProps {
   session: IUser;
+  greetings: boolean;
+  setGreetings: Dispatch<SetStateAction<boolean>>;
   Auth: ({ username, password }: ICredentials) => Promise<any>;
   Logout: () => void;
 }
@@ -23,6 +25,7 @@ export function AuthProvider({ children }: ProviderProps) {
   //
   const router = useRouter();
   const [session, setSession] = useState<IUser>(null!);
+  const [greetings, setGreetings] = useState(true);
 
   useEffect(() => {
     const { ["sga-auth@token"]: token } = parseCookies();
@@ -62,6 +65,8 @@ export function AuthProvider({ children }: ProviderProps) {
     router.push("/");
   }
 
-  return <AuthContext.Provider value={{ Auth, Logout, session }}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={{ session, greetings, setGreetings, Auth, Logout }}>{children}</AuthContext.Provider>
+  );
   //
 }

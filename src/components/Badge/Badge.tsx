@@ -19,7 +19,7 @@ const Badge = ({ children, className, color = "default", ...props }: BadgeProps)
   };
 
   const badgeClass = twMerge(
-    "text-xs text-center font-medium mr-2 px-2.5 py-0.5 rounded",
+    "text-xs text-center font-medium mr-2 px-2.5 py-0.5 rounded select-none",
     colorClass[color],
     className
   );

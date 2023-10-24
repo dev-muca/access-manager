@@ -33,6 +33,10 @@ async function POST(req: NextApiRequest, res: NextApiResponse) {
     if (!password) return res.status(400).send({ error: { field: "password", message: "Forneça sua senha" } });
 
     const data = await User.getUser(username);
+
+    if (data.includes("connect ETIMEDOUT"))
+      return res.status(500).send({ error: { field: "message", message: "Sem resposta do servidor" } });
+
     if (!data) return res.status(401).send({ error: { field: "username", message: "Usuário inválido" } });
 
     const row = data![0];

@@ -16,7 +16,7 @@ const Button = ({ children, color = "default", loader = false, className, ...pro
   };
 
   const buttonClass = twMerge(
-    `h-[40px] px-2 py-1 rounded shadow uppercase font-medium hover:brightness-105 flex justify-center items-center mt-0.5`,
+    `w-min-[280px] h-[40px] px-2 py-1 rounded shadow uppercase font-medium hover:brightness-105 flex justify-center items-center mt-0.5`,
     colorClass[color],
     className
   );

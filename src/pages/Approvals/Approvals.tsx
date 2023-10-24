@@ -7,6 +7,7 @@ import { useContext, useState } from "react";
 
 import Group from "@/components/Group";
 import useFetch from "@/hooks/useFetch";
+import IApproval from "@/@types/IApproval";
 
 const Approvals = () => {
   const { session } = useContext(AuthContext);
@@ -70,8 +71,8 @@ const Approvals = () => {
             </thead>
             <tbody>
               {/* NAO ESQUECER DE TIPAR ESSA PORRA AQUI, CRIAR UM IAPPROVAL */}
-              {data?.map((row: any) => (
-                <tr key={row.id} className="odd:bg-white even:bg-gray-50 border-b text-gray-800">
+              {data?.map((row: IApproval) => (
+                <tr key={row.requestNumber} className="odd:bg-white even:bg-gray-50 border-b text-gray-800">
                   <td className="px-6 py-4 text-center">{row.requestNumber}</td>
                   <td className="px-6 py-4 hidden sm:block">{row.access}</td>
                   <td className="px-6 py-4 text-center">{row.requesterName}</td>
@@ -96,10 +97,10 @@ const Approvals = () => {
                   </td>
                   <td className="px-6 py-4 text-center">
                     <Link
-                      href={{ pathname: "/Progress", query: { requestId: row.id } }}
+                      href={{ pathname: "/Progress", query: { requestId: row.requestNumber } }}
                       className="text-blue-700 underline"
                     >
-                      Ver andamento
+                      Ver detalhes
                     </Link>
                   </td>
                 </tr>

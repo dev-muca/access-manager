@@ -3,18 +3,21 @@ import Badge from "@/components/Badge";
 import Container from "@/components/Container";
 import Group from "@/components/Group";
 import { AuthContext } from "@/context/AuthContext";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 
 const Dashboard = () => {
-  const { session } = useContext(AuthContext);
+  const { session, greetings, setGreetings } = useContext(AuthContext);
 
   return (
     <Container title="Dashboard">
-      <Alert
-        title="Seja bem-vindo 😄"
-        content={`Olá ${session?.fullname}, seja bem-vindo ao SGA (Sistema Gestor de Acessos)`}
-        hasConfirm
-      />
+      {greetings && (
+        <Alert
+          title="Seja bem-vindo 😄"
+          content={`Olá ${session?.fullname}, seja bem-vindo ao SGA (Sistema Gestor de Acessos)`}
+          hasConfirm
+          onConfirm={() => setGreetings(false)}
+        />
+      )}
 
       <Group label="Informações do sistema" className="px-4">
         <Badge>Versão: 0.1.0</Badge>

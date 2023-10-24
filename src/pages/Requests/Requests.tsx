@@ -105,9 +105,9 @@ const Requests = () => {
         </section>
       ) : (
         <div className="bg-red-200 border-b-red-800 text-red-500 px-6 py-4 rounded">
-          {filter === "pendente" && "Você não possuí aprovações pendentes."}
-          {filter === "aprovado" && "Você não possuí aprovações aprovadas."}
-          {filter === "reprovado" && "Você não possuí aprovações reprovadas."}
+          {filter === "pendente" && "Você não possuí solicitações pendentes."}
+          {filter === "aprovado" && "Você não possuí solicitações aprovadas."}
+          {filter === "reprovado" && "Você não possuí solicitações reprovadas."}
         </div>
       )}
     </Container>
