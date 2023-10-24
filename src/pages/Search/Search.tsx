@@ -8,7 +8,6 @@ import Container from "@/components/Container";
 import Input from "@/components/Input";
 
 import IAccess from "@/@types/IAccess";
-import BASE_URL from "@/utils/host";
 import useFetch from "@/hooks/useFetch";
 
 const Search = () => {

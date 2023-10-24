@@ -1,4 +1,3 @@
-import BASE_URL from "@/utils/host";
 import { useState, useEffect } from "react";
 
 type HttpMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
@@ -19,7 +18,7 @@ const useFetch = <T>({ endpoint, method, dependencies = [] }: FetchProps) => {
       try {
         setError(null);
 
-        const response = await fetch(BASE_URL + endpoint, {
+        const response = await fetch(`http://localhost:3000/${endpoint}`, {
           method,
           ...dependencies,
         });

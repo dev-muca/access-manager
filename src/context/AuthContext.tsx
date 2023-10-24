@@ -1,11 +1,9 @@
 import { useRouter } from "next/router";
 import { destroyCookie, parseCookies, setCookie } from "nookies";
-import { createContext, Dispatch, ReactNode, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, ReactNode, SetStateAction, createContext, useEffect, useState } from "react";
 
-import IUser from "@/@types/IUser";
 import ICredentials from "@/@types/ICredentials";
-import BASE_URL from "@/utils/host";
-import useFetch from "@/hooks/useFetch";
+import IUser from "@/@types/IUser";
 
 interface ProviderProps {
   children: ReactNode;
@@ -31,7 +29,7 @@ export function AuthProvider({ children }: ProviderProps) {
     const { ["sga-auth@token"]: token } = parseCookies();
 
     if (token) {
-      fetch(`${BASE_URL}/api/user/auth?validationToken=${token}`, { method: "GET" })
+      fetch(`http://localhost:3000/api/user/auth?validationToken=${token}`, { method: "GET" })
         .then((res) => res.json())
         .then(({ user }) => setSession(user))
         .catch((err) => console.log(err));
@@ -40,7 +38,7 @@ export function AuthProvider({ children }: ProviderProps) {
 
   async function Auth({ username, password }: ICredentials) {
     try {
-      const res = await fetch(`${BASE_URL}/api/user/auth`, {
+      const res = await fetch("http://localhost:3000//api/user/auth", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),

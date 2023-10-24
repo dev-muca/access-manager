@@ -4,6 +4,41 @@ import pool from "@/utils/pool";
 import { ResultSetHeader, RowDataPacket } from "mysql2";
 
 const RequestService = {
+  // createRequest: async ({ idAccess, idRequester, justification, approverOwner, requestDate, approver }: IRequest) => {
+  //   try {
+  //     const conn = await pool.getConnection();
+  //     const requestQuery = `INSERT INTO request (id_access, id_requester, justification, approver_owner, request_date) VALUES (?, ?, ?, ?, ?)`;
+  //     const [result] = await conn.query<ResultSetHeader>(requestQuery, [
+  //       idAccess,
+  //       idRequester,
+  //       justification,
+  //       approverOwner,
+  //       requestDate,
+  //     ]);
+  //     conn.release();
+
+  //     const requestNumber = result.insertId;
+
+  //     approver?.forEach(async (approver: IUser) => {
+  //       const approvalQuery = `INSERT INTO approval (id_user) VALUES (?)`;
+  //       const [result] = await conn.query<ResultSetHeader>(approvalQuery, [approver.id]);
+  //       conn.release();
+
+  //       const idApproval = result.insertId;
+
+  //       const approvalRequestQuery = `INSERT INTO approval_request (id_request, id_approval) VALUES (?, ?)`;
+  //       await conn.query(approvalRequestQuery, [requestNumber, idApproval]);
+  //       conn.release();
+  //     });
+
+  //     conn.release();
+
+  //     return { requestNumber };
+  //   } catch (err: any) {
+  //     console.log("ERROR | Request Service | Create Request | more:", err.message);
+  //     return null;
+  //   }
+  //
   createRequest: async ({ idAccess, idRequester, justification, approverOwner, requestDate, approver }: IRequest) => {
     try {
       const conn = await pool.getConnection();
@@ -15,27 +50,26 @@ const RequestService = {
         approverOwner,
         requestDate,
       ]);
-      conn.release();
 
       const requestNumber = result.insertId;
 
-      approver?.forEach(async (approver: IUser) => {
-        const approvalQuery = `INSERT INTO approval (id_user) VALUES (?)`;
-        const [result] = await conn.query<ResultSetHeader>(approvalQuery, [approver.id]);
-        conn.release();
+      if (approver && approver.length > 0) {
+        const approvals = approver.map(async (approver: IUser) => {
+          const approvalQuery = `INSERT INTO approval (id_user) VALUES (?)`;
+          const [approvalResult] = await conn.query<ResultSetHeader>(approvalQuery, [approver.id]);
+          const idApproval = approvalResult.insertId;
 
-        const idApproval = result.insertId;
+          const approvalRequestQuery = `INSERT INTO approval_request (id_request, id_approval) VALUES (?, ?)`;
+          await conn.query(approvalRequestQuery, [requestNumber, idApproval]);
+        });
 
-        const approvalRequestQuery = `INSERT INTO approval_request (id_request, id_approval) VALUES (?, ?)`;
-        await conn.query(approvalRequestQuery, [requestNumber, idApproval]);
-        conn.release();
-      });
+        await Promise.all(approvals);
+      }
 
       conn.release();
-
       return { requestNumber };
     } catch (err: any) {
-      console.log("ERROR | Request Service | Create Request | more:", err.message);
+      console.error("ERROR | Request Service | Create Request | more:", err.message);
       return null;
     }
   },

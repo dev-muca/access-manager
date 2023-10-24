@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+import { ChangeEvent, FormEvent, useContext, useEffect, useState } from "react";
 
 import Alert from "@/components/Alert";
 import Button from "@/components/Button";
@@ -12,8 +13,6 @@ import IError from "@/@types/IError";
 import IRequest from "@/@types/IRequest";
 import { AuthContext } from "@/context/AuthContext";
 import useDate from "@/hooks/useDate";
-import BASE_URL from "@/utils/host";
-import { ChangeEvent, FormEvent, useContext, useEffect, useState } from "react";
 import useFetch from "@/hooks/useFetch";
 
 export default function Request() {
@@ -51,7 +50,7 @@ export default function Request() {
     e.preventDefault();
     setButtonLoader(true);
 
-    const res = await fetch(`${BASE_URL}/api/request`, {
+    const res = await fetch("http://localhost:3000/api/request", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
