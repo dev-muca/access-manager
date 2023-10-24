@@ -19,7 +19,6 @@ const useFetch = <T>({ endpoint, method, dependencies = [] }: FetchProps) => {
       try {
         setError(null);
 
-        // headers: { "Content-Type": "application/json" },
         const response = await fetch(BASE_URL + endpoint, {
           method,
           ...dependencies,

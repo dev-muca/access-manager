@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import { BiSearch } from "react-icons/bi";
 import { GoTriangleDown } from "react-icons/go";
 

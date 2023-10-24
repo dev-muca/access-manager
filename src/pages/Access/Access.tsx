@@ -13,6 +13,9 @@ const Access = () => {
       <Button className="flex-1" onClick={() => router.push("/Requests")}>
         Minhas solicitações
       </Button>
+      <Button className="flex-1" onClick={() => router.push("/Approvals")}>
+        Minhas aprovações
+      </Button>
     </Container>
   );
 };

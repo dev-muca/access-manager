@@ -3,13 +3,14 @@ import { FaCheckCircle, FaClock, FaExclamationCircle, FaTimesCircle } from "reac
 import { twMerge } from "tailwind-merge";
 
 interface TimeLineProps {
+  data?: string;
   title?: string;
   children?: ReactNode;
   icon?: "check" | "clock" | "cancel" | "exclamation";
   color?: "green" | "yellow" | "red" | "gray";
 }
 
-const TimeLineCard = ({ title, children, icon = "exclamation", color = "gray" }: TimeLineProps) => {
+const TimeLineCard = ({ title, data, children, icon = "exclamation", color = "gray" }: TimeLineProps) => {
   const iconStrToIcon: any = {
     check: <FaCheckCircle />,
     clock: <FaClock />,
@@ -18,10 +19,10 @@ const TimeLineCard = ({ title, children, icon = "exclamation", color = "gray" }:
   };
 
   const colorToClass = {
-    red: { background: "bg-red-500", text: "text-white" },
-    gray: { background: "bg-gray-300", text: "text-gray-400" },
-    green: { background: "bg-green-500", text: "text-white" },
-    yellow: { background: "bg-yellow-400", text: "text-white" },
+    red: { background: "bg-red-500", text: "text-white", border: "border-t border-t-red-600" },
+    gray: { background: "bg-gray-300", text: "text-gray-400", border: "border-t border-t-gray-400" },
+    green: { background: "bg-green-500", text: "text-white", border: "border-t border-t-green-600" },
+    yellow: { background: "bg-yellow-400", text: "text-white", border: "border-t border-t-yellow-500" },
   };
 
   return (
@@ -49,7 +50,20 @@ const TimeLineCard = ({ title, children, icon = "exclamation", color = "gray" }:
               )}
             >
               <h3 className={twMerge("font-semibold text-lg mb-1", colorToClass[color].text)}>{title}</h3>
-              <p className="leading-tight text-justify w-full text-white">{children}</p>
+              <p className="leading-tight text-justify w-full text-white">
+                {data && <span>{data}</span>}
+                {children && (
+                  <p
+                    className={twMerge(
+                      "mt-3 pt-2",
+                      colorToClass[color].border,
+                      color === "gray" ? colorToClass[color].text : null
+                    )}
+                  >
+                    {children}
+                  </p>
+                )}
+              </p>
             </div>
           </div>
         </div>

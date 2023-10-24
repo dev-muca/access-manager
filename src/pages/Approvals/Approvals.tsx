@@ -1,7 +1,6 @@
 import Container from "@/components/Container";
 import Link from "next/link";
 
-import IRequests from "@/@types/IRequests";
 import Badge from "@/components/Badge";
 import { AuthContext } from "@/context/AuthContext";
 import { useContext, useState } from "react";
@@ -9,18 +8,18 @@ import { useContext, useState } from "react";
 import Group from "@/components/Group";
 import useFetch from "@/hooks/useFetch";
 
-const Requests = () => {
+const Approvals = () => {
   const { session } = useContext(AuthContext);
   const [filter, setFilter] = useState("pendente");
 
   const { data, pageLoader } = useFetch({
-    endpoint: `/api/request?session=${session?.id}&status=${filter}`,
+    endpoint: `/api/user/approval?id=${session?.id}&status=${filter}`,
     method: "GET",
     dependencies: [session?.id, filter],
   });
 
   return (
-    <Container title="Minhas Solicitações" loading={pageLoader}>
+    <Container title="Minhas Aprovações" loading={pageLoader}>
       <Group label="Filtrar:" className="px-4">
         <Badge
           color="yellow"
@@ -56,6 +55,9 @@ const Requests = () => {
                   Acesso
                 </th>
                 <th scope="col" className="px-6 py-3 text-center font-bold">
+                  Solicitante
+                </th>
+                <th scope="col" className="px-6 py-3 text-center font-bold">
                   Data da Solicitação
                 </th>
                 <th scope="col" className="px-6 py-3 pr-8 text-center font-bold">
@@ -67,10 +69,12 @@ const Requests = () => {
               </tr>
             </thead>
             <tbody>
-              {data?.map((row: IRequests) => (
+              {/* NAO ESQUECER DE TIPAR ESSA PORRA AQUI, CRIAR UM IAPPROVAL */}
+              {data?.map((row: any) => (
                 <tr key={row.id} className="odd:bg-white even:bg-gray-50 border-b text-gray-800">
-                  <td className="px-6 py-4 text-center">{row.id}</td>
-                  <td className="px-6 py-4 hidden sm:block">{row.name}</td>
+                  <td className="px-6 py-4 text-center">{row.requestNumber}</td>
+                  <td className="px-6 py-4 hidden sm:block">{row.access}</td>
+                  <td className="px-6 py-4 text-center">{row.requesterName}</td>
                   <td className="px-6 py-4 text-center">
                     {row.requestDate?.split(" ")[0].split("-").reverse().join("/")}
                   </td>
@@ -114,4 +118,4 @@ const Requests = () => {
   );
 };
 
-export default Requests;
+export default Approvals;
