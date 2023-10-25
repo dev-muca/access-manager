@@ -24,21 +24,21 @@ const Requests = () => {
       <Group label="Filtrar:" className="px-4">
         <Badge
           color="yellow"
-          className={`cursor-pointer ${filter == "pendente" ? "opacity-100" : "opacity-25"} hover:opacity-100`}
+          className={`cursor-pointer hover:opacity-100 ${filter == "pendente" ? "opacity-100" : "opacity-25"}`}
           onClick={() => setFilter("pendente")}
         >
           Pendentes
         </Badge>
         <Badge
           color="green"
-          className={`cursor-pointer ${filter == "aprovado" ? "opacity-100" : "opacity-25"} hover:opacity-100`}
+          className={`cursor-pointer hover:opacity-100 ${filter == "aprovado" ? "opacity-100" : "opacity-25"}`}
           onClick={() => setFilter("aprovado")}
         >
           Aprovados
         </Badge>
         <Badge
           color="red"
-          className={`cursor-pointer ${filter == "reprovado" ? "opacity-100" : "opacity-25"} hover:opacity-100`}
+          className={`cursor-pointer hover:opacity-100 ${filter == "reprovado" ? "opacity-100" : "opacity-25"}`}
           onClick={() => setFilter("reprovado")}
         >
           Reprovados
