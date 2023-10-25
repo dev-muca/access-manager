@@ -1,93 +1,50 @@
 import { useRouter } from "next/router";
-import { useState } from "react";
 
 import Container from "@/components/Container";
 import TimeLineCard from "@/components/TimeLineCard";
+import useFetch from "@/hooks/useFetch";
+import IApproval from "@/@types/IApproval";
 
 const Progress = () => {
   const router = useRouter();
   const requestId = router.query.requestId;
 
-  const [pageLoader, setPageLoader] = useState(false);
+  const { data, pageLoader } = useFetch({
+    endpoint: `/api/request/approval?id=${requestId}`,
+    method: "GET",
+    dependencies: [requestId],
+  });
+
+  const parsedStatus: any = {
+    Pendente: { color: "yellow", icon: "clock" },
+    Aprovado: { color: "green", icon: "check" },
+    Reprovado: { color: "red", icon: "cancel" },
+  };
 
   return (
     <Container title={`Andamento da Solicitação #${requestId}`} fixedTitle loading={pageLoader}>
-      <TimeLineCard
-        color="green"
-        icon="check"
-        title="Aprovado por: Murilo Carvalho Baleeiro"
-        data="Em 20/10/2023 às 12:34"
-      >
-        Nenhum comentário adicional
-      </TimeLineCard>
-      <TimeLineCard
-        color="green"
-        icon="check"
-        title="Aprovado por: Murilo Carvalho Baleeiro"
-        data="Em 20/10/2023 às 12:34"
-      >
-        Nenhum comentário adicional
-      </TimeLineCard>
-      <TimeLineCard
-        color="green"
-        icon="check"
-        title="Aprovado por: Murilo Carvalho Baleeiro"
-        data="Em 20/10/2023 às 12:34"
-      >
-        Nenhum comentário adicional
-      </TimeLineCard>
-      <TimeLineCard
-        color="green"
-        icon="check"
-        title="Aprovado por: Murilo Carvalho Baleeiro"
-        data="Em 20/10/2023 às 12:34"
-      >
-        Nenhum comentário adicional
-      </TimeLineCard>
-      <TimeLineCard
-        color="green"
-        icon="check"
-        title="Aprovado por: Murilo Carvalho Baleeiro"
-        data="Em 20/10/2023 às 12:34"
-      >
-        Nenhum comentário adicional
-      </TimeLineCard>
-      <TimeLineCard
-        color="green"
-        icon="check"
-        title="Aprovado por: Murilo Carvalho Baleeiro"
-        data="Em 20/10/2023 às 12:34"
-      >
-        Nenhum comentário adicional
-      </TimeLineCard>
-      <TimeLineCard
-        color="green"
-        icon="check"
-        title="Aprovado por: Murilo Carvalho Baleeiro"
-        data="Em 20/10/2023 às 12:34"
-      >
-        Nenhum comentário adicional
-      </TimeLineCard>
-      <TimeLineCard
-        color="green"
-        icon="check"
-        title="Aprovado por: Murilo Carvalho Baleeiro"
-        data="Em 20/10/2023 às 12:34"
-      >
-        Nenhum comentário adicional
-      </TimeLineCard>
-      <TimeLineCard
-        color="green"
-        icon="check"
-        title="Aprovado por: Murilo Carvalho Baleeiro"
-        data="Em 20/10/2023 às 12:34"
-      >
-        Nenhum comentário adicional
-      </TimeLineCard>
-      <TimeLineCard color="yellow" title="Pendente">
-        Aguardando aprovação de: Vitor Oliveira
-      </TimeLineCard>
-      <TimeLineCard title="Em espera">Aguardando ações anteriores...</TimeLineCard>
+      {data?.map(({ id, fullname, status, approvalDate, comment }: IApproval) => (
+        <TimeLineCard
+          key={id}
+          icon={parsedStatus[status].icon}
+          color={parsedStatus[status].color}
+          title={
+            status === "Aprovado"
+              ? `Aprovado por: ${fullname}`
+              : status === "Reprovado"
+              ? `Reprovado por: ${fullname}`
+              : "Pendente"
+          }
+        >
+          <p>
+            {status === "Aprovador"
+              ? `Em ${approvalDate}`
+              : status === "Reprovado"
+              ? `Em ${approvalDate}`
+              : `Aguardando aprovação de: ${fullname}`}
+          </p>
+        </TimeLineCard>
+      ))}
     </Container>
   );
 };

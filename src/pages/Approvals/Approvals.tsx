@@ -1,17 +1,20 @@
-import Container from "@/components/Container";
-import Link from "next/link";
-
-import Badge from "@/components/Badge";
-import { AuthContext } from "@/context/AuthContext";
 import { useContext, useState } from "react";
+import { MdOutlineBlock, MdOutlineCheck } from "react-icons/md";
 
+import { AuthContext } from "@/context/AuthContext";
+
+import IApprovals from "@/@types/IApprovals";
+import Alert from "@/components/Alert";
+import Badge from "@/components/Badge";
+import Container from "@/components/Container";
 import Group from "@/components/Group";
 import useFetch from "@/hooks/useFetch";
-import IApproval from "@/@types/IApproval";
 
 const Approvals = () => {
   const { session } = useContext(AuthContext);
   const [filter, setFilter] = useState("pendente");
+  const [action, setAction] = useState<boolean | null>(null);
+  const [appear, setAppear] = useState(false);
 
   const { data, pageLoader } = useFetch({
     endpoint: `/api/user/approval?id=${session?.id}&status=${filter}`,
@@ -21,6 +24,7 @@ const Approvals = () => {
 
   return (
     <Container title="Minhas Aprovações" loading={pageLoader}>
+      {action != null && <Alert title="Ações" className="w-4/6" onClose={() => setAction(null)}></Alert>}
       <Group label="Filtrar:" className="px-4">
         <Badge
           color="yellow"
@@ -70,8 +74,7 @@ const Approvals = () => {
               </tr>
             </thead>
             <tbody>
-              {/* NAO ESQUECER DE TIPAR ESSA PORRA AQUI, CRIAR UM IAPPROVAL */}
-              {data?.map((row: IApproval) => (
+              {data?.map((row: IApprovals) => (
                 <tr key={row.requestNumber} className="odd:bg-white even:bg-gray-50 border-b text-gray-800">
                   <td className="px-6 py-4 text-center">{row.requestNumber}</td>
                   <td className="px-6 py-4 hidden sm:block">{row.access}</td>
@@ -96,12 +99,24 @@ const Approvals = () => {
                     </Badge>
                   </td>
                   <td className="px-6 py-4 text-center">
-                    <Link
-                      href={{ pathname: "/Progress", query: { requestId: row.requestNumber } }}
-                      className="text-blue-700 underline"
-                    >
-                      Ver detalhes
-                    </Link>
+                    <span className="flex justify-center items-center gap-2">
+                      <MdOutlineCheck
+                        size={24}
+                        className="text-green-600 cursor-pointer hover:scale-125 hover:bg-gray-200 duration-100"
+                        onClick={() => {
+                          setAction(true);
+                          console.log(action);
+                        }}
+                      />
+                      <MdOutlineBlock
+                        size={22}
+                        className="text-red-600 cursor-pointer hover:scale-125 hover:bg-gray-200 duration-100"
+                        onClick={() => {
+                          setAction(false);
+                          console.log(action);
+                        }}
+                      />
+                    </span>
                   </td>
                 </tr>
               ))}

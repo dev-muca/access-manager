@@ -14,7 +14,6 @@ const UserService = {
       return result;
     } catch (err: any) {
       console.log("ERROR | User Service | Get User | more:", err.message);
-      // return null;
       return err.message;
     }
   },

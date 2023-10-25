@@ -11,12 +11,9 @@ const Dashboard = () => {
   return (
     <Container title="Dashboard">
       {greetings && (
-        <Alert
-          title="Seja bem-vindo 😄"
-          content={`Olá ${session?.fullname}, seja bem-vindo ao SGA (Sistema Gestor de Acessos)`}
-          hasConfirm
-          onConfirm={() => setGreetings(false)}
-        />
+        <Alert title="Seja bem-vindo 😄" hasConfirm onConfirm={() => setGreetings(false)}>
+          {`Olá ${session?.fullname}, seja bem-vindo ao SGA (Sistema Gestor de Acessos)`}
+        </Alert>
       )}
 
       <Group label="Informações do sistema" className="px-4">
