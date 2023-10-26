@@ -4,7 +4,7 @@ import Button from "../Button";
 import { twMerge } from "tailwind-merge";
 
 interface AlertProps {
-  title?: string;
+  title?: ReactNode;
   children?: ReactNode;
   className?: string;
   hasActions?: true;
@@ -39,7 +39,7 @@ const Alert = ({ title, children, className, hasActions, hasConfirm, onConfirm, 
                   }}
                 />
               </header>
-              {children && <p className="text-justify">{children}</p>}
+              {children && <div className="text-justify">{children}</div>}
               {hasActions && (
                 <footer className="w-full flex justify-end gap-4">
                   <Button

@@ -15,6 +15,8 @@ const Progress = () => {
     dependencies: [requestId],
   });
 
+  console.log(data);
+
   const parsedStatus: any = {
     Pendente: { color: "yellow", icon: "clock" },
     Aprovado: { color: "green", icon: "check" },
@@ -37,8 +39,10 @@ const Progress = () => {
           }
         >
           <p>
-            {status === "Aprovador"
-              ? `Em ${approvalDate}`
+            {status === "Aprovado"
+              ? `Em ${approvalDate.split(" ")[0].split("-").reverse().join("/")} às ${approvalDate
+                  .split(" ")[1]
+                  .slice(0, 5)}`
               : status === "Reprovado"
               ? `Em ${approvalDate}`
               : `Aguardando aprovação de: ${fullname}`}

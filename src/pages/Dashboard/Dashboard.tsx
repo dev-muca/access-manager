@@ -12,7 +12,7 @@ const Dashboard = () => {
     <Container title="Dashboard">
       {greetings && (
         <Alert title="Seja bem-vindo 😄" hasConfirm onConfirm={() => setGreetings(false)}>
-          {`Olá ${session?.fullname}, seja bem-vindo ao SGA (Sistema Gestor de Acessos)`}
+          <p>{`Olá ${session?.fullname}, seja bem-vindo ao SGA (Sistema Gestor de Acessos)`}</p>
         </Alert>
       )}
 

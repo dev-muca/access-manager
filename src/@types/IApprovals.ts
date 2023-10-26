@@ -1,12 +1,11 @@
 interface IApprovals {
-  requestNumber: number;
-  access: string;
-  description?: string;
+  approvalId: number;
+  requestId: number;
+  accessName: string;
+  accessDescription?: string;
+  requestDate: string;
   requesterId: number;
   requesterName: string;
-  requestUsername: string;
-  requestDate: string;
-  approverOwner: boolean | null;
   status: string;
 }
 

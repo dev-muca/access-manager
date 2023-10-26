@@ -59,6 +59,8 @@ export function AuthProvider({ children }: ProviderProps) {
 
   function Logout() {
     destroyCookie(undefined, "sga-auth@token");
+    setSession(null!);
+    setGreetings(true);
     alert("Sessão encerrada");
     router.push("/");
   }

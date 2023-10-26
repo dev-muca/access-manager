@@ -129,16 +129,12 @@ export default function Request() {
         <Button className="w-full mb-10" loader={buttonLoader}>
           Solicitar
         </Button>
-
-        {request?.id && (
-          <Alert
-            title="Solicitação criada!"
-            content={`O número da sua solicitação é: #${request?.id}`}
-            hasConfirm
-            onConfirm={() => router.push("/Requests")}
-          />
-        )}
       </form>
+      {request?.id && (
+        <Alert title="Solicitação criada!" hasConfirm onConfirm={() => router.push("/Requests")}>
+          <p>{`O número da sua solicitação é: #${request?.id}`}</p>
+        </Alert>
+      )}
     </Container>
   );
 }

@@ -11,9 +11,9 @@ export default async function handleHttp(req: NextApiRequest, res: NextApiRespon
 
 async function GET(req: NextApiRequest, res: NextApiResponse) {
   try {
-    const id = Number(req.query.id);
+    const userId = Number(req.query.userId);
     const status = req.query.status;
-    const approvals = await User.getApprovals(id, status as string);
+    const approvals = await User.getApprovals(userId, status as string);
     return res.status(200).send(approvals);
   } catch (err: any) {
     res.status(500).send({ error: err.message });

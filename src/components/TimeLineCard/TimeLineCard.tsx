@@ -50,7 +50,7 @@ const TimeLineCard = ({ title, data, children, icon = "exclamation", color = "gr
               )}
             >
               <h3 className={twMerge("font-semibold text-lg mb-1", colorToClass[color].text)}>{title}</h3>
-              <p className="leading-tight text-justify w-full text-white">
+              <div className="leading-tight text-justify w-full text-white">
                 {data && <span>{data}</span>}
                 {children && (
                   <p
@@ -63,7 +63,7 @@ const TimeLineCard = ({ title, data, children, icon = "exclamation", color = "gr
                     {children}
                   </p>
                 )}
-              </p>
+              </div>
             </div>
           </div>
         </div>

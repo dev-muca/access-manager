@@ -18,27 +18,27 @@ const UserService = {
     }
   },
 
-  async getApprovals(id: number, status: string = "pendente") {
+  async getApprovals(userId: number, status: string = "Pendente") {
     try {
       const conn = await pool.getConnection();
-      const sql = `SELECT R.id requestNumber,
-                        A.name access,
-                        A.description,
-                        U.id requesterId,
-                        U.fullname requesterName,
-                        U.username requesterUsername,
-                        DATE_FORMAT(R.request_date, '%Y-%m-%d %H:%i:%s') AS requestDate,
-                        R.approver_owner approverOwner,
-                        S.status
-                   FROM request R
-                      INNER JOIN access A ON A.id = R.id_access
-                      INNER JOIN user U ON U.id = R.id_requester
-                      INNER JOIN approver AP ON AP.id_access = R.id_access
-                      INNER JOIN status S ON R.id_status = S.id
-                   WHERE AP.id_user = ?
-                   AND R.id_status = (SELECT id FROM status WHERE status = ?)
-                   ORDER BY requestDate DESC`;
-      const [result] = await conn.query<RowDataPacket[]>(sql, [id, status]);
+      const sql = `SELECT AR.id approvalId,
+                          R.id requestId,
+                          A.name accessName,
+                          A.description accessDescription,
+                          DATE_FORMAT(R.request_date, '%Y-%m-%d %H:%i:%s') AS requestDate,
+                          U.id requesterId,
+                          U.fullname requesterName,
+                          S.status
+                    FROM approval_request AR
+                        INNER JOIN approval AP ON AP.id = AR.id_approval
+                        INNER JOIN request R ON R.id = AR.id_request
+                        INNER JOIN access A ON A.id = R.id_access
+                        INNER JOIN user U ON U.id = R.id_requester
+                        INNER JOIN status S ON S.id = AP.id_status
+                    WHERE AP.id_user = ?
+                        AND AP.id_status = (SELECT id FROM STATUS WHERE STATUS = ?)
+                    ORDER BY requestDate DESC`;
+      const [result] = await conn.query<RowDataPacket[]>(sql, [userId, status]);
 
       return result;
     } catch (err: any) {

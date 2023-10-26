@@ -19,6 +19,12 @@ const Requests = () => {
     dependencies: [session?.id, filter],
   });
 
+  const statusToColor: any = {
+    Pendente: "yellow",
+    Aprovado: "green",
+    Reprovado: "red",
+  };
+
   return (
     <Container title="Minhas Solicitações" loading={pageLoader}>
       <Group label="Filtrar:" className="px-4">
@@ -75,18 +81,7 @@ const Requests = () => {
                     {row.requestDate?.split(" ")[0].split("-").reverse().join("/")}
                   </td>
                   <td className="flex justify-center items-center px-6 py-4 font-bold text-center">
-                    <Badge
-                      color={
-                        row?.status === "Pendente"
-                          ? "yellow"
-                          : row?.status === "Aprovado"
-                          ? "green"
-                          : row?.status === "Reprovado"
-                          ? "red"
-                          : "default"
-                      }
-                      className="flex w-24 justify-center"
-                    >
+                    <Badge color={statusToColor[row?.status!]} className="flex w-24 justify-center">
                       {row.status}
                     </Badge>
                   </td>

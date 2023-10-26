@@ -4,20 +4,21 @@ import { BiLoaderAlt } from "react-icons/bi";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children?: ReactNode;
-  color?: string;
+  color?: "default" | "green" | "red";
   loader?: boolean;
   className?: string;
 }
 
 const Button = ({ children, color = "default", loader = false, className, ...props }: ButtonProps) => {
-  const colorClass: any = {
+  const colotToClass: any = {
     default: "bg-tertiary text-white",
+    green: "bg-green-500 text-white",
     red: "bg-red-500 text-white",
   };
 
   const buttonClass = twMerge(
     `w-min-[280px] h-[40px] px-2 py-1 rounded shadow uppercase font-medium hover:brightness-105 flex justify-center items-center mt-0.5`,
-    colorClass[color],
+    colotToClass[color],
     className
   );
 

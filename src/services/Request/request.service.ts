@@ -76,6 +76,7 @@ const RequestService = {
       const sql = `SELECT AP.id,
                           U.fullname,
                           S.status,
+                          AP.id approvalId,
                           DATE_FORMAT (AP.approval_date, '%Y-%m-%d %H:%i:%s') approvalDate,
                           AP.comment
                    FROM approval_request AR
@@ -90,6 +91,33 @@ const RequestService = {
       return result;
     } catch (err: any) {
       console.log("ERROR | Request Service | Get Approvals | more:", err.message);
+      return null;
+    }
+  },
+
+  setApproval: async ({
+    approvalId,
+    approvalDate,
+    status,
+    comment,
+  }: {
+    status: string;
+    approvalDate: string;
+    approvalId: number;
+    comment?: string;
+  }) => {
+    try {
+      const conn = await pool.getConnection();
+      const sql = `UPDATE approval SET id_status = (SELECT id FROM status WHERE status = ?), 
+                                       approval_date = ?, 
+                                       comment = ? 
+                                       WHERE id = ?`;
+      const [result] = await conn.query<ResultSetHeader>(sql, [status, approvalDate, comment, approvalId]);
+      conn.release();
+
+      return result.affectedRows;
+    } catch (err: any) {
+      console.log("ERROR | Request Service | Set Approve | more:", err.message);
       return null;
     }
   },
