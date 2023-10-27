@@ -19,7 +19,7 @@ const TimeLineCard = ({ title, data, children, icon = "exclamation", color = "gr
   };
 
   const colorToClass = {
-    red: { background: "bg-red-500", text: "text-white", border: "border-t border-t-red-600" },
+    red: { background: "bg-red-500", text: "text-white", border: "border-t border-t-red-400" },
     gray: { background: "bg-gray-300", text: "text-gray-400", border: "border-t border-t-gray-400" },
     green: { background: "bg-green-500", text: "text-white", border: "border-t border-t-green-600" },
     yellow: { background: "bg-yellow-400", text: "text-white", border: "border-t border-t-yellow-500" },

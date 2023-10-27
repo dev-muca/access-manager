@@ -15,8 +15,6 @@ const Progress = () => {
     dependencies: [requestId],
   });
 
-  console.log(data);
-
   const parsedStatus: any = {
     Pendente: { color: "yellow", icon: "clock" },
     Aprovado: { color: "green", icon: "check" },
@@ -47,6 +45,12 @@ const Progress = () => {
               ? `Em ${approvalDate}`
               : `Aguardando aprovação de: ${fullname}`}
           </p>
+          {comment && (
+            <p className="mt-2">
+              <span className="pr-1">Comentários:</span>
+              <span>{comment}</span>
+            </p>
+          )}
         </TimeLineCard>
       ))}
     </Container>
