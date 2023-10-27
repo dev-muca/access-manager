@@ -11,9 +11,13 @@ import Input from "@/components/Input";
 import IAccess from "@/@types/IAccess";
 import IError from "@/@types/IError";
 import IRequest from "@/@types/IRequest";
+
 import { AuthContext } from "@/context/AuthContext";
+
 import useDate from "@/hooks/useDate";
 import useFetch from "@/hooks/useFetch";
+
+import apiBaseUrl from "@/utils/host";
 
 export default function Request() {
   const router = useRouter();
@@ -50,7 +54,7 @@ export default function Request() {
     e.preventDefault();
     setButtonLoader(true);
 
-    const res = await fetch("http://localhost:3000/api/request", {
+    const res = await fetch(`${apiBaseUrl}/api/request`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

@@ -5,6 +5,8 @@ import { Dispatch, ReactNode, SetStateAction, createContext, useEffect, useState
 import ICredentials from "@/@types/ICredentials";
 import IUser from "@/@types/IUser";
 
+import apiBaseUrl from "@/utils/host";
+
 interface ProviderProps {
   children: ReactNode;
 }
@@ -38,7 +40,7 @@ export function AuthProvider({ children }: ProviderProps) {
 
   async function Auth({ username, password }: ICredentials) {
     try {
-      const res = await fetch("http://localhost:3000/api/user/auth", {
+      const res = await fetch(`${apiBaseUrl}/api/user/auth`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),

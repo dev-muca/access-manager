@@ -1,23 +1,20 @@
-import { ChangeEvent, FormEvent, useContext, useEffect, useState } from "react";
+import { ChangeEvent, useContext, useState } from "react";
 import { MdOutlineBlock, MdOutlineCheck } from "react-icons/md";
 
 import { AuthContext } from "@/context/AuthContext";
 
 import IApprovals from "@/@types/IApprovals";
+import IError from "@/@types/IError";
 import Alert from "@/components/Alert";
 import Badge from "@/components/Badge";
 import Button from "@/components/Button";
 import Container from "@/components/Container";
 import Group from "@/components/Group";
 import Input from "@/components/Input";
-import useFetch from "@/hooks/useFetch";
 import useDate from "@/hooks/useDate";
-import IError from "@/@types/IError";
+import useFetch from "@/hooks/useFetch";
 
-interface IActionsProps {
-  approvalId: number;
-  approve: boolean;
-}
+import apiBaseUrl from "@/utils/host";
 
 interface ApproveProps {
   status: boolean;
@@ -54,7 +51,7 @@ const Approvals = () => {
       status: approve?.status,
     };
 
-    const res = await fetch("http://localhost:3000/api/request/approval", {
+    const res = await fetch(`${apiBaseUrl}/api/request/approval`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
