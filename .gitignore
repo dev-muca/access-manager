@@ -36,6 +36,3 @@ next-env.d.ts
 
 # logs
 /logs
-
-# host config file
-/src/utils/host.ts
