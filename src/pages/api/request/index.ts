@@ -12,6 +12,13 @@ async function GET(req: NextApiRequest, res: NextApiResponse) {
   try {
     const session = Number(req.query.session);
     const status = req.query.status;
+    const id = Number(req.query.id);
+
+    if (id) {
+      const data = await Request.getRequest(id);
+      return res.status(200).send(data);
+    }
+
     const data = await Request.getRequests(session, status as string);
     res.status(200).send(data);
   } catch (err: any) {

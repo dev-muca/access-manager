@@ -26,7 +26,7 @@ const TimeLineCard = ({ title, data, children, icon = "exclamation", color = "gr
   };
 
   return (
-    <div className="p-0">
+    <div className="w-full p-0">
       <div className="w-full">
         <div className="flex flex-col md:grid grid-cols-12 text-gray-50">
           <div className="flex md:contents">

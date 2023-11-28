@@ -37,6 +37,9 @@ async function POST(req: NextApiRequest, res: NextApiResponse) {
     if (data.includes("connect ETIMEDOUT"))
       return res.status(500).send({ error: { field: "message", message: "Sem resposta do servidor" } });
 
+    if (data.includes("Too many connections"))
+      return res.status(500).send({ error: { field: "message", message: "Limite de conexões excedidas" } });
+
     if (!data) return res.status(401).send({ error: { field: "username", message: "Usuário inválido" } });
 
     const row = data![0];

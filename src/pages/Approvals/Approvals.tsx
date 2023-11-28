@@ -3,7 +3,6 @@ import { MdOutlineBlock, MdOutlineCheck } from "react-icons/md";
 
 import { AuthContext } from "@/context/AuthContext";
 
-import IApprovals from "@/@types/IApprovals";
 import IError from "@/@types/IError";
 import Alert from "@/components/Alert";
 import Badge from "@/components/Badge";
@@ -14,20 +13,30 @@ import Input from "@/components/Input";
 import useDate from "@/hooks/useDate";
 import useFetch from "@/hooks/useFetch";
 
+import Infobox from "@/components/Infobox";
 import apiBaseUrl from "@/utils/host";
 
-interface ApproveProps {
-  status: boolean;
+interface RequestProps {
   approvalId: number;
-  comment?: string;
+  requestId: number;
+  accessName: string;
+  accessDescription?: string;
+  requestDate: string;
+  justification: string;
+  approverOwner: boolean;
+  requesterId: number;
+  requesterName: string;
+  status: string;
 }
 
 const Approvals = () => {
   const { getTime } = useDate();
   const { session } = useContext(AuthContext);
   const [filter, setFilter] = useState("pendente");
-  const [approve, setApprove] = useState<ApproveProps | null>(null);
   const [buttonLoader, setButtonLoader] = useState(false);
+  const [currentStatus, setCurrentStatus] = useState<boolean>(null!);
+  const [currentComment, setCurrentComment] = useState<string>(null!);
+  const [currentRequest, setCurrentRequest] = useState<RequestProps>(null!);
   const [error, setError] = useState<IError>({ field: "", message: "" });
 
   const { data, pageLoader } = useFetch({
@@ -38,17 +47,17 @@ const Approvals = () => {
 
   const onInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.currentTarget;
-    setApprove((prevData: any) => ({ ...prevData, [name]: value }));
+    setCurrentComment((prevData: any) => ({ ...prevData, [name]: value }));
   };
 
   const onApproveRequest = async () => {
     setButtonLoader(true);
 
     const body = {
-      approvalId: approve?.approvalId,
+      approvalId: currentRequest.approvalId,
       approvalDate: getTime(),
-      comment: approve?.comment,
-      status: approve?.status,
+      comment: currentComment,
+      status: currentStatus,
     };
 
     const res = await fetch(`${apiBaseUrl}/api/request/approval`, {
@@ -58,57 +67,94 @@ const Approvals = () => {
     });
 
     const { error } = await res.json();
+
     if (error) {
       setError(error);
       setButtonLoader(false);
       return;
     } else {
       setButtonLoader(false);
-      setApprove(null);
+      currentStatus ? setFilter("aprovado") : setFilter("reprovado");
+      setCurrentRequest(null!);
+      setCurrentComment(null!);
+      setCurrentStatus(null!);
       return;
     }
   };
 
+  // return "Requisitando dados...";
+
   return (
     <Container title="Minhas Aprovações" loading={pageLoader}>
-      {approve?.status != null && (
+      {currentRequest?.status != null && (
         <Alert
           title={
             <p className="flex flex-row gap-2">
               Você está
-              {approve.status ? (
+              {currentStatus ? (
                 <span className="text-green-500 border-b-2 border-b-green-500"> APROVANDO</span>
               ) : (
                 <span className="text-red-500 border-b-2 border-b-red-500"> REPROVANDO</span>
               )}
-              essa solicitação!
+              a solicitação #{currentRequest.requestId} !
             </p>
           }
           className="w-4/6"
           onClose={() => {
-            setApprove(null);
+            setCurrentRequest(null!);
+            setCurrentStatus(null!);
             setError({ field: "", message: "" });
           }}
         >
           <div className="flex flex-col gap-4">
+            <div className="mt-4">
+              <Group label="Informações da solicitação:">
+                <div className="flex flex-col gap-y-2">
+                  <div className="ml-3 flex gap-2">
+                    <span className="font-medium">Solicitante:</span>
+                    <span>{currentRequest.requesterName}</span>
+                  </div>
+                  <div className="ml-3 flex gap-2">
+                    <span className="font-medium">Acesso solicitado:</span>
+                    <span>{currentRequest.accessName}</span>
+                  </div>
+                  {currentRequest.accessDescription && (
+                    <div className="ml-3 flex gap-2">
+                      <span className="font-medium">Descrição:</span>
+                      <span>{currentRequest.accessDescription}</span>
+                    </div>
+                  )}
+                  {currentRequest.justification && (
+                    <div className="ml-3 flex gap-2">
+                      <span className="font-medium">Justificativa:</span>
+                      <span>{currentRequest.justification}</span>
+                    </div>
+                  )}
+                  {currentRequest.approverOwner && (
+                    <div className="ml-3 flex gap-2">
+                      <span className="font-bold">Aprovador:</span>
+                      <span>SIM</span>
+                      <Infobox message="O solicitante deseja se tornar aprovador deste acesso, ao aprovar a solicitação, este entrará para a grade de aprovação do acesso referente." />
+                    </div>
+                  )}
+                </div>
+              </Group>
+            </div>
             <Input
               name="comment"
-              label={`Comentários${approve ? "" : "*"}:`}
-              placeholder={
-                approve.status
-                  ? "Espaço destinado a comentários"
-                  : "Justifique o motivo da sua reprovação desta solicitação"
-              }
+              label={`Comentários${currentStatus ? "" : "*"}:`}
+              placeholder={currentStatus ? "Espaço destinado a comentários" : "Justifique o motivo da reprovação"}
               onChange={onInputChange}
               error={error.field === "comment" && error.message}
               multiline
             />
-            <Button color={approve.status ? "green" : "red"} onClick={onApproveRequest} loader={buttonLoader}>
-              {approve.status ? "APROVAR" : "REPROVAR"}
+            <Button color={currentStatus ? "green" : "red"} onClick={onApproveRequest} loader={buttonLoader}>
+              {currentStatus ? "APROVAR" : "REPROVAR"}
             </Button>
           </div>
         </Alert>
       )}
+
       <Group label="Filtrar:" className="px-4">
         <Badge
           color="yellow"
@@ -132,7 +178,8 @@ const Approvals = () => {
           Reprovados
         </Badge>
       </Group>
-      {data?.length ? (
+
+      {data?.length > 0 ? (
         <section className="relative overflow-x-auto sm:rounded-md max-h-[calc(100vh-240px)] border-b">
           <table className="w-full text-sm text-left text-gray-50 overflow-auto">
             <thead className="text-xs text-gray-700 uppercase bg-gray-50 sticky top-0">
@@ -160,7 +207,7 @@ const Approvals = () => {
               </tr>
             </thead>
             <tbody>
-              {data?.map((row: IApprovals) => (
+              {data?.map((row: RequestProps) => (
                 <tr key={row.approvalId} className="odd:bg-white even:bg-gray-50 border-b text-gray-800">
                   <td className="px-6 py-4 text-center">{row.requestId}</td>
                   <td className="px-6 py-4 hidden sm:block">{row.accessName}</td>
@@ -190,17 +237,18 @@ const Approvals = () => {
                         <MdOutlineCheck
                           size={24}
                           className="text-green-600 cursor-pointer hover:scale-125 hover:bg-gray-200 duration-100"
-                          onClick={() => setApprove({ approvalId: row.approvalId, status: true })}
+                          onClick={() => {
+                            setCurrentStatus(true);
+                            setCurrentRequest(row);
+                          }}
                         />
                         <MdOutlineBlock
                           size={22}
                           className="text-red-600 cursor-pointer hover:scale-125 hover:bg-gray-200 duration-100"
-                          onClick={() =>
-                            setApprove({
-                              approvalId: row.approvalId,
-                              status: false,
-                            })
-                          }
+                          onClick={() => {
+                            setCurrentStatus(false);
+                            setCurrentRequest(row);
+                          }}
                         />
                       </span>
                     </td>

@@ -24,7 +24,7 @@ const Button = ({ children, color = "default", loader = false, className, ...pro
 
   return (
     <button className={buttonClass} {...props}>
-      {loader ? <BiLoaderAlt size={20} className="animate-spin" /> : <span>{children}</span>}
+      {loader ? <BiLoaderAlt size={20} className="animate-spin" /> : <div>{children}</div>}
     </button>
   );
 };

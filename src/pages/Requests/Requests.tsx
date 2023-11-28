@@ -90,7 +90,7 @@ const Requests = () => {
                       href={{ pathname: "/Progress", query: { requestId: row.id } }}
                       className="text-blue-700 underline"
                     >
-                      Ver andamento
+                      {filter === "pendente" ? "Ver andamento" : "Ver solicitação"}
                     </Link>
                   </td>
                 </tr>

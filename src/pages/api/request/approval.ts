@@ -29,7 +29,7 @@ async function POST(req: NextApiRequest, res: NextApiResponse) {
         },
       });
 
-    console.log({ approvalId, approvalDate, comment, status });
+    // console.log({ approvalId, approvalDate, comment, status });
     // res.end();
 
     const affectedRows = await Request.setApproval({
@@ -38,6 +38,7 @@ async function POST(req: NextApiRequest, res: NextApiResponse) {
       comment,
       status: status ? "Aprovado" : "Reprovado",
     });
+
     res.status(200).send({ update: affectedRows });
   } catch (err: any) {
     res.status(500).send({ error: err.message });
