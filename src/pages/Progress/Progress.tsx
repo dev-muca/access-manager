@@ -26,7 +26,7 @@ const Progress = () => {
     dependencies: [requestId],
   });
 
-  console.log(dataRequest);
+  console.log(dataRequest.data);
 
   const parsedStatus: any = {
     Pendente: { color: "yellow", icon: "clock" },
@@ -75,24 +75,42 @@ const Progress = () => {
       </Group>
 
       <Group label="Detalhes da solicitação:" className="w-1/2 h-full">
-        <div className="flex flex-col gap-4">
-          <div className="ml-3 flex gap-2">
-            <span className="font-medium">Solicitante:</span>
-          </div>
+        <div className="flex flex-col gap-4 py-3 px-2">
+          {dataRequest.data && (
+            <div className="ml-3 flex gap-2">
+              <span className="font-medium">Item solicitado:</span>
+              <span className="font-normal">{dataRequest.data[0].accessName}</span>
+            </div>
+          )}
+
+          {dataRequest.data && (
+            <div className="ml-3 flex gap-2">
+              <span className="font-medium">Solicitado em:</span>
+              <span className="font-normal flex gap-2">
+                {dataRequest.data[0].requestDate.split(" ")[0].split("-").reverse().join("/")}
+                <span>às</span>
+                {dataRequest.data[0].requestDate.split(" ")[1]}
+              </span>
+            </div>
+          )}
+
+          {dataRequest.data && (
+            <div className="ml-3 flex gap-2">
+              <span className="font-medium">Justificativa:</span>
+              <span className="font-normal">{dataRequest.data[0].justification || "não justificado"}</span>
+            </div>
+          )}
+
+          {dataRequest.data && (
+            <div className="ml-3 flex gap-2">
+              <span className="font-medium">Tornar-se aprovador:</span>
+              <span className="font-normal">{dataRequest.data[0].approverOwner ? "sim" : "não"}</span>
+            </div>
+          )}
         </div>
       </Group>
     </Container>
   );
 };
-
-/* 
-approverOwner: boolean
-fullname: 
-id: 
-justification: 
-name: 
-requestDate: 
-username: 
-*/
 
 export default Progress;

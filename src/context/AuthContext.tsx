@@ -31,11 +31,15 @@ export function AuthProvider({ children }: ProviderProps) {
     const { ["sga-auth@token"]: token } = parseCookies();
 
     if (token) {
-      fetch(`http://localhost:3000/api/user/auth?validationToken=${token}`, { method: "GET" })
+      fetch(`${apiBaseUrl}/api/user/auth?validationToken=${token}`, { method: "GET" })
         .then((res) => res.json())
-        .then(({ user }) => setSession(user))
+        .then((data) => {
+          setSession(data);
+          router.push("/Dashboard");
+        })
         .catch((err) => console.log(err));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   async function Auth({ username, password }: ICredentials) {

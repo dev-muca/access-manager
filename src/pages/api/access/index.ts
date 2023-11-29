@@ -1,4 +1,3 @@
-import IAccess from "@/@types/IAccess";
 import Access from "@/services/Access";
 import { NextApiRequest, NextApiResponse } from "next";
 
@@ -10,6 +9,7 @@ export default async function handleHttp(req: NextApiRequest, res: NextApiRespon
 async function GET(req: NextApiRequest, res: NextApiResponse) {
   const id = Number(req.query.id);
   const orderBy = req.query.orderBy as string;
+
   const data = await Access.getAccess(id, orderBy);
 
   if (!data) return res.status(400).send({ field: "message", message: "Nenhum acesso disponível!" });
@@ -29,7 +29,7 @@ async function GET(req: NextApiRequest, res: NextApiResponse) {
     approver: access.approver.split(";").map(parseApprover),
   }));
 
-  res.status(200).send(id ? accesses[0] : accesses);
+  res.status(200).send(accesses);
 }
 
 async function POST(req: NextApiRequest, res: NextApiResponse) {

@@ -1,4 +1,5 @@
 import pool from "@/utils/pool";
+import { readFileSync } from "fs";
 import { RowDataPacket } from "mysql2";
 
 const AccessService = {
