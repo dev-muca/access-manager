@@ -5,14 +5,10 @@ import TimeLineCard from "@/components/TimeLineCard";
 import useFetch from "@/hooks/useFetch";
 import IApproval from "@/@types/IApproval";
 import Group from "@/components/Group";
-import { useContext } from "react";
-import { AuthContext } from "@/context/AuthContext";
-import Infobox from "@/components/Infobox";
 
 const Progress = () => {
   const router = useRouter();
   const requestId = router.query.requestId;
-  const { session } = useContext(AuthContext);
 
   const dataApproval = useFetch({
     endpoint: `/api/request/approval?id=${requestId}`,
@@ -20,13 +16,13 @@ const Progress = () => {
     dependencies: [requestId],
   });
 
+  console.log("APPROVAL DATA:", dataApproval);
+
   const dataRequest = useFetch({
     endpoint: `/api/request?id=${requestId}`,
     method: "GET",
     dependencies: [requestId],
   });
-
-  console.log(dataRequest.data);
 
   const parsedStatus: any = {
     Pendente: { color: "yellow", icon: "clock" },

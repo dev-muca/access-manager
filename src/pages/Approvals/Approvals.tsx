@@ -46,8 +46,8 @@ const Approvals = () => {
   });
 
   const onInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.currentTarget;
-    setCurrentComment((prevData: any) => ({ ...prevData, [name]: value }));
+    const { value } = e.currentTarget;
+    setCurrentComment(value);
   };
 
   const onApproveRequest = async () => {
@@ -81,8 +81,6 @@ const Approvals = () => {
       return;
     }
   };
-
-  // return "Requisitando dados...";
 
   return (
     <Container title="Minhas Aprovações" loading={pageLoader}>
@@ -141,7 +139,7 @@ const Approvals = () => {
               </Group>
             </div>
             <Input
-              name="comment"
+              name="currentComment"
               label={`Comentários${currentStatus ? "" : "*"}:`}
               placeholder={currentStatus ? "Espaço destinado a comentários" : "Justifique o motivo da reprovação"}
               onChange={onInputChange}

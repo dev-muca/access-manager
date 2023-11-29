@@ -21,7 +21,7 @@ const RequestService = {
 
       if (approver && approver.length > 0) {
         const approvals = approver.map(async (approver: IUser) => {
-          const approvalQuery = readFileSync("./sql/create-approval").toString();
+          const approvalQuery = readFileSync("./sql/create-approval.sql").toString();
           const [approvalResult] = await conn.query<ResultSetHeader>(approvalQuery, [approver.id]);
           const idApproval = approvalResult.insertId;
 
