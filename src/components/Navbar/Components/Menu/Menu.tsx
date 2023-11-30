@@ -1,9 +1,9 @@
 import Link from "next/link";
-import { twMerge } from "tailwind-merge";
 import { ButtonHTMLAttributes } from "react";
-import { FaUserCircle } from "react-icons/fa";
 import { BiLeftArrowAlt } from "react-icons/bi";
+import { FaUserCircle } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
+import { twMerge } from "tailwind-merge";
 
 interface ToggleProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   displayName?: string;

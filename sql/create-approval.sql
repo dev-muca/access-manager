@@ -1,4 +1,2 @@
-INSERT INTO
-    approval (id_user)
-VALUES
-    (?)
+INSERT INTO approval (id_user)
+VALUES (?)

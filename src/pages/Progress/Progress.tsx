@@ -1,10 +1,11 @@
 import { useRouter } from "next/router";
 
-import Container from "@/components/Container";
-import TimeLineCard from "@/components/TimeLineCard";
-import useFetch from "@/hooks/useFetch";
 import IApproval from "@/@types/IApproval";
+import useFetch from "@/hooks/useFetch";
+
+import Container from "@/components/Container";
 import Group from "@/components/Group";
+import TimeLineCard from "@/components/TimeLineCard";
 
 const Progress = () => {
   const router = useRouter();
@@ -15,8 +16,6 @@ const Progress = () => {
     method: "GET",
     dependencies: [requestId],
   });
-
-  console.log("APPROVAL DATA:", dataApproval);
 
   const dataRequest = useFetch({
     endpoint: `/api/request?id=${requestId}`,

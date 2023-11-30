@@ -1,12 +1,12 @@
 import { useRouter } from "next/router";
-import { twMerge } from "tailwind-merge";
-import { TbLockUp } from "react-icons/tb";
 import { useContext, useState } from "react";
 import { AiOutlineDashboard } from "react-icons/ai";
+import { TbLockUp } from "react-icons/tb";
+import { twMerge } from "tailwind-merge";
 
+import Exit from "./Components/Exit";
 import Menu from "./Components/Menu";
 import Option from "./Components/Option";
-import Exit from "./Components/Exit";
 
 import { AuthContext } from "@/context/AuthContext";
 

@@ -1,14 +1,9 @@
 UPDATE approval
-SET
-    id_status = (
-        SELECT
-            id
-        FROM
-            status
-        WHERE
-            status = ?
+SET id_status = (
+        SELECT id
+        FROM status
+        WHERE status = ?
     ),
     approval_date = ?,
     comment = ?
-WHERE
-    id = ?
+WHERE id = ?
