@@ -37,36 +37,38 @@ const Progress = () => {
       className="flex gap-6 pt-4"
     >
       <Group label="Grade de aprovações:" className="w-1/2 h-full">
-        {dataApproval.data?.map(({ id, fullname, status, approvalDate, comment }: IApproval) => (
-          <TimeLineCard
-            key={id}
-            icon={parsedStatus[status].icon}
-            color={parsedStatus[status].color}
-            title={
-              status === "Aprovado"
-                ? `Aprovado por: ${fullname}`
-                : status === "Reprovado"
-                ? `Reprovado por: ${fullname}`
-                : "Pendente"
-            }
-          >
-            <p>
-              {status === "Aprovado"
-                ? `Em ${approvalDate.split(" ")[0].split("-").reverse().join("/")} às ${approvalDate
-                    .split(" ")[1]
-                    .slice(0, 5)}`
-                : status === "Reprovado"
-                ? `Em ${approvalDate}`
-                : `Aguardando aprovação de: ${fullname}`}
-            </p>
-            {comment && (
-              <p className="mt-2">
-                <span className="pr-1">Comentários:</span>
-                <span>{comment}</span>
+        <div className="w-full flex flex-col justify-center items-center">
+          {dataApproval.data?.map(({ id, fullname, status, approvalDate, comment }: IApproval) => (
+            <TimeLineCard
+              key={id}
+              icon={parsedStatus[status].icon}
+              color={parsedStatus[status].color}
+              title={
+                status === "Aprovado"
+                  ? `Aprovado por: ${fullname}`
+                  : status === "Reprovado"
+                  ? `Reprovado por: ${fullname}`
+                  : "Pendente"
+              }
+            >
+              <p>
+                {status === "Aprovado"
+                  ? `Em ${approvalDate.split(" ")[0].split("-").reverse().join("/")} às ${approvalDate
+                      .split(" ")[1]
+                      .slice(0, 5)}`
+                  : status === "Reprovado"
+                  ? `Em ${approvalDate}`
+                  : `Aguardando aprovação de: ${fullname}`}
               </p>
-            )}
-          </TimeLineCard>
-        ))}
+              {comment && (
+                <p className="mt-2">
+                  <span className="pr-1">Comentários:</span>
+                  <span>{comment}</span>
+                </p>
+              )}
+            </TimeLineCard>
+          ))}
+        </div>
       </Group>
 
       <Group label="Detalhes da solicitação:" className="w-1/2 h-full">

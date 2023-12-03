@@ -28,8 +28,8 @@ const TimeLineCard = ({ title, data, children, icon = "exclamation", color = "gr
   return (
     <div className="w-full p-0">
       <div className="w-full">
-        <div className="flex flex-col md:grid grid-cols-12 text-gray-50">
-          <div className="flex md:contents">
+        <div className="w-full flex flex-col md:grid grid-cols-12 text-gray-50">
+          <div className="w-full flex md:contents">
             <div className="col-start-1 col-end-2 mr-10 md:mx-auto relative">
               <div className="h-full w-6 flex items-center justify-center">
                 <div className={twMerge("h-full w-1 pointer-events-none", colorToClass[color].background)}></div>
@@ -45,7 +45,7 @@ const TimeLineCard = ({ title, data, children, icon = "exclamation", color = "gr
             </div>
             <div
               className={twMerge(
-                "col-start-2 col-end-12 p-4 rounded-xl my-4 mr-auto shadow-md w-full",
+                "w-full col-start-2 col-end-12 p-4 rounded-xl my-4 mr-auto shadow-md",
                 colorToClass[color].background
               )}
             >
