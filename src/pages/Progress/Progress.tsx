@@ -27,6 +27,7 @@ const Progress = () => {
     Pendente: { color: "yellow", icon: "clock" },
     Aprovado: { color: "green", icon: "check" },
     Reprovado: { color: "red", icon: "cancel" },
+    Cancelado: { color: "gray", icon: "exclamation" },
   };
 
   return (
@@ -48,6 +49,8 @@ const Progress = () => {
                   ? `Aprovado por: ${fullname}`
                   : status === "Reprovado"
                   ? `Reprovado por: ${fullname}`
+                  : status === "Cancelado"
+                  ? `Cancelado`
                   : "Pendente"
               }
             >
@@ -58,6 +61,8 @@ const Progress = () => {
                       .slice(0, 5)}`
                   : status === "Reprovado"
                   ? `Em ${approvalDate}`
+                  : status === "Cancelado"
+                  ? `Aprovação de: ${fullname} foi cancelada pela reprovação de outro.`
                   : `Aguardando aprovação de: ${fullname}`}
               </p>
               {comment && (
