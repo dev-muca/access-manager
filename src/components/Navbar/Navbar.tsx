@@ -1,9 +1,11 @@
 import { useRouter } from "next/router";
 import { useContext, useState } from "react";
 import { AiOutlineDashboard } from "react-icons/ai";
+import { MdOutlineAdminPanelSettings } from "react-icons/md";
 import { TbLockUp } from "react-icons/tb";
 import { twMerge } from "tailwind-merge";
 
+import AdminMiddleware from "../AdminMiddleware";
 import Exit from "./Components/Exit";
 import Menu from "./Components/Menu";
 import Option from "./Components/Option";
@@ -49,6 +51,14 @@ const Navbar = () => {
             onClick={() => navigateTo("/Access")}
             open={open}
           />
+          <AdminMiddleware>
+            <Option
+              name={"Administrador"}
+              icon={<MdOutlineAdminPanelSettings size={24} />}
+              onClick={() => navigateTo("/Admin")}
+              open={open}
+            />
+          </AdminMiddleware>
         </ul>
 
         <Exit onClick={Logout} />

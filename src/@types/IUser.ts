@@ -10,13 +10,13 @@ interface IUser {
   streetAddress?: string;
   city?: string;
   state?: string;
-  postalCode?: number;
+  postalCode?: number | null;
   title?: string;
   office?: string;
   department?: string;
   company?: string;
-  telephoneNumber?: number;
-  homeNumber?: number;
+  telephoneNumber?: number | null;
+  homeNumber?: number | null;
   description?: string;
   active?: boolean;
   validationToken?: string;

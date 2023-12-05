@@ -37,8 +37,8 @@ const Progress = () => {
       loading={dataApproval.pageLoader}
       className="flex gap-6 pt-4"
     >
-      <Group label="Grade de aprovações:" className="w-1/2 h-full">
-        <div className="w-full flex flex-col justify-center items-center">
+      <Group labelFixed label="Grade de aprovações:" className="w-1/2 h-full">
+        <div className="w-full flex flex-col items-start overflow-y-auto">
           {dataApproval.data?.map(({ id, fullname, status, approvalDate, comment }: IApproval) => (
             <TimeLineCard
               key={id}

@@ -7,9 +7,10 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   color?: "default" | "green" | "red";
   loader?: boolean;
   className?: string;
+  disable?: true;
 }
 
-const Button = ({ children, color = "default", loader = false, className, ...props }: ButtonProps) => {
+const Button = ({ children, color = "default", loader = false, className, disable, ...props }: ButtonProps) => {
   const colotToClass: any = {
     default: "bg-tertiary text-white",
     green: "bg-green-500 text-white",
@@ -18,6 +19,7 @@ const Button = ({ children, color = "default", loader = false, className, ...pro
 
   const buttonClass = twMerge(
     `w-min-[280px] h-[40px] px-2 py-1 rounded shadow uppercase font-medium hover:brightness-105 flex justify-center items-center mt-0.5`,
+    disable && "grayscale opacity-50 hover:brightness-100 cursor-not-allowed",
     colotToClass[color],
     className
   );

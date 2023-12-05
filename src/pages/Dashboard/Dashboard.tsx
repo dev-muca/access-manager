@@ -19,13 +19,13 @@ const Dashboard = () => {
       <Container title="Dashboard" noBackward>
         <Group label="Informações da plataforma:" className="px-4">
           <Badge className="h-[30px] px-4 flex justify-center items-center hover:brightness-105">
-            🔵 Versão: 0.1.1
+            🔵 Versão: 0.1.2
           </Badge>
           <Badge className="h-[30px] px-4 flex justify-center items-center hover:brightness-105" color="green">
             🟢 Integração Web-Api: Online
           </Badge>
-          <Badge className="h-[30px] px-4 flex justify-center items-center hover:brightness-105" color="red">
-            🔴 Integração Active-Directory: Offline
+          <Badge className="h-[30px] px-4 flex justify-center items-center hover:brightness-105" color="yellow">
+            🟡 Integração Active-Directory: Em andamento
           </Badge>
         </Group>
       </Container>
