@@ -138,7 +138,7 @@ const UserService = {
       const [result] = await conn.query<RowDataPacket[]>(sql, [username]);
       conn.release();
 
-      if (!result.length) return null;
+      if (!result.length) throw new Error("No users found");
 
       return result;
     } catch (err: any) {

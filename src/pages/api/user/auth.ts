@@ -40,6 +40,9 @@ async function POST(req: NextApiRequest, res: NextApiResponse) {
     if (data.includes("Too many connections"))
       return res.status(500).send({ error: { field: "message", message: "Limite de conexões excedidas" } });
 
+    if (data.includes("No users found"))
+      return res.status(500).send({ error: { field: "message", message: "Usuário inválido" } });
+
     if (!data) return res.status(401).send({ error: { field: "username", message: "Usuário inválido" } });
 
     const row = data![0];
@@ -77,6 +80,7 @@ async function POST(req: NextApiRequest, res: NextApiResponse) {
     user.validationToken = token;
     res.status(200).send({ user });
   } catch (err: any) {
+    console.log(err.message);
     res.status(500).send({ error: err.message });
   }
 }
