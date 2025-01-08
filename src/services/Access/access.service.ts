@@ -22,17 +22,31 @@ const AccessService = {
   async getAccess(id: number, order: string = "name") {
     try {
       const conn = await pool.getConnection();
-      const query = `SELECT A.id,
-                            A.name,
-                            A.description,
-                            GROUP_CONCAT(CONCAT(U.id, '-', u.fullname) ORDER BY U.id ASC SEPARATOR ';') AS approver
-                      FROM access A
-                        INNER JOIN approver AP ON AP.id_access = A.id
-                        INNER JOIN user U ON U.id = AP.id_user
+
+      const validOrders = ["name", "id", "description"];
+      if (!validOrders.includes(order)) {
+        throw new Error("Invalid order column");
+      }
+      const query = `SELECT 
+                        A.id,
+                        A.name,
+                        A.description,
+                        GROUP_CONCAT(CONCAT(U.id, '-', U.fullname) ORDER BY U.id ASC SEPARATOR ';') AS approver
+                      FROM 
+                        access A
+                      INNER JOIN 
+                        approver AP ON AP.id_access = A.id
+                      INNER JOIN 
+                        user U ON U.id = AP.id_user
                       ${id ? "WHERE A.id = ?" : ""} 
-                      GROUP BY A.name
-                      ORDER BY A.${order}`;
-      const [result] = await conn.query<RowDataPacket[]>(query, [id]);
+                      GROUP BY 
+                        A.id, A.name, A.description
+                      ORDER BY 
+                        A.${order};`;
+      const [result] = await conn.query<RowDataPacket[]>(
+        query,
+        [id].filter((val) => val !== undefined)
+      );
       conn.release();
 
       if (!result.length) return null;
